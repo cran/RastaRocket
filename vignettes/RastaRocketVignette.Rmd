@@ -1,0 +1,374 @@
+---
+title: "RastaRocketVignette"
+date: "`r Sys.Date()`"
+output:
+  html_vignette:
+    toc: true
+    toc_depth: 2
+    keep_md: true
+vignette: >
+  %\VignetteIndexEntry{RastaRocketVignette}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r,include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning=FALSE,
+  message=FALSE,
+  results='asis'
+)
+```
+
+\
+
+
+```{r setup}
+library(RastaRocket)
+library(dplyr)
+library(tidyr)
+library(labelled)
+library(rlang)
+library(gtsummary)
+library(forcats)
+```
+
+
+# Introduction
+
+This vignette demonstrates the different options available for the `desc_var` function, accompanied by examples to illustrate its usage. 
+ 
+# Toy dataset
+
+We will generate a sample dataset to apply the `desc_var` function.
+
+
+```{r}
+# Charger le package nécessaire
+set.seed(123)  # Pour garantir la reproductibilité
+
+# Création du data frame
+data <- data.frame(
+  Age = c(rnorm(45, mean = 50, sd = 10), rep(NA, 5)),  # Renommée Age
+  sexe = sample(c(0, 1), 50, replace = TRUE, prob = c(0.6, 0.4)),  # Renommée sexe
+  quatre_modalites = sample(c("A", "B", "C"), 50, replace = TRUE, prob = c(0.2, 0.5, 0.3)),  # Modalités sans "D"
+  traitement = sample(c("BRAS-A", "BRAS-B"), 50, replace = TRUE, prob = c(0.55, 0.45)),  # Nouvelle variable traitement
+  echelle = sample(0:5, 50, replace = TRUE)  # Nouvelle variable entière de 0 à 5
+)
+
+# Ajouter la modalité "D" comme niveau sans effectif
+data$quatre_modalites <- factor(data$quatre_modalites, levels = c("A", "B", "C", "D"))
+
+# Ajouter des labels à la variable sexe
+data$sexe <- factor(data$sexe, levels = c(0, 1), labels = c("Femme", "Homme"))
+
+# Aperçu des données
+
+
+
+data <- data %>% labelled::set_variable_labels( Age = "Age",
+                                                sexe = "sexe",
+                                                traitement  = "traitement",
+                                                quatre_modalites = "quatres niveaux",
+                                                echelle = "Echelle")
+```
+
+# Basic usage
+ 
+Below, we describe the options used in the example.
+
+The dataset is passed to the `desc_var` function for analysis.
+
+- `table_title`: Title of the descriptive table. Here, it is "test."
+- `by_group`: Logical indicating whether the descriptive table should be stratified by the grouping variable (var_group). If TRUE, the table is grouped by var_group; if FALSE, the grouping variable is ignored and not described in the table.
+- `var_group`: The variable used for grouping the data. Here, it is "traitement."
+- `group_title`: Title of the grouping variable column. Here, it is "traitement."
+- `add_total`: Add a Total column when `var_group` is specified
+
+
+```{r}
+data %>% RastaRocket::desc_var(table_title = "test",
+                            by_group = TRUE,
+                            var_group = "traitement",
+                            group_title = "Traitement",
+                            add_total = TRUE,
+                            show_n_per_group = TRUE)
+```
+
+# Quantitative and qualitative feature
+
+The package support the user specification of feature type as quantitative or qualitative features. For instance, you could chose to describe a quantitative features as a qualitative one if it has few values. For instance, we can do this for `Age` after we round it.
+
+```{r}
+data %>%
+  dplyr::select(Age, traitement) %>%
+  dplyr::mutate(Age = round(Age)) %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     group_title = "traitement",
+                     quali = c("Age"))
+```
+
+
+# Missing data
+
+The display of missing data is controlled by the `show_missing_data` argument in the `RastaRocket::desc_var` function. By default, if `anyNA(data1)` returns `TRUE`, missing data will be displayed. If no missing data is detected, it will be hidden. Users can override this behavior by explicitly setting `show_missing_data` to `TRUE` or `FALSE`.
+
+```{r}
+iris %>% RastaRocket::desc_var(table_title = "test",
+                            by_group = TRUE,
+                            var_group = "Species",
+                            group_title = "Species",
+                            show_missing_data = TRUE)
+```
+
+```{r}
+iris %>% RastaRocket::desc_var(table_title = "test",
+                            by_group = TRUE,
+                            var_group = "Species",
+                            group_title = "Species",
+                            show_missing_data = FALSE)
+```
+
+# Feature Data Management
+
+In the previous example, no specific data management operations were applied.
+
+## Order of categorical features
+
+### Order by frequency
+
+In this example, we add `freq_relevel = TRUE`, which orders the categories of categorical variables in descending order based on their counts.
+
+```{r second example}
+data %>% desc_var(table_title = "test",
+             by_group = TRUE,
+             var_group = "traitement",
+             group_title = "traitement",
+             freq_relevel = TRUE)
+```
+
+### Custom order
+
+The default order of categorical features is determined by their levels. If you want to customize this order, you can modify the levels using a library such as `forcats`.
+
+```{r}
+data %>%
+  dplyr::mutate(quatre_modalites = forcats::fct_relevel(quatre_modalites,
+                                                       "A", "C", "D", "B")) %>%
+  desc_var(table_title = "test",
+           by_group = TRUE,
+           var_group = "traitement",
+           group_title = "traitement")
+```
+
+
+## Remove zero-count levels
+
+
+By default, zero-count levels are removed but we can explicitly specify we do not want to drop them.
+
+```{r third example}
+data %>% desc_var(table_title = "test",
+             by_group = TRUE,
+             var_group = "traitement",
+             group_title = "traitement",
+             drop_levels = FALSE)
+```
+
+# Overall and Per-Group Descriptions
+
+## Per-Group Description
+
+Here, we use a per-group description for the variables.
+
+```{r }
+data %>% desc_var(table_title = "test",
+             by_group = TRUE,
+             var_group = "traitement",
+             group_title = "traitement")
+```
+
+## Overall Description
+
+In this example, we generate a global description of the variables.
+
+```{r}
+data %>% RastaRocket::desc_var(table_title = "test",
+             by_group = FALSE,
+             var_group = "traitement",
+             group_title = "traitement")
+```
+
+# Intermediate titles
+
+To insert intermediate titles, you can use the `intermediate_header` function which takes a list of sub-tables generated by `desc_var` and a vector of titles.
+
+```{r}
+tb1 <- data %>%
+  dplyr::select(Age, sexe) %>%
+  RastaRocket::desc_var(table_title = "test")
+
+tb2 <- data %>%
+  dplyr::select(quatre_modalites) %>%
+  RastaRocket::desc_var(table_title = "test")
+
+RastaRocket::intermediate_header(tbls = list(tb1, tb2),
+                              group_header = c("Title A", "Title B"))
+
+```
+
+# Number of Digits in Quantitative and Qualitative Features
+
+You can specify the number of digits for quantitative and qualitative features using the `digits` argument.
+
+## Specify Number of Digits
+
+In the example below, quantitative values are rounded to 0 decimal places, while qualitative values percentage are rounded to 1 decimal place.
+
+```{r}
+data %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     digits = list(mean_sd = 0,
+                                   median_q1_q3_min_max = 0,
+                                   pct = 1))
+```
+
+## Combine Subtables with Different Rounding
+
+To have more control over rounding, you can create subtables with different numbers of digits and combine them into a single table using `gtsummary::tbl_stack`.
+
+```{r}
+tb1 <- data %>%
+  dplyr::select(Age, sexe, traitement) %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     digits = list(mean_sd = 2,
+                                   median_q1_q3_min_max = 2,
+                                   pct = 2))
+
+tb2 <- data %>%
+  dplyr::select(quatre_modalites, traitement) %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     digits = list(mean_sd = 0,
+                                   median_q1_q3_min_max = 0,
+                                   pct = 1))
+
+gtsummary::tbl_stack(list(tb1, tb2))
+
+```
+
+# Statistical tests
+
+## Add Default Statistical Tests
+
+You can include statistical tests in your summary table using the `tests = TRUE` argument. This automatically applies default statistical tests for the grouped variables.
+
+The following example adds statistical tests for all features, grouped by the `traitement` variable.
+
+```{r}
+data %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     tests = TRUE)
+```
+
+## Specify Statistical Tests for Each Feature
+
+For greater control, you can specify the test to use for each feature by passing a named list to the tests argument. The example below applies:
+
+- t-test for Age,
+- Chi-squared test for sexe, and
+- Fisher's exact test for echelle.
+
+```{r}
+data %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     tests = list(Age = "t.test",
+                                  sexe = "chisq.test",
+                                  echelle = "fisher.test"))
+```
+
+# Custom appearance
+
+To have a nicer appearance of the table, it is possible to customize it as a `gt` table. A dedicated function is implemented: `custom_format`.
+
+```{r}
+data %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     tests = list(Age = "t.test",
+                                  sexe = "chisq.test",
+                                  echelle = "fisher.test")) %>%
+  custom_format()
+```
+
+This also works when using stacked tables.
+
+```{r}
+tb1 <- data %>%
+  dplyr::select(Age, sexe, traitement) %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     digits = list(mean_sd = 0,
+                                     median_q1_q3_min_max = 0,
+                                     pct = 0))
+
+tb2 <- data %>%
+  dplyr::select(quatre_modalites, traitement) %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     digits = list(mean_sd = 2,
+                                   median_q1_q3_min_max = 2,
+                                   pct = 2))
+
+gtsummary::tbl_stack(list(tb1, tb2)) %>%
+  custom_format()
+```
+
+You can customize the format by specifying the column size and the alignment.
+
+```{r}
+data %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement") %>%
+  custom_format(align = "left",
+                column_size = list(label ~ gt::pct(50),
+                                   gt::starts_with("stat") ~ gt::pct(25)))
+```
+
+# French format
+
+You can customize the output format to french using the `gtsummary::theme_gtsummary_language` function. The `gtsummary::reset_gtsummary_theme()` reset the format to the default behavior (i.e English). You can set the format once at the beginning of the document, no need to specify it multiple times.
+
+
+```{r}
+# reset theme to default
+gtsummary::reset_gtsummary_theme()
+# switch to French format
+gtsummary::theme_gtsummary_language(language = "fr", decimal.mark = ",", big.mark = " ")
+
+iris %>%
+  RastaRocket::desc_var(table_title = "test")
+
+# you can put several tables here, it will keep French format
+
+# back to default format
+gtsummary::reset_gtsummary_theme()
+```
+

@@ -1,0 +1,2469 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2025-11-17" />
+
+<title>DescribeAE</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">DescribeAE</h1>
+<h4 class="date">2025-11-17</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#toy-dataset" id="toc-toy-dataset">Toy dataset</a>
+<ul>
+<li><a href="#assigning-patients-to-treatment-arms" id="toc-assigning-patients-to-treatment-arms">Assigning Patients to
+Treatment Arms</a></li>
+<li><a href="#recording-adverse-events-by-llt-pt-soc-and-grade" id="toc-recording-adverse-events-by-llt-pt-soc-and-grade">Recording
+Adverse Events by LLT, PT, SOC and Grade</a></li>
+</ul></li>
+<li><a href="#summarizing-adverse-events" id="toc-summarizing-adverse-events">Summarizing Adverse Events</a>
+<ul>
+<li><a href="#describing-adverse-events-by-system-organ-class" id="toc-describing-adverse-events-by-system-organ-class">Describing
+Adverse Events by System Organ Class</a></li>
+<li><a href="#describing-adverse-events-by-grade" id="toc-describing-adverse-events-by-grade">Describing Adverse Events by
+Grade</a></li>
+</ul></li>
+<li><a href="#what-if-you-have-only-one-group" id="toc-what-if-you-have-only-one-group">What if you have only one group
+?</a></li>
+<li><a href="#plot-adverse-events" id="toc-plot-adverse-events">Plot
+Adverse Events</a>
+<ul>
+<li><a href="#dumbell-plot" id="toc-dumbell-plot">Dumbell plot</a></li>
+<li><a href="#volcano-plot" id="toc-volcano-plot">Volcano plot</a></li>
+<li><a href="#butterfly-plot" id="toc-butterfly-plot">Butterfly
+plot</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul>
+</div>
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(RastaRocket)</span></code></pre></div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Adverse events (AE) are a crucial aspect of clinical trials,
+providing insight into the safety profile of treatments. The
+<code>DescribeAE</code> package provides functions to summarize and
+visualize adverse events by different criteria such as <strong>System
+Organ Class (SOC)</strong>, <strong>Preferred Term (PT)</strong>, and
+<strong>Grade</strong>.</p>
+<p>This vignette demonstrates how to use two core functions:</p>
+<ul>
+<li><code>desc_ei_per_pt()</code>: Summarizes adverse events by
+<strong>System Organ Class (SOC)</strong> and <strong>Preferred Term
+(PT)</strong>.</li>
+<li><code>desc_ei_per_grade()</code>: Summarizes adverse events by
+<strong>grade</strong>, which represents severity.</li>
+</ul>
+<p>These functions generate tables that help interpret the distribution
+of adverse events across different treatment arms in a randomized
+controlled trial (RCT).</p>
+</div>
+<div id="toy-dataset" class="section level1">
+<h1>Toy dataset</h1>
+<p>Before using these functions, we need to create a toy datasets. Below
+is an example of how to structure the data.</p>
+<div id="assigning-patients-to-treatment-arms" class="section level2">
+<h2>Assigning Patients to Treatment Arms</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>df_pat_grp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">USUBJID =</span> <span class="fu">paste0</span>(<span class="st">&quot;ID_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">RDGRPNAME =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;C&quot;</span>, <span class="dv">4</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="recording-adverse-events-by-llt-pt-soc-and-grade" class="section level2">
+<h2>Recording Adverse Events by LLT, PT, SOC and Grade</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>df_pat_llt <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="at">USUBJID =</span> <span class="fu">c</span>(<span class="st">&quot;ID_1&quot;</span>, <span class="st">&quot;ID_1&quot;</span>, <span class="st">&quot;ID_2&quot;</span>, <span class="st">&quot;ID_8&quot;</span>, <span class="st">&quot;ID_9&quot;</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">EINUM =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">EILLTN =</span> <span class="fu">c</span>(<span class="st">&quot;llt1&quot;</span>, <span class="st">&quot;llt2&quot;</span>, <span class="st">&quot;llt1&quot;</span>, <span class="st">&quot;llt3&quot;</span>, <span class="st">&quot;llt4&quot;</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">EIPTN =</span> <span class="fu">c</span>(<span class="st">&quot;Arrhythmia&quot;</span>, <span class="st">&quot;Myocardial Infarction&quot;</span>, <span class="st">&quot;Myocardial Infarction&quot;</span>, <span class="st">&quot;Pneumonia&quot;</span>, <span class="st">&quot;Pneumonia&quot;</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="at">EISOCPN =</span> <span class="fu">c</span>(<span class="st">&quot;Cardiac Disorders&quot;</span>, <span class="st">&quot;Cardiac Disorders&quot;</span>, <span class="st">&quot;Cardiac Disorders&quot;</span>, <span class="st">&quot;Infections&quot;</span>, <span class="st">&quot;Infections&quot;</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="at">EIGRDM =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="at">EIGRAV =</span> <span class="fu">c</span>(<span class="st">&quot;Grave&quot;</span>, <span class="st">&quot;Non grave&quot;</span>, <span class="st">&quot;Non grave&quot;</span>, <span class="st">&quot;Non grave&quot;</span>, <span class="st">&quot;Grave&quot;</span>) </span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+</div>
+<div id="summarizing-adverse-events" class="section level1">
+<h1>Summarizing Adverse Events</h1>
+<div id="describing-adverse-events-by-system-organ-class" class="section level2">
+<h2>Describing Adverse Events by System Organ Class</h2>
+<p>To analyze adverse events based on their <strong>System Organ Class
+(SOC)</strong> and <strong>Preferred Term (PT)</strong>, use the
+<code>desc_ei_per_pt()</code> function:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">desc_ei_per_pt</span>(<span class="at">df_pat_grp =</span> df_pat_grp,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>               <span class="at">df_pat_llt =</span> df_pat_llt)</span></code></pre></div>
+<div id="volvrnxhes" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#volvrnxhes table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#volvrnxhes thead, #volvrnxhes tbody, #volvrnxhes tfoot, #volvrnxhes tr, #volvrnxhes td, #volvrnxhes th {
+border-style: none;
+}
+#volvrnxhes p {
+margin: 0;
+padding: 0;
+}
+#volvrnxhes .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#volvrnxhes .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#volvrnxhes .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#volvrnxhes .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#volvrnxhes .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#volvrnxhes .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#volvrnxhes .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#volvrnxhes .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#volvrnxhes .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#volvrnxhes .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#volvrnxhes .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#volvrnxhes .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#volvrnxhes .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#volvrnxhes .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#volvrnxhes .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#volvrnxhes .gt_from_md > :first-child {
+margin-top: 0;
+}
+#volvrnxhes .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#volvrnxhes .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#volvrnxhes .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#volvrnxhes .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#volvrnxhes .gt_row_group_first td {
+border-top-width: 2px;
+}
+#volvrnxhes .gt_row_group_first th {
+border-top-width: 2px;
+}
+#volvrnxhes .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#volvrnxhes .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#volvrnxhes .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#volvrnxhes .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#volvrnxhes .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#volvrnxhes .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#volvrnxhes .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#volvrnxhes .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#volvrnxhes .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#volvrnxhes .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#volvrnxhes .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#volvrnxhes .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#volvrnxhes .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#volvrnxhes .gt_left {
+text-align: left;
+}
+#volvrnxhes .gt_center {
+text-align: center;
+}
+#volvrnxhes .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#volvrnxhes .gt_font_normal {
+font-weight: normal;
+}
+#volvrnxhes .gt_font_bold {
+font-weight: bold;
+}
+#volvrnxhes .gt_font_italic {
+font-style: italic;
+}
+#volvrnxhes .gt_super {
+font-size: 65%;
+}
+#volvrnxhes .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#volvrnxhes .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#volvrnxhes .gt_indent_1 {
+text-indent: 5px;
+}
+#volvrnxhes .gt_indent_2 {
+text-indent: 10px;
+}
+#volvrnxhes .gt_indent_3 {
+text-indent: 15px;
+}
+#volvrnxhes .gt_indent_4 {
+text-indent: 20px;
+}
+#volvrnxhes .gt_indent_5 {
+text-indent: 25px;
+}
+#volvrnxhes .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#volvrnxhes div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="pt"><span class="gt_from_md"><strong>Evénements indésirables</strong></span></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_Total">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>Total</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_A">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>A</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_B">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>B</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_C">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>C</strong></span></div>
+      </th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="A_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="A_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="B_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="B_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="C_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="C_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <th colspan="9" class="gt_group_heading" style="background-color: #F5F3F4; font-weight: bold;" scope="colgroup" id="Total">Total</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Total  pt" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Total</td>
+<td headers="Total  Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">5 (100.0)</td>
+<td headers="Total  Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">4 (40.0)</td>
+<td headers="Total  A_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">3 (100.0)</td>
+<td headers="Total  A_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (66.7)</td>
+<td headers="Total  B_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">0 (  0.0)</td>
+<td headers="Total  B_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">0 ( 0.0)</td>
+<td headers="Total  C_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (100.0)</td>
+<td headers="Total  C_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (50.0)</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="9" class="gt_group_heading" style="background-color: #F5F3F4; font-weight: bold;" scope="colgroup" id="Cardiac Disorders">Cardiac Disorders</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Cardiac Disorders  pt" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Total</td>
+<td headers="Cardiac Disorders  Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">3 ( 60.0)</td>
+<td headers="Cardiac Disorders  Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (20.0)</td>
+<td headers="Cardiac Disorders  A_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">3 (100.0)</td>
+<td headers="Cardiac Disorders  A_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (66.7)</td>
+<td headers="Cardiac Disorders  B_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="Cardiac Disorders  B_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="Cardiac Disorders  C_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="Cardiac Disorders  C_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td></tr>
+    <tr><td headers="Cardiac Disorders  pt" class="gt_row gt_left">Myocardial Infarction</td>
+<td headers="Cardiac Disorders  Total_EI" class="gt_row gt_left">2 ( 40.0)</td>
+<td headers="Cardiac Disorders  Total_PAT" class="gt_row gt_left">2 (20.0)</td>
+<td headers="Cardiac Disorders  A_EI" class="gt_row gt_left">2 ( 66.7)</td>
+<td headers="Cardiac Disorders  A_PAT" class="gt_row gt_left">2 (66.7)</td>
+<td headers="Cardiac Disorders  B_EI" class="gt_row gt_left"><br /></td>
+<td headers="Cardiac Disorders  B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="Cardiac Disorders  C_EI" class="gt_row gt_left"><br /></td>
+<td headers="Cardiac Disorders  C_PAT" class="gt_row gt_left"><br /></td></tr>
+    <tr><td headers="Cardiac Disorders  pt" class="gt_row gt_left">Arrhythmia</td>
+<td headers="Cardiac Disorders  Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Cardiac Disorders  Total_PAT" class="gt_row gt_left">1 (10.0)</td>
+<td headers="Cardiac Disorders  A_EI" class="gt_row gt_left">1 ( 33.3)</td>
+<td headers="Cardiac Disorders  A_PAT" class="gt_row gt_left">1 (33.3)</td>
+<td headers="Cardiac Disorders  B_EI" class="gt_row gt_left"><br /></td>
+<td headers="Cardiac Disorders  B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="Cardiac Disorders  C_EI" class="gt_row gt_left"><br /></td>
+<td headers="Cardiac Disorders  C_PAT" class="gt_row gt_left"><br /></td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="9" class="gt_group_heading" style="background-color: #F5F3F4; font-weight: bold;" scope="colgroup" id="Infections">Infections</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Infections  pt" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Total</td>
+<td headers="Infections  Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 ( 40.0)</td>
+<td headers="Infections  Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (20.0)</td>
+<td headers="Infections  A_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="Infections  A_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="Infections  B_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="Infections  B_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="Infections  C_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (100.0)</td>
+<td headers="Infections  C_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (50.0)</td></tr>
+    <tr><td headers="Infections  pt" class="gt_row gt_left">Pneumonia</td>
+<td headers="Infections  Total_EI" class="gt_row gt_left">2 ( 40.0)</td>
+<td headers="Infections  Total_PAT" class="gt_row gt_left">2 (20.0)</td>
+<td headers="Infections  A_EI" class="gt_row gt_left"><br /></td>
+<td headers="Infections  A_PAT" class="gt_row gt_left"><br /></td>
+<td headers="Infections  B_EI" class="gt_row gt_left"><br /></td>
+<td headers="Infections  B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="Infections  C_EI" class="gt_row gt_left">2 (100.0)</td>
+<td headers="Infections  C_PAT" class="gt_row gt_left">2 (50.0)</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<div id="interpretation" class="section level3">
+<h3>Interpretation:</h3>
+<p>This table shows how frequently different types of adverse events
+occur within each treatment arm. It helps in identifying which organ
+systems are most affected and whether certain treatment groups have
+higher rates of specific adverse events.</p>
+</div>
+</div>
+<div id="describing-adverse-events-by-grade" class="section level2">
+<h2>Describing Adverse Events by Grade</h2>
+<p>To assess the severity of adverse events across treatment arms, use
+<code>desc_ei_per_grade()</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">desc_ei_per_grade</span>(<span class="at">df_pat_grp =</span> df_pat_grp,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                  <span class="at">df_pat_grade =</span> df_pat_llt)</span></code></pre></div>
+<div id="yywsdrslep" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yywsdrslep table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#yywsdrslep thead, #yywsdrslep tbody, #yywsdrslep tfoot, #yywsdrslep tr, #yywsdrslep td, #yywsdrslep th {
+border-style: none;
+}
+#yywsdrslep p {
+margin: 0;
+padding: 0;
+}
+#yywsdrslep .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#yywsdrslep .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#yywsdrslep .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#yywsdrslep .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#yywsdrslep .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#yywsdrslep .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#yywsdrslep .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#yywsdrslep .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#yywsdrslep .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#yywsdrslep .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#yywsdrslep .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#yywsdrslep .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#yywsdrslep .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#yywsdrslep .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#yywsdrslep .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#yywsdrslep .gt_from_md > :first-child {
+margin-top: 0;
+}
+#yywsdrslep .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#yywsdrslep .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#yywsdrslep .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#yywsdrslep .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#yywsdrslep .gt_row_group_first td {
+border-top-width: 2px;
+}
+#yywsdrslep .gt_row_group_first th {
+border-top-width: 2px;
+}
+#yywsdrslep .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#yywsdrslep .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#yywsdrslep .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#yywsdrslep .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#yywsdrslep .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#yywsdrslep .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#yywsdrslep .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#yywsdrslep .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#yywsdrslep .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#yywsdrslep .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#yywsdrslep .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#yywsdrslep .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#yywsdrslep .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#yywsdrslep .gt_left {
+text-align: left;
+}
+#yywsdrslep .gt_center {
+text-align: center;
+}
+#yywsdrslep .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#yywsdrslep .gt_font_normal {
+font-weight: normal;
+}
+#yywsdrslep .gt_font_bold {
+font-weight: bold;
+}
+#yywsdrslep .gt_font_italic {
+font-style: italic;
+}
+#yywsdrslep .gt_super {
+font-size: 65%;
+}
+#yywsdrslep .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#yywsdrslep .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#yywsdrslep .gt_indent_1 {
+text-indent: 5px;
+}
+#yywsdrslep .gt_indent_2 {
+text-indent: 10px;
+}
+#yywsdrslep .gt_indent_3 {
+text-indent: 15px;
+}
+#yywsdrslep .gt_indent_4 {
+text-indent: 20px;
+}
+#yywsdrslep .gt_indent_5 {
+text-indent: 25px;
+}
+#yywsdrslep .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#yywsdrslep div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="grade"><span class="gt_from_md"><strong>Grade</strong></span></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_Total">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>Total</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_A">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>A</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_B">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>B</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_C">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>C</strong></span></div>
+      </th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="A_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="A_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="B_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="B_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="C_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="C_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="grade" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Any grade</td>
+<td headers="Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">5 (100.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">4 (40.0)</td>
+<td headers="A_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">3 (100.0)</td>
+<td headers="A_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (66.7)</td>
+<td headers="B_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">0 (  0.0)</td>
+<td headers="B_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">0 ( 0.0)</td>
+<td headers="C_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (100.0)</td>
+<td headers="C_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (50.0)</td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">1</td>
+<td headers="Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">1 (10.0)</td>
+<td headers="A_EI" class="gt_row gt_left">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left"><br /></td>
+<td headers="C_PAT" class="gt_row gt_left"><br /></td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">2</td>
+<td headers="Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">1 (10.0)</td>
+<td headers="A_EI" class="gt_row gt_left"><br /></td>
+<td headers="A_PAT" class="gt_row gt_left"><br /></td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left">1 ( 50.0)</td>
+<td headers="C_PAT" class="gt_row gt_left">1 (25.0)</td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">3</td>
+<td headers="Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">1 (10.0)</td>
+<td headers="A_EI" class="gt_row gt_left">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left"><br /></td>
+<td headers="C_PAT" class="gt_row gt_left"><br /></td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">4</td>
+<td headers="Total_EI" class="gt_row gt_left">2 ( 40.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">2 (20.0)</td>
+<td headers="A_EI" class="gt_row gt_left">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left">1 ( 50.0)</td>
+<td headers="C_PAT" class="gt_row gt_left">1 (25.0)</td></tr>
+    <tr><td headers="grade" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">SAE</td>
+<td headers="Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 ( 40.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (20.0)</td>
+<td headers="A_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="C_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 ( 50.0)</td>
+<td headers="C_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 (25.0)</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<div id="interpretation-1" class="section level3">
+<h3>Interpretation:</h3>
+<p>This table summarizes the distribution of adverse event grades
+(severity levels) per treatment group. It helps in understanding whether
+a treatment is associated with more severe adverse events compared to
+others.</p>
+</div>
+</div>
+</div>
+<div id="what-if-you-have-only-one-group" class="section level1">
+<h1>What if you have only one group ?</h1>
+<p>In that case the table <code>df_pat_grp</code> must still be provided
+with RDGRPNAME set to “Total” (or any other string)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">desc_ei_per_pt</span>(<span class="at">df_pat_grp =</span> df_pat_grp <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">RDGRPNAME =</span> <span class="st">&quot;A&quot;</span>),</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>               <span class="at">df_pat_llt =</span> df_pat_llt)</span></code></pre></div>
+<div id="qwrhmlvzoz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qwrhmlvzoz table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#qwrhmlvzoz thead, #qwrhmlvzoz tbody, #qwrhmlvzoz tfoot, #qwrhmlvzoz tr, #qwrhmlvzoz td, #qwrhmlvzoz th {
+border-style: none;
+}
+#qwrhmlvzoz p {
+margin: 0;
+padding: 0;
+}
+#qwrhmlvzoz .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#qwrhmlvzoz .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#qwrhmlvzoz .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#qwrhmlvzoz .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#qwrhmlvzoz .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#qwrhmlvzoz .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#qwrhmlvzoz .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#qwrhmlvzoz .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#qwrhmlvzoz .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#qwrhmlvzoz .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#qwrhmlvzoz .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#qwrhmlvzoz .gt_from_md > :first-child {
+margin-top: 0;
+}
+#qwrhmlvzoz .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#qwrhmlvzoz .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#qwrhmlvzoz .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qwrhmlvzoz .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#qwrhmlvzoz .gt_row_group_first td {
+border-top-width: 2px;
+}
+#qwrhmlvzoz .gt_row_group_first th {
+border-top-width: 2px;
+}
+#qwrhmlvzoz .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qwrhmlvzoz .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#qwrhmlvzoz .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qwrhmlvzoz .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#qwrhmlvzoz .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qwrhmlvzoz .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#qwrhmlvzoz .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qwrhmlvzoz .gt_left {
+text-align: left;
+}
+#qwrhmlvzoz .gt_center {
+text-align: center;
+}
+#qwrhmlvzoz .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#qwrhmlvzoz .gt_font_normal {
+font-weight: normal;
+}
+#qwrhmlvzoz .gt_font_bold {
+font-weight: bold;
+}
+#qwrhmlvzoz .gt_font_italic {
+font-style: italic;
+}
+#qwrhmlvzoz .gt_super {
+font-size: 65%;
+}
+#qwrhmlvzoz .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#qwrhmlvzoz .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#qwrhmlvzoz .gt_indent_1 {
+text-indent: 5px;
+}
+#qwrhmlvzoz .gt_indent_2 {
+text-indent: 10px;
+}
+#qwrhmlvzoz .gt_indent_3 {
+text-indent: 15px;
+}
+#qwrhmlvzoz .gt_indent_4 {
+text-indent: 20px;
+}
+#qwrhmlvzoz .gt_indent_5 {
+text-indent: 25px;
+}
+#qwrhmlvzoz .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#qwrhmlvzoz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="pt"><span class="gt_from_md"><strong>Evénements indésirables</strong></span></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_Total">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>Total</strong></span></div>
+      </th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <th colspan="3" class="gt_group_heading" style="background-color: #F5F3F4; font-weight: bold;" scope="colgroup" id="Total">Total</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Total  pt" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Total</td>
+<td headers="Total  Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">5 (100.0)</td>
+<td headers="Total  Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">4 (40.0)</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="3" class="gt_group_heading" style="background-color: #F5F3F4; font-weight: bold;" scope="colgroup" id="Cardiac Disorders">Cardiac Disorders</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Cardiac Disorders  pt" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Total</td>
+<td headers="Cardiac Disorders  Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">3 ( 60.0)</td>
+<td headers="Cardiac Disorders  Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (20.0)</td></tr>
+    <tr><td headers="Cardiac Disorders  pt" class="gt_row gt_left">Myocardial Infarction</td>
+<td headers="Cardiac Disorders  Total_EI" class="gt_row gt_left">2 ( 40.0)</td>
+<td headers="Cardiac Disorders  Total_PAT" class="gt_row gt_left">2 (20.0)</td></tr>
+    <tr><td headers="Cardiac Disorders  pt" class="gt_row gt_left">Arrhythmia</td>
+<td headers="Cardiac Disorders  Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Cardiac Disorders  Total_PAT" class="gt_row gt_left">1 (10.0)</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="3" class="gt_group_heading" style="background-color: #F5F3F4; font-weight: bold;" scope="colgroup" id="Infections">Infections</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Infections  pt" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Total</td>
+<td headers="Infections  Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 ( 40.0)</td>
+<td headers="Infections  Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (20.0)</td></tr>
+    <tr><td headers="Infections  pt" class="gt_row gt_left">Pneumonia</td>
+<td headers="Infections  Total_EI" class="gt_row gt_left">2 ( 40.0)</td>
+<td headers="Infections  Total_PAT" class="gt_row gt_left">2 (20.0)</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">desc_ei_per_grade</span>(<span class="at">df_pat_grp =</span> df_pat_grp,</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                  <span class="at">df_pat_grade =</span> df_pat_llt <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">RDGRPNAME =</span> <span class="st">&quot;A&quot;</span>))</span></code></pre></div>
+<div id="rdmsbszcdh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rdmsbszcdh table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#rdmsbszcdh thead, #rdmsbszcdh tbody, #rdmsbszcdh tfoot, #rdmsbszcdh tr, #rdmsbszcdh td, #rdmsbszcdh th {
+border-style: none;
+}
+#rdmsbszcdh p {
+margin: 0;
+padding: 0;
+}
+#rdmsbszcdh .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#rdmsbszcdh .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#rdmsbszcdh .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#rdmsbszcdh .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#rdmsbszcdh .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#rdmsbszcdh .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#rdmsbszcdh .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#rdmsbszcdh .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#rdmsbszcdh .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#rdmsbszcdh .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#rdmsbszcdh .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#rdmsbszcdh .gt_from_md > :first-child {
+margin-top: 0;
+}
+#rdmsbszcdh .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#rdmsbszcdh .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#rdmsbszcdh .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#rdmsbszcdh .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#rdmsbszcdh .gt_row_group_first td {
+border-top-width: 2px;
+}
+#rdmsbszcdh .gt_row_group_first th {
+border-top-width: 2px;
+}
+#rdmsbszcdh .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#rdmsbszcdh .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#rdmsbszcdh .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#rdmsbszcdh .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#rdmsbszcdh .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#rdmsbszcdh .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#rdmsbszcdh .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#rdmsbszcdh .gt_left {
+text-align: left;
+}
+#rdmsbszcdh .gt_center {
+text-align: center;
+}
+#rdmsbszcdh .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#rdmsbszcdh .gt_font_normal {
+font-weight: normal;
+}
+#rdmsbszcdh .gt_font_bold {
+font-weight: bold;
+}
+#rdmsbszcdh .gt_font_italic {
+font-style: italic;
+}
+#rdmsbszcdh .gt_super {
+font-size: 65%;
+}
+#rdmsbszcdh .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#rdmsbszcdh .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#rdmsbszcdh .gt_indent_1 {
+text-indent: 5px;
+}
+#rdmsbszcdh .gt_indent_2 {
+text-indent: 10px;
+}
+#rdmsbszcdh .gt_indent_3 {
+text-indent: 15px;
+}
+#rdmsbszcdh .gt_indent_4 {
+text-indent: 20px;
+}
+#rdmsbszcdh .gt_indent_5 {
+text-indent: 25px;
+}
+#rdmsbszcdh .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#rdmsbszcdh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="grade"><span class="gt_from_md"><strong>Grade</strong></span></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_Total">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>Total</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_A">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>A</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_B">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>B</strong></span></div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="over_C">
+        <div class="gt_column_spanner"><span class="gt_from_md"><strong>C</strong></span></div>
+      </th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Total_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="A_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="A_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="B_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="B_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="C_EI"><span class="gt_from_md"><strong>AE <br> N (%)</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="C_PAT"><span class="gt_from_md"><strong>Patient <br> N (%)</strong></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="grade" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">Any grade</td>
+<td headers="Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">5 (100.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">4 (40.0)</td>
+<td headers="A_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">3 (100.0)</td>
+<td headers="A_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (66.7)</td>
+<td headers="B_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">0 (  0.0)</td>
+<td headers="B_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">0 ( 0.0)</td>
+<td headers="C_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (100.0)</td>
+<td headers="C_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (50.0)</td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">1</td>
+<td headers="Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">1 (10.0)</td>
+<td headers="A_EI" class="gt_row gt_left">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left"><br /></td>
+<td headers="C_PAT" class="gt_row gt_left"><br /></td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">2</td>
+<td headers="Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">1 (10.0)</td>
+<td headers="A_EI" class="gt_row gt_left"><br /></td>
+<td headers="A_PAT" class="gt_row gt_left"><br /></td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left">1 ( 50.0)</td>
+<td headers="C_PAT" class="gt_row gt_left">1 (25.0)</td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">3</td>
+<td headers="Total_EI" class="gt_row gt_left">1 ( 20.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">1 (10.0)</td>
+<td headers="A_EI" class="gt_row gt_left">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left"><br /></td>
+<td headers="C_PAT" class="gt_row gt_left"><br /></td></tr>
+    <tr><td headers="grade" class="gt_row gt_left">4</td>
+<td headers="Total_EI" class="gt_row gt_left">2 ( 40.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left">2 (20.0)</td>
+<td headers="A_EI" class="gt_row gt_left">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left"><br /></td>
+<td headers="C_EI" class="gt_row gt_left">1 ( 50.0)</td>
+<td headers="C_PAT" class="gt_row gt_left">1 (25.0)</td></tr>
+    <tr><td headers="grade" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">SAE</td>
+<td headers="Total_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 ( 40.0)</td>
+<td headers="Total_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">2 (20.0)</td>
+<td headers="A_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 ( 33.3)</td>
+<td headers="A_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 (33.3)</td>
+<td headers="B_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="B_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;"><br /></td>
+<td headers="C_EI" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 ( 50.0)</td>
+<td headers="C_PAT" class="gt_row gt_left" style="font-style: italic; font-weight: bold;">1 (25.0)</td></tr>
+  </tbody>
+  
+</table>
+</div>
+</div>
+<div id="plot-adverse-events" class="section level1">
+<h1>Plot Adverse Events</h1>
+<p>This section provides several visualization methods for adverse
+events (AEs) based on patient data. Currently, these plots support only
+two groups. Future work may involve migration to aevisR for enhanced
+functionality.</p>
+<p>First, we define the two patients group:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df_pat_grp <span class="ot">&lt;-</span> df_pat_grp <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">RDGRPNAME =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dv">5</span>)))</span></code></pre></div>
+<div id="dumbell-plot" class="section level2">
+<h2>Dumbell plot</h2>
+<p>The dumbbell plot visualizes the difference in AE occurrence between
+the two groups. It highlights the absolute risk difference for each
+AE.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">plot_dumbell</span>(<span class="at">df_pat_llt =</span> df_pat_llt,</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>             <span class="at">df_pat_grp =</span> df_pat_grp)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="volcano-plot" class="section level2">
+<h2>Volcano plot</h2>
+<p>The volcano plot displays the association between risk differences
+and statistical significance (-log10 p-values). This helps identify AEs
+that differ significantly between groups.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">plot_volcano</span>(<span class="at">df_pat_llt =</span> df_pat_llt,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>             <span class="at">df_pat_grp =</span> df_pat_grp)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="butterfly-plot" class="section level2">
+<h2>Butterfly plot</h2>
+<p>The butterfly stacked bar plot compares AE frequencies across groups
+while stacking by severity grade. It provides a detailed view of AE
+distributions.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">plot_butterfly_stacked_barplot</span>(<span class="at">df_pat_llt =</span> df_pat_llt,</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>                               <span class="at">df_pat_grp =</span> df_pat_grp)</span></code></pre></div>
+<p><img src="data:image/png;base64,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DISA5tftrfm8vW9uz229V72oZyB9CDu4cub2vrm1q25Wr6qPEz4DbV+od16o6+83aurr0etr7fPmY1EvubzWDpZvL+6o28TOyjADnd2ySs5u7erT6M359V3LIwRkmtWXcNXN6uOvDJ0vnSBA5hzIoml5KksBoMUd83Gn4vdQqYaFwTOm8gLarJqE80sIyNyNADpQB7gn1k8uIHNiHACqBC16zokFdOe0no8SOysXoN3gQj5jBmo2379ZzTy/jmzZ7AJSx6yj1Zo6XJmDlwUUHMJCQBW/xQwUANLnQBFM6lRo4BwoOITNr+8txzxndAIB+eoYVlETjvfx3+0C2ml4Xi0Etnh3xXtspZbYWbkANff1wel2cBW21fxW9cy/9V2F2VX1VdizmSdBkS2bLUDilAdQoYlsGYAABCD3AAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAogAIQKIACECiAAhAosR2PfmfeLgFQIIiAAEIQMIiAAmKAAQgAAmLACQoAhCAACQsApCgCEAAApCwCECCIgABCEDCIgAJigAEIAAJiwAkKAIQgAAkLHIANOF4Np/yMuOwypi6CVZ5N25Dx5PYrse68WPqZvoBBfnUWFYZUzcuj1RAjm/jR+8GQON+pAICIHJiAyAiCoCIKAAiogCIiDKFgD76k+/6/v/9y6Vf793cu3TpWrDA5uElna/6H/3RpUu/8cHwctuRXZjUR7jKNT+9m+StKDhZD+uw8Q5DkD2UqTtk+gA9ek1v4dvP64/g5tFf3nqofra3r/Wt+FCt9/B5UxK7PFiY1sej1675D794K72b9K0oMBkP67Lx2UNgV0sbyvQdMnWA7l36c+VabaH2HdwEH3/2QXRFPX7+21/V38YuDxem9fHQ/HZeS+8mtYcCk/WwLhufPQRmedpQZuyQqQP03x/oifEju83BjQU/8JtzT4/fv97S38YuDxem9WGKX7uW2k12DwXF5WEzNt5xCFKHMmOHTB0g++P2b6855A785ujfPbXsTy+pSTxueXdhSh8mavRSu/EzeygoLg+bsfFuQ5A1lKk7ZDYA+eanfGjO3CJr+R/98S3/0V99N255d2FKHzr31AE+tZvenkxYXFQcHjZr492GIGsoU3fIzAB6+HxwP8i954NvEpZ3F6b0obv54q3MbtJ7KCzZD+uy8dlDkDmUqTtkSgH1n7P55mge3A9iz/n88KceWt5dmNKH/RXO7Ca1h+KS+bBOG585BNlDmbpDphRQ/1Wjb65H+34tzHHbXH7aQ/Hg8sjCxD7svJ3VjZ+yFcUm42EdNt5hCByGMnWHTCugR6+ZJ6yCG/u7ET0wB78g6mQufnlkYWIfajjMk2jX0rtJ7aHIZDysy8ZnD4HDUKbukCkERGYpACKiAIiIAiAiCoCIKAAiogCIiAIgIgqAHLNh/4fMintFqzbQ0PC8pcRVOyuDq8f2MXUBkGM25nbU186KuXHJkIjOSgKfBDxpC6YnAHKMBeS3Tq05FsQAStIAoBIkANReqJljkT4YdS5/3TtdN/cqfq915fdXPK/WXvC8YLZqmQW6Qa2tujj/dwvBwUwfF2tmydxdYyWuD/3Vm1pIAHJMZAZqqM/2wlJwPNP39NGp12pX6c4eLU+f4VS604kCUTON/kYlLA/OgeL6MGRbUysIQI4Jz4EqwblM63TdfBOe2fS3qr0eejlaNQt6orQQZWVup3N5zU5pIaDYPlpm2praAMgxwVXYUngaFBIxE4Q/2Kq+9LzU/D5RtiE4mWp5Xg9QbB+dlakWBCDHbHQvv1rBOy0FgM6vxbQOAYo2mApzLFRnRW9FZqD4Po5WOQc6AYkACi/EYmagsDV1BgoBmSXRQ1hiH/6G88XfcQdAjukB6u7VYDcvxbZmnQOp/szZTcuLngMl9DHF1/MAckwPkLlW0nOC3av63tFqpb/V7PzgecPhqzC1ZsurBZOPt2QQdq/CBvsw05L700/HHQA5JgLIPFujZo9ARPR5oLBVf9nofx4oAuj3FuxJjao4taaPThvR54EG+9DlU+sHQMef8KzpZARAxx4AEVEAREg3ACKiAIiIAiAiCoCIKAAiogCIiAIgIgqAiCgAIqIAiIgCICIKgIgoACKiAIiIAiAiCoCIKAAiogCIiAIgIgqAiCgAIqIAyD1fiE3Cyp+MS1LPn4lLwrofxkb+0+UMgNwDoJgAyD0AigmA3AOgmADIPQCKCYDcA6CYlBxQw0t6/8GYN0cFUExKDeho1b7JXNyfIMgDqH2hV5MOqL3Q5zYdUKvvDaYyAUW3oviUGlCApBH39y9yAOp7Q95UQH3vqOlnANJvyhnZmkxAG8f6tsBlBmTf/tKkfeFvvNN180cFzJvReae+rnaDfoPdyN7IANTwPus6A7UU2aPV3hSUeQgz70lukwWo9TFmoGNK5K1P2wuV4H7Dvk+8nk30W2dGp6cMQD/acT+E9T96NqDIVmQAOrr+FoCOKeYNm/WsE7xl8//u2EZzvFCQzG1kP4/xHMjvP3BmADLv6xomA1BjiXOg40rknb+D95u3b4hqdq3aDY3uXzewGSugRvRMJXMGcj4H6ry0A6DjSngOFAIyfyNHfdcFNHByPU5Ajb437h3fOdBGjauw40swC4SA9Kmtvjiy7yCvDmED7848RkCN/iulsQFSp/+Jz2wVk1IDsle8Lf1H3c4HbwevTzfs28rrk2glKqJofIDCv9ASJhWQ9txedD2J5nmgY00r+H21e3RDnQH9vfmbFb3L+MgsND5AGwPzRPoM1Oh7MgFAM5tMQNFkXoVFk3kIiyQT0PEGQO4BUEwA5B4AxQRA7gFQTABERAEQEQVARBQAEVEAREQBEBEFQEQUABFRAEREARARBUBEFAARUQBERAEQEQVARBQAEVH+H6jn8aWaFMZwAAAAAElFTkSuQmCC" /><!-- --></p>
+<!-- ## Patient Span Chart (Panchart) -->
+<!-- The Patient Span Chart provides a timeline view of adverse events, treatments, and randomization for a selected patient. -->
+<!-- It is particularly useful for tracking the sequence of AEs in relation to treatment administration and study randomization. -->
+<!-- ### Example Dataset -->
+<!-- ```{r} -->
+<!-- df_pat_grp_rando <- data.frame( -->
+<!--   id_pat = c("ID_1", "ID_2"), -->
+<!--   grp = c("A", "B"), -->
+<!--   rando_date = c("2020-12-01", "2021-01-03") -->
+<!-- ) -->
+<!-- df_pat_pt_grade_date <- data.frame( -->
+<!--   id_pat = c("ID_1", "ID_1", "ID_1", "ID_1", "ID_2"), -->
+<!--   pt = c("Arrhythmia", "Myocardial Infarction", "Arrhythmia", -->
+<!--           "Pneumonia", "Pneumonia"), -->
+<!--   grade = c(4, 2, 1, 3, 4), -->
+<!--   start = c("2021-01-01", "2021-02-03", "2021-01-02", "2021-03-05", "2021-02-01"), -->
+<!--   end = c("2021-01-14", "2021-03-03", "2021-01-22", "2021-05-05", "2021-02-03") -->
+<!-- ) -->
+<!-- df_pat_treatment_date <- data.frame( -->
+<!--   id_pat = c("ID_1", "ID_1", "ID_1"), -->
+<!--   treatment_date = c("2021-01-25", "2021-03-01", "2021-01-20") -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ### Generating the Panchart for a Specific Patient -->
+<!-- ```{r fig.height=4, fig.width=6} -->
+<!-- plot_patient_panchart( -->
+<!--   df_soc_pt = df_soc_pt, -->
+<!--   df_pat_grp_rando = df_pat_grp_rando, -->
+<!--   df_pat_pt_grade_date = df_pat_pt_grade_date, -->
+<!--   df_pat_treatment_date = df_pat_treatment_date, -->
+<!--   pat_id = "ID_1" -->
+<!-- ) -->
+<!-- ``` -->
+<!-- Interpreting the Chart -->
+<!-- - Horizontal bars represent the duration of each adverse event. -->
+<!-- - Vertical dashed lines indicate the patient's randomization and treatment dates. -->
+<!-- - Colors differentiate the severity of adverse events (by grade). -->
+<!-- - Separate facets display treatments and adverse events categorized by Preferred Term (PT). -->
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>The <code>DescribeAE</code> package provides a structured approach to
+summarizing and visualizing adverse events in clinical trials. By using
+<code>desc_ei_per_soc()</code> and <code>desc_ei_per_grade()</code>,
+researchers can:</p>
+<ul>
+<li>Identify which organ systems are most affected.</li>
+<li>Compare the frequency and severity of adverse events across
+treatment arms.</li>
+<li>Gain insights into the safety profile of treatments.</li>
+</ul>
+<p>These summaries support better decision-making in clinical trial
+analyses, ensuring a comprehensive evaluation of adverse events. For
+further customization, users can preprocess their data accordingly
+before applying these functions.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

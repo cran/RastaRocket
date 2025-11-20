@@ -1,0 +1,85 @@
+---
+title: "SetupProject"
+date: "`r Sys.Date()`"
+output:
+  html_vignette:
+    toc: true
+    toc_depth: 2
+    keep_md: true
+vignette: >
+  %\VignetteIndexEntry{SetupProject}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  results = 'asis'
+)
+```
+
+# Introduction
+
+The `start_new_reporting` function helps set up a structured Quarto document for statistical reporting. It generates a folder containing necessary files for report creation, including Quarto files (`.qmd`), custom CSS for styling, an HTML header, and a configuration YAML file.
+
+# Function Definition
+
+This function creates and writes a Quarto document (`.qmd`), along with custom CSS and HTML headers, to structure a statistical analysis report. It takes the following arguments:
+
+- `name` The name of the quarto document to be generated.
+- `folder_path` The folder where the project files should be created.
+- `output_folder` The folder where the HTML report will be stored (a local copy is always kept, just in case).
+- `structure` Character string indicating the organizational structure, either "USMR" or "EUCLID". Default is "USMR".
+- `path_logo` Character string specifying the path to the logo image. The package contains the logo for EUCLID and USMR, so you can just put `NULL` there.
+- `confidential` Logical value indicating whether the report should be marked as confidential. Default is FALSE.
+- `report_type` Character string specifying the type of report. Default is "Data review report".
+- `study_id` Character string representing the study identifier. Default is "CHUBXYYYY/NN".
+- `study_name` Character string specifying the name of the study. Default is "The Study Name".
+- `study_abbreviation` Character string providing the abbreviation of the study. Default is "TSN".
+- `investigator` Character string representing the investigator's name. Default is "Investigator name".
+- `methodologist` Character string specifying the methodologist's name. Default is "Jean Dupont".
+- `biostatistician` Character string specifying the biostatistician's name. Default is "George Frais".
+- `datamanager` Character string specifying the data manager's name. Default is "Peter Parker".
+- `methodologist_mail`, `biostatistician_mail`, `datamanager_mail`: The emails of the different persons, you can also let it guess and put NULL there.
+- `language` Character string indicating the language of the report, either "fr" (French) or "en" (English). Default is "fr".
+
+Using all those arguments, the fonction generate several files that you can modify afterwards anyway.
+
+# Generated Files
+
+The function generates a folder containing several essential files:
+
+- **`<name>.qmd`**: The main Quarto document for statistical analysis.
+- **`<name>_custom.css`**: A custom CSS file to style the generated HTML report.
+- **`<name>_custom.html`**: An HTML header file included before the document body.
+- **`_quarto.yml`**: A Quarto configuration YAML file defining the report setup.
+- **`datestamp_output_file.R`**: An R script used for post-processing the HTML report and saving it in the appropriate location.
+
+# Example
+
+```{r eval = FALSE}
+start_new_reporting(folder_path = "reporting/",
+                    output_folder = "UnEndroitSurleReseau/",
+                    name = "report_analysis",
+                    structure = "USMR",
+                    confidential = FALSE,
+                    report_type = "Data review report",
+                    study_id = "CHUBXYYYY/NN",
+                    study_name = "Chocolatines vs Pain au chocolat",
+                    study_abbreviation = "CPC",
+                    investigator = "Croissant AuBeurre",
+                    methodologist = "Boulanger Bordelais",
+                    biostatistician = "Patissier Toulousain",
+                    datamanager = "Meunier Palois",
+                    language = "fr")
+```
+
+
+# Conclusion
+
+Using `start_new_reporting` ensures a structured and standardized approach to statistical reporting, making it easier to maintain consistency and readability in data analysis documents.
+
