@@ -49,27 +49,30 @@
 ajouter_label_ndm <- function(data,
                               col_to_skip = NULL) {
 
-  # Boucle pour itérer sur toutes les colonnes du jeu de données
-  for (i in seq_along(data)) {
-    # Obtenir le label actuel de la variable (si défini)
-    label_actuel <- labelled::var_label(data[[i]])
-    colname_actuel <- colnames(data)[i]
-    # set variable name as label if NULL
-    if(is.null(label_actuel)){
-      label_actuel <- colname_actuel
-    }
-    
-    if(colname_actuel %in% col_to_skip){
-      nouveau_label <- label_actuel
-    } else {
-      # Créer un nouveau label en ajoutant "n (d.m.)" au label existant
-      nouveau_label <- paste0(label_actuel, " ", "n (d.m.)")
-    }
+  data |>
+    dplyr::mutate(
+      dplyr::across(
+        all_of(names(data)), ~ {
+          # Obtenir le nom de la colonne courante
+          nom_col <- dplyr::cur_column()
+          # Obtenir le label actuel de la variable (si défini)
+          label_actuel <- labelled::var_label(.x)
 
-    # Appliquer le nouveau label à la variable en utilisant la fonction set_variable_labels
-    data[[i]] <- labelled::set_variable_labels(data[[i]], nouveau_label)
-  }
+          # set variable name as label if NULL
+          if (is.null(label_actuel) || is.na(label_actuel)) {
+            label_actuel <- nom_col
+          }
 
-  # Retourner le jeu de données modifié avec les nouveaux labels
-  return(data)
+          # si colonne à exclure, on garde le label tel quel
+          if (nom_col %in% col_to_skip) {
+            nouveau_label <- label_actuel
+          } else {
+            # Créer un nouveau label en ajoutant "n (d.m.)" au label existant
+            nouveau_label <- paste0(label_actuel, " n (d.m.)")
+          }
+          # Appliquer le nouveau label à la variable en utilisant la fonction set_variable_labels
+          labelled::set_variable_labels(.x, nouveau_label)
+        }
+      )
+    )
 }

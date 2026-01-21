@@ -22,7 +22,7 @@ prepare_table(
 
 \item{drop_levels}{Boolean (default = TRUE). Drop unused levels.}
 
-\item{freq_relevel}{Boolean  (default = FALSE). Reorder factors by frequency.}
+\item{freq_relevel}{Boolean  (default = FALSE). Reorder factors by frequency except for the group variable.}
 
 \item{show_missing_data}{Should the missing data be displayed. Can be either :
 \itemize{

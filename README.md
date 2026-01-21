@@ -9,10 +9,14 @@
 
 ### Package installation
 
-To install the `RastaRocket` package, use the following code. Note that the devtools package must be installed beforehand. Ensure the `build_vignettes = TRUE` option is set during installation to access the included tutorial vignette:
+Install from CRAN:
+
+install.packages("RastaRocket")   
+
+Or install the latest development version on GitHub. Note that the devtools package must be installed beforehand. Ensure the `build_vignettes = TRUE` option is set during installation to access the included tutorial vignette:
 
 ```r
-devtools::install_github("BiostatUSMR/RastaRocket", build_vignettes = T)
+devtools::install_github("BiostatUSMR/RastaRocket", build_vignettes = TRUE)
 ```
 
 ### Access tutorials
@@ -50,10 +54,14 @@ If everything is set up correctly, the vignettes should open, providing a detail
 
 ### Installation du package
 
-Pour installer le package `RastaRocket`, utilisez le code suivant. Notez que le package `devtools` doit être installé au préalable. Assurez-vous que l’option `build_vignettes = TRUE` est activée lors de l’installation pour accéder au tutoriel inclus sous forme de vignette :
+Installation depuis le CRAN :
+
+install.packages("RastaRocket")
+
+Ou installez la dernière version de développement disponible sur GitHub. Notez que le package `devtools` doit être installé au préalable. Assurez-vous que l’option `build_vignettes = TRUE` est activée lors de l’installation pour accéder au tutoriel inclus sous forme de vignette :
 
 ```r
-devtools::install_github("BiostatUSMR/RastaRocket", build_vignettes = T)
+devtools::install_github("BiostatUSMR/RastaRocket", build_vignettes = TRUE)
 ```
 
 ### Accéder au tutoriel

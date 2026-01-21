@@ -49,7 +49,7 @@ median_q1_q3_min_max = 1, pct = 1).}
 
 \item{drop_levels}{Boolean (default = TRUE). Drop unused levels.}
 
-\item{freq_relevel}{Boolean (default = FALSE). Reorder factors by frequency.}
+\item{freq_relevel}{Boolean (default = FALSE). Reorder factors by frequency except for the group variable.}
 
 \item{tests}{A value in order to add p value. Default to \code{FALSE} OPTION :
 \itemize{

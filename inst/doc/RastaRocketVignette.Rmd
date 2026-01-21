@@ -10,6 +10,8 @@ vignette: >
   %\VignetteIndexEntry{RastaRocketVignette}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r,include = FALSE}
@@ -86,7 +88,7 @@ The dataset is passed to the `desc_var` function for analysis.
 - `var_group`: The variable used for grouping the data. Here, it is "traitement."
 - `group_title`: Title of the grouping variable column. Here, it is "traitement."
 - `add_total`: Add a Total column when `var_group` is specified
-
+- `show_n_per_group`: Should the 'N' appears in the column header of the groups. if TRUE, `N` is shown; if FALSE, No `N` is shown ( Default to `FALSE`)
 
 ```{r}
 data %>% RastaRocket::desc_var(table_title = "test",

@@ -16,7 +16,7 @@
 #'        continuous variable. Default is list(mean_sd = 1,
 #'        median_q1_q3_min_max = 1, pct = 1).
 #' @param drop_levels Boolean (default = TRUE). Drop unused levels.
-#' @param freq_relevel Boolean (default = FALSE). Reorder factors by frequency.
+#' @param freq_relevel Boolean (default = FALSE). Reorder factors by frequency except for the group variable.
 #' @param tests A value in order to add p value. Default to `FALSE` OPTION :
 #'   - `FALSE`: No p-value add
 #'   - `TRUE`: Add p-value made by default by gtsummary. See gtsummary add_p() options.
@@ -106,7 +106,7 @@ desc_var <- ## Les arguments de la fonction
            show_missing_data = NULL,
            var_tot = NULL,
            var_characteristic = NULL) {
-    
+
     # Check consistency between by_group and var_group
     if(by_group && is.null(var_group)){
       stop("If 'by_group = TRUE', you must provide a 'var_group'.")
@@ -114,23 +114,23 @@ desc_var <- ## Les arguments de la fonction
     if(!by_group && !is.null(var_group)){
       message("Note: 'var_group' is provided but 'by_group = FALSE'. The grouping variable will be ignored.")
     }
-    
+
     # Check that statistical tests are not requested in ungrouped mode
     if(!by_group && isTRUE(tests)){
       stop("Cannot perform statistical tests when 'by_group = FALSE'. Please set 'by_group = TRUE' to enable tests.")
     }
-    
+
     ### get missing data
     bool_missing_data <- anyNA(data1)
-    
+
     if(is.null(show_missing_data)){
       show_missing_data <- bool_missing_data
     }
-    
+
     if(!show_missing_data & bool_missing_data){
-      warning("show_missing_data is set to FALSE but there are missing data in the dataset.") 
+      warning("show_missing_data is set to FALSE but there are missing data in the dataset.")
     }
-    
+
     ### Prepare table
     data2 <- prepare_table(data1 = data1,
                            by_group = by_group,
@@ -138,7 +138,7 @@ desc_var <- ## Les arguments de la fonction
                            drop_levels = drop_levels,
                            freq_relevel = freq_relevel,
                            show_missing_data = show_missing_data)
-    
+
     ### Basic gtsummary
     base_table <- base_table(data1 = data2,
                              by_group = by_group,
@@ -146,7 +146,7 @@ desc_var <- ## Les arguments de la fonction
                              quali = quali,
                              quanti = quanti,
                              digits = digits)
-    
+
     ### Customize output
     res <- customize_table(base_table = base_table,
                            by_group = by_group,
@@ -159,13 +159,13 @@ desc_var <- ## Les arguments de la fonction
                            var_title = var_title,
                            var_tot = var_tot,
                            var_characteristic = var_characteristic)
-    
+
     # Add p-values
     res <- add_pvalues(res = res, tests = tests)
-    
+
     return(res)
-    
+
   }
 
 
-  
+
