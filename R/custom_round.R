@@ -9,15 +9,15 @@
 #' @return A character vector with the rounded and formatted numbers.
 #'
 #' @examples
-#' custom_round(3.14159)      # "3.1"
-#' custom_round(3.14159, 3)   # "3.142"
-#' custom_round(c(2, 2.5), 2) # "2.00" "2.50"
+#' RastaRocket::custom_round(3.14159)      # "3.1"
+#' RastaRocket::custom_round(3.14159, 3)   # "3.142"
+#' RastaRocket::custom_round(c(2, 2.5), 2) # "2.00" "2.50"
 #'
 #' @export
 custom_round <- function(x, digits = 1) {
   res <- x |>
     round(digits = digits) |>
     format(nsmall = digits)
-  
+
   return(res)
 }

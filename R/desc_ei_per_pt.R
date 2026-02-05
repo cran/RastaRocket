@@ -1,30 +1,6 @@
-# main function -----------------------------------------------------------
-utils::globalVariables(c("USUBJID",
-                         "RDGRPNAME",
-                         "id_pat",
-                         "grp",
-                         "EILLTN",
-                         "EISOCPN",
-                         "EIPTN",
-                         "EINUM",
-                         "soc",
-                         "pt",
-                         "nb_pat",
-                         "nb_pat_per_grp",
-                         "nb_ei",
-                         "pct_ei",
-                         "pct_pat",
-                         "p_val",
-                         "significant_bool",
-                         "freq_pat",
-                         "RD",
-                         "CIinf",
-                         "CIsup",
-                         "significant_label",
-                         "total_nb_pat"))
 
 #' desc_ei_per_pt
-#' 
+#'
 #' A function to describe AE by soc and pt
 #'
 #' @param df_pat_grp A dataframe with two columns: id_pat and grp (the rct arm)
@@ -32,14 +8,14 @@ utils::globalVariables(c("USUBJID",
 #' @param language 'fr' default or 'en'
 #' @param order_by_freq Logical. Should PT and SOC be ordered by frequency? Defaults to TRUE. If FALSE, PT and SOC are ordered alphabetically.
 #' @param digits Number of digits for percentages
-#' 
+#'
 #' @return A gt table
 #' @export
 #'
 #' @examples
 #' df_pat_grp <- data.frame(USUBJID = paste0("ID_", 1:10),
 #'                          RDGRPNAME = c(rep("A", 3), rep("B", 3), rep("C", 4)))
-#' 
+#'
 #' df_pat_llt <- data.frame(USUBJID = c("ID_1", "ID_1",
 #'                                     "ID_2",
 #'                                     "ID_4",
@@ -54,61 +30,61 @@ utils::globalVariables(c("USUBJID",
 #'                          EISOCPN = c("Cardiac Disorders", "Cardiac Disorders",
 #'                                  "Cardiac Disorders", "Infections",
 #'                                  "Infections"))
-#' 
+#'
 #' desc_ei_per_pt(df_pat_grp = df_pat_grp,
 #'                df_pat_llt = df_pat_llt)
-#' 
+#'
 desc_ei_per_pt <- function(df_pat_grp,
                            df_pat_llt,
                            language = "fr",
                            order_by_freq = TRUE,
                            digits = 1){
-  
+
   unknown_ei <- " Unknown"
-  
+
   ##### Check column names and remove duplicates
-  
+
   if(any(!c("USUBJID", "RDGRPNAME") %in% colnames(df_pat_grp))){
     stop("df_pat_grp should contain 'USUBJID' = the patient id and 'RDGRPNAME' = the randomization group")
   }
-  
+
   if(any(!c("USUBJID", "EILLTN", "EISOCPN", "EIPTN", "EINUM") %in% colnames(df_pat_llt))){
     stop("df_pat_grp should contain 'USUBJID' = the patient id and 'EINUM' = the AE event number and 'EILLTN' = the AE LLT and 'EISOCPN' = the AE SOC and 'EIPTN' = the AE PT")
   }
-  
+
   ##### clean type and df
-  
-  df_pat_grp <- df_pat_grp |> 
+
+  df_pat_grp <- df_pat_grp |>
     dplyr::mutate(id_pat = as.character(USUBJID),
-                  grp = as.character(RDGRPNAME)) |> 
+                  grp = as.character(RDGRPNAME)) |>
     dplyr::distinct(id_pat, grp)
 
-  df_pat_llt <- df_pat_llt |> 
-    distinct(USUBJID, EILLTN, EISOCPN, EIPTN, EINUM) |> 
+  df_pat_llt <- df_pat_llt |>
+    distinct(USUBJID, EILLTN, EISOCPN, EIPTN, EINUM) |>
     dplyr::select(id_pat = USUBJID,
                   soc = EISOCPN,
-                  pt = EIPTN) |> 
+                  pt = EIPTN) |>
     dplyr::mutate(id_pat = as.character(id_pat))
-  
+
   ##### check for stupid missing data
   if(anyNA(df_pat_grp)){
     warning("Missing data removed from df_pat_grp please be careful !")
     df_pat_grp <- na.omit(df_pat_grp)
   }
-  
+
   if(anyNA(df_pat_llt)){
     warning("Missing data removed from df_pat_llt please be careful !")
-    df_pat_llt <- df_pat_llt |> 
+    df_pat_llt <- df_pat_llt |>
       dplyr::mutate_at(.vars = c("soc", "pt"),
-                       .funs = function(x) if_else(is.na(x), unknown_ei, x)) |> 
+                       .funs = function(x) if_else(is.na(x), unknown_ei, x)) |>
       na.omit()
   }
-  
-  
+
+
   ##### Build augmented df, Total is a whole new group
-  
+
   nb_grp <- length(unique(df_pat_grp$grp))
-  
+
   if(nb_grp > 1){
     augmented_df_pat_grp <- dplyr::bind_rows(df_pat_grp,
                                              df_pat_grp |>
@@ -116,27 +92,27 @@ desc_ei_per_pt <- function(df_pat_grp,
   } else {
     augmented_df_pat_grp <- df_pat_grp |> dplyr::mutate(grp = "Total")
   }
-  
+
   vec_grp <- unique(augmented_df_pat_grp$grp)
-  
-  augmented_df_pat_pt_grp <- df_pat_llt |> 
+
+  augmented_df_pat_pt_grp <- df_pat_llt |>
     dplyr::left_join(augmented_df_pat_grp,
                      by = "id_pat",
                      relationship = "many-to-many")
-  
+
   ##### Build wide dataframe
-  
+
   df_wide <- desc_ei_per_pt_prepare_df(augmented_df_pat_grp = augmented_df_pat_grp,
                                        augmented_df_pat_pt_grp = augmented_df_pat_pt_grp,
                                        unknown_ei = unknown_ei,
                                        digits = digits)
-  
+
   ##### gt part
-  
+
   res <- desc_ei_per_pt_df_to_gt(df_wide = df_wide,
                                  vec_grp = vec_grp,
                                  language = language)
-  
+
   return(res)
 }
 
@@ -157,63 +133,63 @@ desc_ei_per_pt <- function(df_pat_grp,
 #' @return A wide-format dataframe summarizing adverse event occurrences and patient counts across groups.
 #' @importFrom purrr reduce
 #' @keywords internal
-#' 
+#'
 desc_ei_per_pt_prepare_df <- function(augmented_df_pat_grp,
                                       augmented_df_pat_pt_grp,
                                       order_by_freq = TRUE,
                                       unknown_ei = " Unknown",
                                       digits = 1){
-  
+
   ##### compute summary statistics per group
-  
-  df_nb_pat_per_grp <- augmented_df_pat_grp |> 
-    dplyr::group_by(grp) |> 
+
+  df_nb_pat_per_grp <- augmented_df_pat_grp |>
+    dplyr::group_by(grp) |>
     dplyr::summarise(nb_pat_per_grp = n())
-  
-  df_ei_total <- augmented_df_pat_pt_grp |> 
-    dplyr::group_by(grp) |> 
+
+  df_ei_total <- augmented_df_pat_pt_grp |>
+    dplyr::group_by(grp) |>
     dplyr::summarise(nb_ei = n(),
                      pct_ei = 100,
                      nb_pat = length(unique(id_pat)),
-                     .groups = "drop") |> 
-    dplyr::full_join(df_nb_pat_per_grp, by = "grp") |> 
+                     .groups = "drop") |>
+    dplyr::full_join(df_nb_pat_per_grp, by = "grp") |>
     dplyr::mutate(across(.cols = c("nb_ei", "pct_ei", "nb_pat"),
-                         .fns = function(x) if_else(is.na(x), 0, x))) |> 
+                         .fns = function(x) if_else(is.na(x), 0, x))) |>
     dplyr::mutate(pct_pat = nb_pat/nb_pat_per_grp*100,
                   pt = "Total",
-                  soc = "Total") |> 
+                  soc = "Total") |>
     dplyr::select(pt, soc, grp, nb_ei, pct_ei, nb_pat, pct_pat)
-  
+
   ##### compute summary statisticsby SOC and PT
   df_wide_temp <- list(pt = c("grp", "soc", "pt"),
-                  soc = c("grp", "soc")) |> 
+                  soc = c("grp", "soc")) |>
     lapply(function(vec_grp_by){
-      temp <- augmented_df_pat_pt_grp |> 
-        dplyr::group_by(across(all_of(vec_grp_by))) |> 
+      temp <- augmented_df_pat_pt_grp |>
+        dplyr::group_by(across(all_of(vec_grp_by))) |>
         dplyr::summarise(nb_ei = n(),
                          nb_pat = length(unique(id_pat)),
-                         .groups = "drop") |> 
-        dplyr::left_join(df_ei_total |> 
+                         .groups = "drop") |>
+        dplyr::left_join(df_ei_total |>
                            dplyr::select(grp, nb_ei_denom = nb_ei),
-                         by = "grp") |> 
+                         by = "grp") |>
         dplyr::left_join(df_nb_pat_per_grp,
-                         by = "grp") |> 
+                         by = "grp") |>
         dplyr::mutate(pct_pat = nb_pat/nb_pat_per_grp*100,
                       pct_ei = nb_ei/nb_ei_denom*100)
-      
+
       if(!"pt" %in% colnames(temp)){
         temp$pt <- "Total"
       }
-      
-      res <- temp |> 
+
+      res <- temp |>
         dplyr::select(soc, pt, grp, nb_ei, pct_ei, nb_pat, pct_pat)
-      
+
       return(res)
-    }) |> 
-    bind_rows() |> 
+    }) |>
+    bind_rows() |>
     ### add total ei dataset
     bind_rows(df_ei_total)
-  
+
   if(order_by_freq){
     # Calculate frequency-based levels for pt and soc
     pt_levels <- df_wide_temp %>%
@@ -221,13 +197,13 @@ desc_ei_per_pt_prepare_df <- function(augmented_df_pat_grp,
       summarise(total_nb_pat = sum(nb_pat, na.rm = TRUE)) %>%
       arrange(desc(total_nb_pat)) %>%
       pull(pt)
-    
+
     soc_levels <- df_wide_temp %>%
       group_by(soc) %>%
       summarise(total_nb_pat = sum(nb_pat, na.rm = TRUE)) %>%
       arrange(desc(total_nb_pat)) %>%
       pull(soc)
-    
+
     # Apply factor levels to the dataframe
     df_wide_temp_ordered <- df_wide_temp %>%
       mutate(
@@ -237,33 +213,33 @@ desc_ei_per_pt_prepare_df <- function(augmented_df_pat_grp,
         across(c("pt", "soc", "grp"), function(x) forcats::fct_relevel(x, "Total"))
       )
   } else {
-    df_wide_temp_ordered <- df_wide_temp |> 
+    df_wide_temp_ordered <- df_wide_temp |>
       ### Arrange dataframe for visualization
       mutate(across(c("pt", "soc", "grp"), as.factor),
              across(c("pt", "soc", "grp"), function(x) forcats::fct_relevel(x, "Total")))
   }
-  
+
   df_wide <- df_wide_temp_ordered |>
     mutate(EI = paste0(nb_ei, " (", custom_round(pct_ei, digits = digits),")"),
            PAT = paste0(nb_pat, " (", custom_round(pct_pat, digits = digits),")"),
-           .keep = "unused") |> 
-    dplyr::arrange(soc, pt, grp) |> 
+           .keep = "unused") |>
+    dplyr::arrange(soc, pt, grp) |>
     ### Go to wide format with correct names
-    dplyr::group_by(grp) |> 
-    dplyr::group_split() |> 
+    dplyr::group_by(grp) |>
+    dplyr::group_split() |>
     lapply(function(df_i){
       grp_i <- df_i |> dplyr::pull(grp) |> unique()
-      df_i |> 
-        dplyr::select(-grp) |> 
+      df_i |>
+        dplyr::select(-grp) |>
         dplyr::rename_with(.cols = c("EI", "PAT"),
                            .fn = function(x) paste0(grp_i, "_", x))
-    }) |> 
-    purrr::reduce(full_join, by = c("pt", "soc")) |> 
+    }) |>
+    purrr::reduce(full_join, by = c("pt", "soc")) |>
     ## remove duplicate total and unknown for unknow ae
     filter(!(soc == unknown_ei & pt == unknown_ei))
-  
+
   return(df_wide)
-  
+
 }
 
 
@@ -292,48 +268,48 @@ desc_ei_per_pt_df_to_gt <- function(df_wide,
   } else {
     label_pt <- language
   }
-  
+
   ### Create the gt table and labels
-  
-  gt_temp <- df_wide |> 
-    dplyr::group_by(soc) |> 
-    gt::gt() |> 
+
+  gt_temp <- df_wide |>
+    dplyr::group_by(soc) |>
+    gt::gt() |>
     gt::cols_label(
       pt = gt::md(label_pt),
       soc = "soc",
       dplyr::ends_with("EI") ~ gt::md("**AE <br> N (%)**"),
       dplyr::ends_with("PAT") ~ gt::md("**Patient <br> N (%)**")
     )
-  
+
   gt_temp2 <- gt_temp
   for (grp in vec_grp) {
-    gt_temp2 <- gt_temp2 |> 
+    gt_temp2 <- gt_temp2 |>
       gt::tab_spanner(label = gt::md(glue::glue("**{grp}**")),
                       id = glue::glue("over_{grp}"),
                       columns = c(glue::glue("{grp}_EI"),
                                   glue::glue("{grp}_PAT")))
   }
-  
+
   ### color table
-  
-  res <- gt_temp2 |> 
-    gt::sub_missing(missing_text = "") |> 
+
+  res <- gt_temp2 |>
+    gt::sub_missing(missing_text = "") |>
     gt::cols_align(align = "left",
-                   columns = dplyr::everything()) |> 
+                   columns = dplyr::everything()) |>
     gt::tab_style(
       locations = gt::cells_body(rows = pt == "Total"),
       style = gt::cell_text(weight = "bold",
                             style = "italic")
-    ) |> 
+    ) |>
     gt::tab_style(
       locations = gt::cells_row_groups(),
       style = gt::cell_fill(color = "#F5F3F4")
-    ) |> 
+    ) |>
     gt::tab_style(
       locations = gt::cells_row_groups(),
       style = gt::cell_text(weight = "bold")
     )
-  
+
   return(res)
 }
 

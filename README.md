@@ -37,7 +37,6 @@ To view the tutorial on how to use the descriptive functions, run the following 
 
 ```r
 vignette("RastaRocketVignette")
-vignette("DescribeAE")
 ```
 
 #### Adverse Event Description
@@ -84,5 +83,16 @@ Pour voir le tutoriel sur les fonctions de description, vous pouvez ouvrir la vi
 ```r
 vignette("RastaRocketVignette")
 ```
+
+#### Description d'évenements indésirables
+
+Pour consulter le tutoriel sur l'utilisation des fonctions descriptives des évènements indésirables, exécuter la commande suivante:  
+
+
+```r
+vignette("DescribeAE")
+```
+
+
 
 Si tout est bien installé, les deux vignettes devraient s'ouvrir.

@@ -65,16 +65,25 @@ percentages are displayed:
 }
 \item Headers for columns and spanning headers are customized using the \code{group_title},
 \code{table_title}, and \code{var_title} arguments.
-\item An external function \code{modify_table_body_func} is called to further modify
-the table body.
 }
 }
 \examples{
 # Example usage with a sample gtsummary table
 library(gtsummary)
 base_table <- trial \%>\%
-  tbl_summary(by = "trt", missing = "no")
-
+  gtsummary::tbl_summary(
+    type = list(
+      gtsummary::all_continuous() ~ "continuous2"
+    ),
+    by = "trt",
+    missing = "always",
+    missing_stat = "{N_nonmiss} ({N_miss})",
+    statistic = list(
+      gtsummary::all_continuous2() ~ c("{mean} ({sd})",
+                                       "{median} ({p25} ; {p75})",
+                                       "{min} ; {max}")
+    ))
+ 
 customize_table(
   base_table,
   var_group = "trt",

@@ -7,7 +7,7 @@
 #' @param base_table_missing A `gtsummary` table object (typically output from previous steps).
 #' @param var_characteristic Optional. A string to label the features column.
 #' @param show_missing_data Logical. If `TRUE`, adds missing data info to column headers.
-#' @param show_n_per_group A boolean indicating whether to display group sizes (n) for 
+#' @param show_n_per_group A boolean indicating whether to display group sizes (n) for
 #'        each level of the grouping variable.
 #' @param var_tot Optional. A string to label the total column.
 #' @param var_group Optional. Name of a grouping variable for adding a spanning header.
@@ -29,21 +29,21 @@ custom_headers <- function(base_table_missing,
     base_table_missing <- base_table_missing |>
       gtsummary::modify_header(label = paste0("**", var_characteristic, "**"))
   }
-  
+
   # Set stats columns header
-  char_header <- if_else(condition = show_n_per_group,
+  char_header <-  dplyr::if_else(condition = show_n_per_group,
           true = "**{level}**<br>N = {n}",
           false = "**{level}**")
-  
+
   base_table_missing <- base_table_missing |>
     gtsummary::modify_header(gtsummary::all_stat_cols() ~ char_header)
-  
+
   # Set total column header
   if (!is.null(var_tot)) {
     base_table_missing <- base_table_missing |>
       gtsummary::modify_header(stat_0 = paste0("**", var_tot, "**"))
   }
-  
+
   # Add spanning header if grouping variable is provided
   if (!is.null(var_group)) {
     if (is.null(group_title)) {
@@ -52,17 +52,17 @@ custom_headers <- function(base_table_missing,
         group_title <- var_group
       }
     }
-    
+
     base_table_missing <- base_table_missing %>%
       gtsummary::modify_spanning_header(
         c(gtsummary::all_stat_cols(FALSE) ~ paste0("**", group_title, "**"))
       )
   }
-  
+
   # Finalize table: caption and bold labels
   res <- base_table_missing %>%
     gtsummary::modify_caption(paste0("**", table_title, "**")) %>%
     gtsummary::bold_labels()
-  
+
   return(res)
 }

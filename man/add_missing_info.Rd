@@ -4,27 +4,14 @@
 \alias{add_missing_info}
 \title{Add missing value information to a gtsummary table}
 \usage{
-add_missing_info(
-  base_table,
-  show_missing_data,
-  var_group = NULL,
-  by_group = FALSE
-)
+add_missing_info(base_table)
 }
 \arguments{
 \item{base_table}{A \code{gtsummary} table object.}
-
-\item{show_missing_data}{Logical. If \code{TRUE}, shows the number of non-missing and missing values with percentages.
-If \code{FALSE}, shows only non-missing values.}
-
-\item{var_group}{Optional. A grouping variable name. If not \code{NULL}, additional stats are added by group.}
-
-\item{by_group}{A boolean (default is FALSE) to analyse by group.}
 }
 \value{
 A \code{gtsummary} table object with missing value information and modifications applied.
 }
 \description{
-This function adds information about missing and non-missing data counts to a gtsummary table.
-It can also apply custom statistics by group and modify the table body with an external function.
+This function merge missing data row into label row of gtsummary object
 }

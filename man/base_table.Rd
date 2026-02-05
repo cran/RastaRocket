@@ -6,6 +6,7 @@
 \usage{
 base_table(
   data1,
+  show_missing_data,
   by_group = FALSE,
   var_group,
   quali = NULL,
@@ -15,6 +16,12 @@ base_table(
 }
 \arguments{
 \item{data1}{A data frame containing the data to summarize.}
+
+\item{show_missing_data}{Should the missing data be displayed. Can be either :
+\itemize{
+\item \code{FALSE}: No missing data displayed
+\item \code{TRUE}(default): Missing data displayed
+}}
 
 \item{by_group}{A boolean (default is FALSE) to analyse by group.}
 
@@ -44,6 +51,6 @@ options for customizing the rounding and labels.
 }
 \examples{
 # Example usage with the iris dataset
-base_table(iris, var_group = "Species")
+base_table(iris, var_group = "Species", show_missing_data = TRUE)
 
 }

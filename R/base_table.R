@@ -16,19 +16,24 @@
 #' @param digits A list, the number of decimal places to round categorical and
 #'        continuous variable. Default is list(mean_sd = 1,
 #'        median_q1_q3_min_max = 1, pct = 1).
+#' @param show_missing_data Should the missing data be displayed. Can be either :
+#'   - `FALSE`: No missing data displayed
+#'   - `TRUE`(default): Missing data displayed
+#'   
 #' @return A `gtsummary` table summarizing the specified variables, 
 #'         grouped by `var_group` if provided, with customizable statistics 
 #'         and rounding options.
 #'
 #' @examples
 #' # Example usage with the iris dataset
-#' base_table(iris, var_group = "Species")
+#' base_table(iris, var_group = "Species", show_missing_data = TRUE)
 #'
 #' @import gtsummary
 #' @import dplyr
 #' @import rlang
 #' @export
 base_table <- function(data1,
+                       show_missing_data,
                        by_group = FALSE,
                        var_group,
                        quali = NULL,
@@ -56,6 +61,12 @@ base_table <- function(data1,
     col_1 <- NULL
   }
   
+  ##### missing data parameters
+  missing_stat <- ifelse(show_missing_data,
+                         yes = "{N_nonmiss} ({N_miss})",
+                         no = "{N_nonmiss}")
+  
+  ##### base gtsummary table
   base_table <- data1 %>%
     gtsummary::tbl_summary(
       type = list(
@@ -68,8 +79,9 @@ base_table <- function(data1,
       ),
       by = !!col_1,
       ## Pour degrouper les tables
-      missing = "no",
-      ## Ne pas afficher les NA
+      missing = "always",
+      missing_stat = missing_stat,
+      ## Toujours calculer les NA
       statistic = list(
         gtsummary::all_continuous2() ~ c("{mean} ({sd})", "{median} ({p25} ; {p75})","{min} ; {max}"),
         ## Stat à afficher pour les VAR (quantitatives)

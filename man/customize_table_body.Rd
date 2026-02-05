@@ -40,7 +40,7 @@ data <- data.frame(
 )
 
 # Apply the function
-modified_data <- customize_table_body(data)
+modified_data <- RastaRocket::customize_table_body(data)
 print(modified_data)
 
 }

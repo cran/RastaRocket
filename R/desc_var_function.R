@@ -145,7 +145,8 @@ desc_var <- ## Les arguments de la fonction
                              var_group = var_group,
                              quali = quali,
                              quanti = quanti,
-                             digits = digits)
+                             digits = digits,
+                             show_missing_data = show_missing_data)
 
     ### Customize output
     res <- customize_table(base_table = base_table,

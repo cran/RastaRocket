@@ -1,3 +1,11 @@
+# RastaRocket 1.0.2
+
+## Bug fixes
+- Fix missing data handling (use missing data option instead of statistics computation, much better and less bug)
+
+## Improvements
+- Refactored `add_missing_info()` with cleaner and more elegant internal code.
+
 # RastaRocket 1.0.1
 
 ## Bug fixes

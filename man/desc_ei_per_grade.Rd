@@ -9,7 +9,7 @@ desc_ei_per_grade(df_pat_grp, df_pat_grade, severity = TRUE, digits = 1)
 \arguments{
 \item{df_pat_grp}{A dataframe with two columns: USUBJID and RDGRPNAME (the RCT arm).}
 
-\item{df_pat_grade}{A dataframe with three columns: USUBJID, EINUM (the AE id), EIGRDM (the AE grade) and EIGRAV (the AE severity which must be "Grave" and "Non grave").}
+\item{df_pat_grade}{A dataframe with four columns: USUBJID, EINUM (the AE id), EIGRDM (the AE grade) and EIGRAV (the AE severity which must be "Grave" and "Non grave").}
 
 \item{severity}{A boolean to show severe adverse event line or not.}
 
