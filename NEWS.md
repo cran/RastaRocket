@@ -1,3 +1,18 @@
+# RastaRocket 1.1.2
+
+## Improvements
+
+- `desc_ei_per_grade()` and `desc_ei_per_pt()`
+  - Made more flexible regarding variable names.
+  - Users can now specify custom column names through function arguments.
+ 
+- `desc_var()` and `base_table()`
+  - Added the ability to specify which statistics to display for continuous variables.
+  
+- `digits` argument
+  - Enhanced precision control with clearer and more flexible number rounding for categorical and continuous variables.
+
+
 # RastaRocket 1.0.2
 
 ## Bug fixes

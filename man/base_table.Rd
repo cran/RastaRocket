@@ -11,7 +11,8 @@ base_table(
   var_group,
   quali = NULL,
   quanti = NULL,
-  digits = list(mean_sd = 1, median_q1_q3_min_max = 1, pct = 1)
+  stat_var_quanti = c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}"),
+  digits = list(r_quanti = 1, r_quali = 1)
 )
 }
 \arguments{
@@ -34,9 +35,10 @@ treat as categorical in the summary table.}
 \item{quanti}{A character vector, the names of continuous variables to
 treat as continuous in the summary table.}
 
+\item{stat_var_quanti}{A character vector specifying the statistics to display for continuous variables. Default is \code{c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}")}.}
+
 \item{digits}{A list, the number of decimal places to round categorical and
-continuous variable. Default is list(mean_sd = 1,
-median_q1_q3_min_max = 1, pct = 1).}
+continuous variable. Default is list(r_quanti = 1, r_quali = 1)}
 }
 \value{
 A \code{gtsummary} table summarizing the specified variables,

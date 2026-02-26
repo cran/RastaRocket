@@ -3,9 +3,14 @@
 #'
 #' A function to describe adverse events (AE) by grade.
 #'
-#' @param df_pat_grp A dataframe with two columns: USUBJID and RDGRPNAME (the RCT arm).
-#' @param df_pat_grade A dataframe with four columns: USUBJID, EINUM (the AE id), EIGRDM (the AE grade) and EIGRAV (the AE severity which must be "Grave" and "Non grave").
-#' @param severity A boolean to show severe adverse event line or not.
+#' @param df_pat_grp A dataframe with two columns: USUBJID (Patient id) and RDGRPNAME (the RCT arm).
+#' @param df_pat_grade A dataframe with four columns: USUBJID (Patient id), EINUM (the AE id), EIGRDM (the AE grade) and EIGRAV (the AE severity which must be "Grave" and "Non grave").
+#' @param id_col  Patient id column (default: "USUBJID").
+#' @param group_col group column, the rct arm (default: "RDGRPNAME").
+#' @param ei_num_col AE id column (default: "EINUM").
+#' @param ei_grdm_col AE grade column (default: "EIGRDM").
+#' @param ei_grav_col AE severity column (default: "EIGRAV").
+#' @param severity A boolean to show severe adverse event line or not (default: TRUE).
 #' @param digits Number of digits for percentages
 #'
 #' @return A gt table summarizing the AE by grade.
@@ -37,46 +42,66 @@
 #' desc_ei_per_grade(df_pat_grp = df_pat_grp,
 #'                   df_pat_grade = df_pat_grade)
 #'
+#'
+
+
 desc_ei_per_grade <- function(df_pat_grp,
                               df_pat_grade,
+                              id_col = "USUBJID",
+                              group_col = "RDGRPNAME",
+                              ei_num_col = "EINUM",
+                              ei_grdm_col = "EIGRDM",
+                              ei_grav_col = "EIGRAV",
                               severity = TRUE,
                               digits = 1){
 
+
+  id_col <- rlang::ensym(id_col)
+  group_col <- rlang::ensym(group_col)
+  ei_num_col <- rlang::ensym(ei_num_col)
+  ei_grdm_col <- rlang::ensym(ei_grdm_col)
+  ei_grav_col <- rlang::ensym(ei_grav_col)
+
   ##### Check column names and remove duplicates
-  if(any(!c("USUBJID", "RDGRPNAME") %in% colnames(df_pat_grp))){
-    stop("df_pat_grp should contain 'USUBJID' = the patient id and 'RDGRPNAME' = the randomization group")
+
+  if(any(!c(rlang::as_string(id_col), rlang::as_string(group_col)) %in% colnames(df_pat_grp))){
+    stop(glue::glue("df_pat_grp should contain '{rlang::as_string(id_col)}' = the patient id and '{rlang::as_string(group_col)}' = the randomization group"))
   }
 
-  if(any(!c("USUBJID", "EIGRDM", "EINUM") %in% colnames(df_pat_grade))){
-    stop("df_pat_grade should contain 'USUBJID' = the patient id and 'EIGRDM' = the AE grade and 'EINUM' = the AE id")
+  if(any(!c(rlang::as_string(id_col), rlang::as_string(ei_grdm_col), rlang::as_string(ei_num_col)) %in% colnames(df_pat_grade))){
+    stop(glue::glue("df_pat_grade should contain '{rlang::as_string(id_col)}' = the patient id, '{rlang::as_string(ei_grdm_col)}' = the AE grade, and '{rlang::as_string(ei_num_col)}' = the AE id"))
   }
 
   ##### Check severity encoding
 
   if(severity){
-    if(any(!c("EIGRAV") %in% colnames(df_pat_grade))){
-      stop("Because you used severity = TRUE, df_pat_grade should contain EIGRAV = the AE severity coded as 'Grave' or 'Non grave'")
+    if(any(!rlang::as_string(ei_grav_col) %in% colnames(df_pat_grade))){
+      stop(glue::glue("Because you used severity = TRUE, df_pat_grade should contain '{rlang::as_string(ei_grav_col)}' = the AE severity coded as 'Grave' or 'Non grave'"))
     }
 
-    vec_severity <- unique(na.omit(df_pat_grade$EIGRAV))
+    vec_severity <- unique(na.omit(dplyr::pull(df_pat_grade, !!ei_grav_col)))
+    #vec_severity <- unique(na.omit(df_pat_grade |> pull(!!ei_grav_col)))
     if(!all(vec_severity %in% c("Grave", "Non grave"))){
-      stop(paste0("EIGRAV should contain only 'Grave' or 'Non grave' but it contains: ", paste(vec_severity, collapse = "; ")))
+      stop(glue::glue("'{rlang::as_string(ei_grav_col)}' should contain only 'Grave' or 'Non grave' but it contains: {paste(vec_severity, collapse = '; ')}"))
     }
   }
+
 
   ##### clean type and df, remove duplicate rows
 
   df_pat_grp <- df_pat_grp |>
-    dplyr::mutate(id_pat = as.character(USUBJID),
-                  grp = as.character(RDGRPNAME)) |>
+    dplyr::mutate(id_pat = as.character(!!id_col),
+                  grp = as.character(!!group_col)) |>
     dplyr::distinct(id_pat, grp)
 
   df_pat_grade <- df_pat_grade |>
-    dplyr::distinct(USUBJID, EIGRDM, EINUM, EIGRAV) |>
-    dplyr::mutate(id_pat = as.character(USUBJID),
-                  grade = as.character(EIGRDM),
-                  severity = as.character(EIGRAV)) |>
+    dplyr::distinct(!!id_col, !!ei_grdm_col, !!ei_num_col, !!ei_grav_col) |>
+    dplyr::mutate(id_pat = as.character(!!id_col),
+                  grade = as.character(!!ei_grdm_col),
+                  severity = as.character(!!ei_grav_col)) |>
     dplyr::select(id_pat, grade, severity)
+
+
 
   ##### check for stupid missing data
 
@@ -85,13 +110,14 @@ desc_ei_per_grade <- function(df_pat_grp,
     df_pat_grp <- na.omit(df_pat_grp)
   }
 
+
   if(anyNA(df_pat_grade)){
     warning("Missing data removed from df_pat_grade please be careful ! If grade is unknown, replace missing data by 'Unknown'.")
     df_pat_grade <- df_pat_grade |>
-      dplyr::mutate_at(.vars = c("grade"),
-                       .funs = function(x) dplyr::if_else(is.na(x), " Unknown", x)) |>
+      dplyr::mutate(grade = dplyr::if_else(is.na(grade), "Unknown", grade)) |>
       na.omit()
   }
+
 
   ##### Build augmented df, Any grade is a whole new group
 
@@ -194,13 +220,13 @@ desc_ei_per_grade_prepare_df <- function(augmented_df_pat_grp,
     dplyr::bind_rows(df_ei_total) |>
     ### Arrange dataframe for visualization
     dplyr::mutate(grade = as.factor(grade),
-           grade = forcats::fct_relevel(grade, "Any grade"),
-           grp = as.factor(grp),
-           grp = forcats::fct_relevel(grp, "Total")) |>
+                  grade = forcats::fct_relevel(grade, "Any grade"),
+                  grp = as.factor(grp),
+                  grp = forcats::fct_relevel(grp, "Total")) |>
     ### merge n and pct
     dplyr::mutate(EI = paste0(nb_ei, " (", custom_round(pct_ei, digits = digits), ")"),
-           PAT = paste0(nb_pat, " (", custom_round(pct_pat, digits = digits), ")"),
-           .keep = "unused") |>
+                  PAT = paste0(nb_pat, " (", custom_round(pct_pat, digits = digits), ")"),
+                  .keep = "unused") |>
     dplyr::arrange(grade, grp) |>
     ### Go to wide format with correct names
     dplyr::group_by(grp) |>

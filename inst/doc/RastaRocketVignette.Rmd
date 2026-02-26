@@ -231,19 +231,24 @@ You can specify the number of digits for quantitative and qualitative features u
 
 In the example below, quantitative values are rounded to 0 decimal places, while qualitative values percentage are rounded to 1 decimal place.
 
+
+
 ```{r}
 data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 0,
-                                   median_q1_q3_min_max = 0,
-                                   pct = 1))
+                     digits = list(r_quanti = 0, r_quali = 1))
 ```
+
+
 
 ## Combine Subtables with Different Rounding
 
 To have more control over rounding, you can create subtables with different numbers of digits and combine them into a single table using `gtsummary::tbl_stack`.
+
+
+
 
 ```{r}
 tb1 <- data %>%
@@ -251,22 +256,19 @@ tb1 <- data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 2,
-                                   median_q1_q3_min_max = 2,
-                                   pct = 2))
+                     digits = list(r_quanti = 2, r_quali = 2))
 
 tb2 <- data %>%
   dplyr::select(quatre_modalites, traitement) %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 0,
-                                   median_q1_q3_min_max = 0,
-                                   pct = 1))
+                     digits = list(r_quanti = 0, r_quali = 1))
 
 gtsummary::tbl_stack(list(tb1, tb2))
-
 ```
+
+
 
 # Statistical tests
 
@@ -319,28 +321,28 @@ data %>%
 
 This also works when using stacked tables.
 
+
+
 ```{r}
 tb1 <- data %>%
   dplyr::select(Age, sexe, traitement) %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 0,
-                                     median_q1_q3_min_max = 0,
-                                     pct = 0))
+                     digits = list(r_quanti = 0, r_quali = 0))
 
 tb2 <- data %>%
   dplyr::select(quatre_modalites, traitement) %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 2,
-                                   median_q1_q3_min_max = 2,
-                                   pct = 2))
+                     digits = list(r_quanti = 0, r_quali = 1))
 
 gtsummary::tbl_stack(list(tb1, tb2)) %>%
   custom_format()
 ```
+
+
 
 You can customize the format by specifying the column size and the alignment.
 

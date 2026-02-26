@@ -8,6 +8,12 @@
 #' @param language 'fr' default or 'en'
 #' @param order_by_freq Logical. Should PT and SOC be ordered by frequency? Defaults to TRUE. If FALSE, PT and SOC are ordered alphabetically.
 #' @param digits Number of digits for percentages
+#' @param id_col Patient id column (default: "USUBJID").
+#' @param group_col group column, the rct arm (default: "RDGRPNAME").
+#' @param ei_num_col AE id column (default: "EINUM").
+#' @param ei_llt_col AE LLT column (default: "EILLTN").
+#' @param ei_soc_col AE SOC column (default: "EISOCPN").
+#' @param ei_pt_col AE PT column (default: "EIPTN")
 #'
 #' @return A gt table
 #' @export
@@ -36,34 +42,49 @@
 #'
 desc_ei_per_pt <- function(df_pat_grp,
                            df_pat_llt,
+                           id_col = "USUBJID",
+                           group_col = "RDGRPNAME",
+                           ei_num_col = "EINUM",
+                           ei_llt_col = "EILLTN",
+                           ei_soc_col = "EISOCPN",
+                           ei_pt_col = "EIPTN",
                            language = "fr",
                            order_by_freq = TRUE,
                            digits = 1){
+
+
+  id_col <- rlang::ensym(id_col)
+  group_col <- rlang::ensym(group_col)
+  ei_num_col <- rlang::ensym(ei_num_col)
+  ei_llt_col <- rlang::ensym(ei_llt_col)
+  ei_soc_col <- rlang::ensym(ei_soc_col)
+  ei_pt_col <- rlang::ensym(ei_pt_col)
 
   unknown_ei <- " Unknown"
 
   ##### Check column names and remove duplicates
 
-  if(any(!c("USUBJID", "RDGRPNAME") %in% colnames(df_pat_grp))){
-    stop("df_pat_grp should contain 'USUBJID' = the patient id and 'RDGRPNAME' = the randomization group")
+  if(any(!c(rlang::as_string(id_col), rlang::as_string(group_col)) %in% colnames(df_pat_grp))){
+    stop(glue::glue("df_pat_grp should contain '{rlang::as_string(id_col)}' = the patient id and '{rlang::as_string(group_col)}' = the randomization group"))
   }
 
-  if(any(!c("USUBJID", "EILLTN", "EISOCPN", "EIPTN", "EINUM") %in% colnames(df_pat_llt))){
-    stop("df_pat_grp should contain 'USUBJID' = the patient id and 'EINUM' = the AE event number and 'EILLTN' = the AE LLT and 'EISOCPN' = the AE SOC and 'EIPTN' = the AE PT")
+  if(any(!c(rlang::as_string(id_col), rlang::as_string(ei_llt_col), rlang::as_string(ei_soc_col), rlang::as_string(ei_pt_col), rlang::as_string(ei_num_col)) %in% colnames(df_pat_llt))){
+    stop(glue::glue("df_pat_llt should contain '{rlang::as_string(id_col)}' = the patient id, '{rlang::as_string(ei_num_col)}' = the AE event number, '{rlang::as_string(ei_llt_col)}' = the AE LLT, '{rlang::as_string(ei_soc_col)}' = the AE SOC, and '{rlang::as_string(ei_pt_col)}' = the AE PT"))
   }
+
 
   ##### clean type and df
 
   df_pat_grp <- df_pat_grp |>
-    dplyr::mutate(id_pat = as.character(USUBJID),
-                  grp = as.character(RDGRPNAME)) |>
+    dplyr::mutate(id_pat = as.character(!!id_col),
+                  grp = as.character(!!group_col)) |>
     dplyr::distinct(id_pat, grp)
 
   df_pat_llt <- df_pat_llt |>
-    distinct(USUBJID, EILLTN, EISOCPN, EIPTN, EINUM) |>
-    dplyr::select(id_pat = USUBJID,
-                  soc = EISOCPN,
-                  pt = EIPTN) |>
+    dplyr::distinct(!!id_col, !!ei_llt_col, !!ei_soc_col, !!ei_pt_col, !!ei_num_col) |>
+    dplyr::select(id_pat = !!id_col,
+                  soc = !!ei_soc_col,
+                  pt = !!ei_pt_col) |>
     dplyr::mutate(id_pat = as.character(id_pat))
 
   ##### check for stupid missing data
@@ -160,7 +181,7 @@ desc_ei_per_pt_prepare_df <- function(augmented_df_pat_grp,
                   soc = "Total") |>
     dplyr::select(pt, soc, grp, nb_ei, pct_ei, nb_pat, pct_pat)
 
-  ##### compute summary statisticsby SOC and PT
+  ##### compute summary statistics by SOC and PT
   df_wide_temp <- list(pt = c("grp", "soc", "pt"),
                   soc = c("grp", "soc")) |>
     lapply(function(vec_grp_by){
@@ -263,8 +284,11 @@ desc_ei_per_pt_df_to_gt <- function(df_wide,
   ### language
   if (language == 'fr'){
     label_pt <- "**Ev\u00e9nements ind\u00e9sirables**"
+    ###### MS
+    lable_ae <- "EI"
   } else if (language == 'en'){
     label_pt <- "**Adverse events**"
+    lable_ae <- "AE"
   } else {
     label_pt <- language
   }
@@ -277,7 +301,8 @@ desc_ei_per_pt_df_to_gt <- function(df_wide,
     gt::cols_label(
       pt = gt::md(label_pt),
       soc = "soc",
-      dplyr::ends_with("EI") ~ gt::md("**AE <br> N (%)**"),
+      #dplyr::ends_with("EI") ~ gt::md("**AE <br> N (%)**"),
+      dplyr::ends_with("EI") ~ gt::md("**label_ae <br> N (%)**"),
       dplyr::ends_with("PAT") ~ gt::md("**Patient <br> N (%)**")
     )
 

@@ -14,7 +14,8 @@ desc_var(
   by_group = FALSE,
   var_group = NULL,
   group_title = NULL,
-  digits = list(mean_sd = 1, median_q1_q3_min_max = 1, pct = 1),
+  stat_var_quanti = c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}"),
+  digits = list(r_quanti = 1, r_quali = 1),
   drop_levels = TRUE,
   freq_relevel = FALSE,
   tests = FALSE,
@@ -43,9 +44,9 @@ desc_var(
 
 \item{group_title}{A character string specifying the title for the grouping variable. Default is \code{NULL} and get the label or the variable.}
 
-\item{digits}{A list, the number of decimal places to round categorical and
-continuous variable. Default is list(mean_sd = 1,
-median_q1_q3_min_max = 1, pct = 1).}
+\item{stat_var_quanti}{A character vector specifying the statistics to display for continuous variables. Default is \code{c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}")}.}
+
+\item{digits}{A list, the number of decimal places to round categorical and continuous variable. Default is list(r_quanti = 1, r_quali = 1)}
 
 \item{drop_levels}{Boolean (default = TRUE). Drop unused levels.}
 

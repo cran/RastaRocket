@@ -12,9 +12,8 @@
 #' @param by_group A boolean (default is FALSE) to analyse by group.
 #' @param var_group A variable used for grouping (if applicable). Defaults to `NULL`.
 #' @param group_title A character string specifying the title for the grouping variable. Default is `NULL` and get the label or the variable.
-#' @param digits A list, the number of decimal places to round categorical and
-#'        continuous variable. Default is list(mean_sd = 1,
-#'        median_q1_q3_min_max = 1, pct = 1).
+#' @param stat_var_quanti A character vector specifying the statistics to display for continuous variables. Default is `c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}")`.
+#' @param digits A list, the number of decimal places to round categorical and continuous variable. Default is list(r_quanti = 1, r_quali = 1)
 #' @param drop_levels Boolean (default = TRUE). Drop unused levels.
 #' @param freq_relevel Boolean (default = FALSE). Reorder factors by frequency except for the group variable.
 #' @param tests A value in order to add p value. Default to `FALSE` OPTION :
@@ -63,24 +62,7 @@
 #' @import cardx
 #' @export
 
-# data1 = iris
-# table_title = ""
-# quali = NULL
-# quanti = NULL
-# group = FALSE
-# var_title = "Variable"
-# var_group = "Species" ## Variable de groupe (dégroupée les tables)
-# group_title = NULL
-# digits = list(mean_sd = 1,
-#               median_q1_q3_min_max = 1,
-#               pct = 1)
-# drop_levels = TRUE
-# freq_relevel = FALSE
-# tests = FALSE
-# show_missing_data = FALSE
-# show_n_per_group = TRUE
-# add_total = TRUE
-# var_tot = "Total"
+
 
 desc_var <- ## Les arguments de la fonction
   function(data1,
@@ -96,9 +78,8 @@ desc_var <- ## Les arguments de la fonction
            by_group = FALSE, ## booléen pour préciser s'il faut degroupé ou pas les tables.
            var_group = NULL, ## Variable de groupe (dégroupée les tables)
            group_title = NULL,
-           digits = list(mean_sd = 1,
-                         median_q1_q3_min_max = 1,
-                         pct = 1),
+           stat_var_quanti = c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}"),
+           digits = list(r_quanti = 1, r_quali = 1),
            drop_levels = TRUE,
            freq_relevel = FALSE,
            tests = FALSE,
@@ -145,6 +126,7 @@ desc_var <- ## Les arguments de la fonction
                              var_group = var_group,
                              quali = quali,
                              quanti = quanti,
+                             stat_var_quanti = stat_var_quanti,
                              digits = digits,
                              show_missing_data = show_missing_data)
 

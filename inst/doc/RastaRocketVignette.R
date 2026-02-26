@@ -130,9 +130,7 @@ data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 0,
-                                   median_q1_q3_min_max = 0,
-                                   pct = 1))
+                     digits = list(r_quanti = 0, r_quali = 1))
 
 ## -----------------------------------------------------------------------------
 tb1 <- data %>%
@@ -140,21 +138,16 @@ tb1 <- data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 2,
-                                   median_q1_q3_min_max = 2,
-                                   pct = 2))
+                     digits = list(r_quanti = 2, r_quali = 2))
 
 tb2 <- data %>%
   dplyr::select(quatre_modalites, traitement) %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 0,
-                                   median_q1_q3_min_max = 0,
-                                   pct = 1))
+                     digits = list(r_quanti = 0, r_quali = 1))
 
 gtsummary::tbl_stack(list(tb1, tb2))
-
 
 ## -----------------------------------------------------------------------------
 data %>%
@@ -188,18 +181,14 @@ tb1 <- data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 0,
-                                     median_q1_q3_min_max = 0,
-                                     pct = 0))
+                     digits = list(r_quanti = 0, r_quali = 0))
 
 tb2 <- data %>%
   dplyr::select(quatre_modalites, traitement) %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(mean_sd = 2,
-                                   median_q1_q3_min_max = 2,
-                                   pct = 2))
+                     digits = list(r_quanti = 0, r_quali = 1))
 
 gtsummary::tbl_stack(list(tb1, tb2)) %>%
   custom_format()

@@ -4,14 +4,34 @@
 \alias{desc_ei_per_grade}
 \title{desc_ei_per_grade}
 \usage{
-desc_ei_per_grade(df_pat_grp, df_pat_grade, severity = TRUE, digits = 1)
+desc_ei_per_grade(
+  df_pat_grp,
+  df_pat_grade,
+  id_col = "USUBJID",
+  group_col = "RDGRPNAME",
+  ei_num_col = "EINUM",
+  ei_grdm_col = "EIGRDM",
+  ei_grav_col = "EIGRAV",
+  severity = TRUE,
+  digits = 1
+)
 }
 \arguments{
-\item{df_pat_grp}{A dataframe with two columns: USUBJID and RDGRPNAME (the RCT arm).}
+\item{df_pat_grp}{A dataframe with two columns: USUBJID (Patient id) and RDGRPNAME (the RCT arm).}
 
-\item{df_pat_grade}{A dataframe with four columns: USUBJID, EINUM (the AE id), EIGRDM (the AE grade) and EIGRAV (the AE severity which must be "Grave" and "Non grave").}
+\item{df_pat_grade}{A dataframe with four columns: USUBJID (Patient id), EINUM (the AE id), EIGRDM (the AE grade) and EIGRAV (the AE severity which must be "Grave" and "Non grave").}
 
-\item{severity}{A boolean to show severe adverse event line or not.}
+\item{id_col}{Patient id column (default: "USUBJID").}
+
+\item{group_col}{group column, the rct arm (default: "RDGRPNAME").}
+
+\item{ei_num_col}{AE id column (default: "EINUM").}
+
+\item{ei_grdm_col}{AE grade column (default: "EIGRDM").}
+
+\item{ei_grav_col}{AE severity column (default: "EIGRAV").}
+
+\item{severity}{A boolean to show severe adverse event line or not (default: TRUE).}
 
 \item{digits}{Number of digits for percentages}
 }
@@ -44,5 +64,6 @@ df_pat_grade <- data.frame(USUBJID = c("ID_1", "ID_1",
 
 desc_ei_per_grade(df_pat_grp = df_pat_grp,
                   df_pat_grade = df_pat_grade)
+
 
 }
