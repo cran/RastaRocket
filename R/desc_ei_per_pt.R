@@ -183,7 +183,7 @@ desc_ei_per_pt_prepare_df <- function(augmented_df_pat_grp,
 
   ##### compute summary statistics by SOC and PT
   df_wide_temp <- list(pt = c("grp", "soc", "pt"),
-                  soc = c("grp", "soc")) |>
+                       soc = c("grp", "soc")) |>
     lapply(function(vec_grp_by){
       temp <- augmented_df_pat_pt_grp |>
         dplyr::group_by(across(all_of(vec_grp_by))) |>
@@ -284,27 +284,32 @@ desc_ei_per_pt_df_to_gt <- function(df_wide,
   ### language
   if (language == 'fr'){
     label_pt <- "**Ev\u00e9nements ind\u00e9sirables**"
-    ###### MS
-    lable_ae <- "EI"
+    label_ei <- "**EI <br> N (%)**"
+    label_pat <- "**Patient <br> N (%)**"
   } else if (language == 'en'){
     label_pt <- "**Adverse events**"
-    lable_ae <- "AE"
-  } else {
-    label_pt <- language
+    label_ei <- "**AE <br> N (%)**"
+    label_pat <- "**Patient <br> N (%)**"
   }
 
-  ### Create the gt table and labels
 
+  ### Construction  de la liste de labels
+  cols_ei <- names(df_wide)[grepl("_EI$", names(df_wide))]
+  cols_pat <- names(df_wide)[grepl("_PAT$", names(df_wide))]
+
+
+  list_labels <- list()
+  list_labels[["pt"]] <- gt::md(label_pt)
+  list_labels[["soc"]] <- "soc"
+
+  for(col in cols_ei) list_labels[[col]] <- gt::md(label_ei)
+  for(col in cols_pat) list_labels[[col]] <- gt::md(label_pat)
+
+  ### Create the gt table
   gt_temp <- df_wide |>
     dplyr::group_by(soc) |>
     gt::gt() |>
-    gt::cols_label(
-      pt = gt::md(label_pt),
-      soc = "soc",
-      #dplyr::ends_with("EI") ~ gt::md("**AE <br> N (%)**"),
-      dplyr::ends_with("EI") ~ gt::md("**label_ae <br> N (%)**"),
-      dplyr::ends_with("PAT") ~ gt::md("**Patient <br> N (%)**")
-    )
+    gt::cols_label(.list = list_labels)
 
   gt_temp2 <- gt_temp
   for (grp in vec_grp) {

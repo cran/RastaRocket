@@ -1,3 +1,21 @@
+# RastaRocket 1.1.3
+
+## Major changes
+
+- The `freq_relevel` argument in `desc_var()` and `base_table()` has been updated to provide more flexible options
+  for reordering factor levels by frequency, using `sort` argument from `gtsummary`.  
+-  The `freq_relevel` argument has been removed from the `prepare_table()` function, as it is now handled internally for greater consistency.
+
+## New features
+
+- A `language` argument has been added to the `desc_ei_per_grade()` function to support output translation.
+- The `desc_ei_per_pt()` function has been revised to align with the new language translation feature.
+
+## Documentation improvements
+
+- Detailed descriptions and worked examples for `digits` and `freq_relevel` arguments have been added to the documentation of `desc_var()`.
+- The vignette has been updated accordingly to illustrate these enhancements.
+
 # RastaRocket 1.1.2
 
 ## Improvements

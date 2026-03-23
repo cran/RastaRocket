@@ -54,7 +54,7 @@ set.seed(123)  # Pour garantir la reproductibilité
 # Création du data frame
 data <- data.frame(
   Age = c(rnorm(45, mean = 50, sd = 10), rep(NA, 5)),  # Renommée Age
-  sexe = sample(c(0, 1), 50, replace = TRUE, prob = c(0.6, 0.4)),  # Renommée sexe
+  sexe = sample(c(0, 1), 50, replace = TRUE, prob = c(0.4, 0.6)),  # Renommée sexe
   quatre_modalites = sample(c("A", "B", "C"), 50, replace = TRUE, prob = c(0.2, 0.5, 0.3)),  # Modalités sans "D"
   traitement = sample(c("BRAS-A", "BRAS-B"), 50, replace = TRUE, prob = c(0.55, 0.45)),  # Nouvelle variable traitement
   echelle = sample(0:5, 50, replace = TRUE)  # Nouvelle variable entière de 0 à 5
@@ -70,7 +70,7 @@ data$sexe <- factor(data$sexe, levels = c(0, 1), labels = c("Femme", "Homme"))
 
 
 
-data <- data %>% labelled::set_variable_labels( Age = "Age",
+data <- data |>  labelled::set_variable_labels( Age = "Age",
                                                 sexe = "sexe",
                                                 traitement  = "traitement",
                                                 quatre_modalites = "quatres niveaux",
@@ -91,7 +91,7 @@ The dataset is passed to the `desc_var` function for analysis.
 - `show_n_per_group`: Should the 'N' appears in the column header of the groups. if TRUE, `N` is shown; if FALSE, No `N` is shown ( Default to `FALSE`)
 
 ```{r}
-data %>% RastaRocket::desc_var(table_title = "test",
+data |>  RastaRocket::desc_var(table_title = "test",
                             by_group = TRUE,
                             var_group = "traitement",
                             group_title = "Traitement",
@@ -104,9 +104,9 @@ data %>% RastaRocket::desc_var(table_title = "test",
 The package support the user specification of feature type as quantitative or qualitative features. For instance, you could chose to describe a quantitative features as a qualitative one if it has few values. For instance, we can do this for `Age` after we round it.
 
 ```{r}
-data %>%
-  dplyr::select(Age, traitement) %>%
-  dplyr::mutate(Age = round(Age)) %>%
+data |> 
+  dplyr::select(Age, traitement) |> 
+  dplyr::mutate(Age = round(Age)) |> 
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
@@ -120,7 +120,7 @@ data %>%
 The display of missing data is controlled by the `show_missing_data` argument in the `RastaRocket::desc_var` function. By default, if `anyNA(data1)` returns `TRUE`, missing data will be displayed. If no missing data is detected, it will be hidden. Users can override this behavior by explicitly setting `show_missing_data` to `TRUE` or `FALSE`.
 
 ```{r}
-iris %>% RastaRocket::desc_var(table_title = "test",
+iris |>  RastaRocket::desc_var(table_title = "test",
                             by_group = TRUE,
                             var_group = "Species",
                             group_title = "Species",
@@ -128,7 +128,7 @@ iris %>% RastaRocket::desc_var(table_title = "test",
 ```
 
 ```{r}
-iris %>% RastaRocket::desc_var(table_title = "test",
+iris |>  RastaRocket::desc_var(table_title = "test",
                             by_group = TRUE,
                             var_group = "Species",
                             group_title = "Species",
@@ -146,7 +146,7 @@ In the previous example, no specific data management operations were applied.
 In this example, we add `freq_relevel = TRUE`, which orders the categories of categorical variables in descending order based on their counts.
 
 ```{r second example}
-data %>% desc_var(table_title = "test",
+data |>  desc_var(table_title = "test",
              by_group = TRUE,
              var_group = "traitement",
              group_title = "traitement",
@@ -158,9 +158,9 @@ data %>% desc_var(table_title = "test",
 The default order of categorical features is determined by their levels. If you want to customize this order, you can modify the levels using a library such as `forcats`.
 
 ```{r}
-data %>%
+data |> 
   dplyr::mutate(quatre_modalites = forcats::fct_relevel(quatre_modalites,
-                                                       "A", "C", "D", "B")) %>%
+                                                       "A", "C", "D", "B")) |> 
   desc_var(table_title = "test",
            by_group = TRUE,
            var_group = "traitement",
@@ -174,7 +174,7 @@ data %>%
 By default, zero-count levels are removed but we can explicitly specify we do not want to drop them.
 
 ```{r third example}
-data %>% desc_var(table_title = "test",
+data |>  desc_var(table_title = "test",
              by_group = TRUE,
              var_group = "traitement",
              group_title = "traitement",
@@ -188,7 +188,7 @@ data %>% desc_var(table_title = "test",
 Here, we use a per-group description for the variables.
 
 ```{r }
-data %>% desc_var(table_title = "test",
+data |>  desc_var(table_title = "test",
              by_group = TRUE,
              var_group = "traitement",
              group_title = "traitement")
@@ -199,7 +199,7 @@ data %>% desc_var(table_title = "test",
 In this example, we generate a global description of the variables.
 
 ```{r}
-data %>% RastaRocket::desc_var(table_title = "test",
+data |>  RastaRocket::desc_var(table_title = "test",
              by_group = FALSE,
              var_group = "traitement",
              group_title = "traitement")
@@ -210,12 +210,12 @@ data %>% RastaRocket::desc_var(table_title = "test",
 To insert intermediate titles, you can use the `intermediate_header` function which takes a list of sub-tables generated by `desc_var` and a vector of titles.
 
 ```{r}
-tb1 <- data %>%
-  dplyr::select(Age, sexe) %>%
+tb1 <- data |> 
+  dplyr::select(Age, sexe) |> 
   RastaRocket::desc_var(table_title = "test")
 
-tb2 <- data %>%
-  dplyr::select(quatre_modalites) %>%
+tb2 <- data |> 
+  dplyr::select(quatre_modalites) |> 
   RastaRocket::desc_var(table_title = "test")
 
 RastaRocket::intermediate_header(tbls = list(tb1, tb2),
@@ -225,22 +225,35 @@ RastaRocket::intermediate_header(tbls = list(tb1, tb2),
 
 # Number of Digits in Quantitative and Qualitative Features
 
-You can specify the number of digits for quantitative and qualitative features using the `digits` argument.
+You can specify the number of digits for quantitative and qualitative features using `r_quanti` and `r_quali` in the `digits` argument. It specifies the number of digits statistics are rounded to.  
+The values passed can be a single integer or a vector of integers. If a single integer or a vector is passed, it rearranged to the length of the number of statistics presented.
 
 ## Specify Number of Digits
 
-In the example below, quantitative values are rounded to 0 decimal places, while qualitative values percentage are rounded to 1 decimal place.
+- In the example below, quantitative values are rounded to 0 decimal places, while qualitative values percentage are rounded to 1 decimal place.
 
 
 
 ```{r}
-data %>%
+data |> 
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
                      digits = list(r_quanti = 0, r_quali = 1))
 ```
 
+
+- In the example below, we used a vector of integer to round quantitative and qualitative features. 
+
+
+```{r}
+RastaRocket:: desc_var(
+     data1 = iris,
+     quanti = "Sepal.Length",
+     stat_var_quanti = c("{sum}", "{mean} ({sd})"),
+     digits = list(r_quanti = c(1, 3, 2), r_quali = c(0, 2))
+ )
+```
 
 
 ## Combine Subtables with Different Rounding

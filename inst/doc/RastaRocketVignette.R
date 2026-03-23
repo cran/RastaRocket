@@ -23,7 +23,7 @@ set.seed(123)  # Pour garantir la reproductibilité
 # Création du data frame
 data <- data.frame(
   Age = c(rnorm(45, mean = 50, sd = 10), rep(NA, 5)),  # Renommée Age
-  sexe = sample(c(0, 1), 50, replace = TRUE, prob = c(0.6, 0.4)),  # Renommée sexe
+  sexe = sample(c(0, 1), 50, replace = TRUE, prob = c(0.4, 0.6)),  # Renommée sexe
   quatre_modalites = sample(c("A", "B", "C"), 50, replace = TRUE, prob = c(0.2, 0.5, 0.3)),  # Modalités sans "D"
   traitement = sample(c("BRAS-A", "BRAS-B"), 50, replace = TRUE, prob = c(0.55, 0.45)),  # Nouvelle variable traitement
   echelle = sample(0:5, 50, replace = TRUE)  # Nouvelle variable entière de 0 à 5
@@ -39,14 +39,14 @@ data$sexe <- factor(data$sexe, levels = c(0, 1), labels = c("Femme", "Homme"))
 
 
 
-data <- data %>% labelled::set_variable_labels( Age = "Age",
+data <- data |>  labelled::set_variable_labels( Age = "Age",
                                                 sexe = "sexe",
                                                 traitement  = "traitement",
                                                 quatre_modalites = "quatres niveaux",
                                                 echelle = "Echelle")
 
 ## -----------------------------------------------------------------------------
-data %>% RastaRocket::desc_var(table_title = "test",
+data |>  RastaRocket::desc_var(table_title = "test",
                             by_group = TRUE,
                             var_group = "traitement",
                             group_title = "Traitement",
@@ -54,9 +54,9 @@ data %>% RastaRocket::desc_var(table_title = "test",
                             show_n_per_group = TRUE)
 
 ## -----------------------------------------------------------------------------
-data %>%
-  dplyr::select(Age, traitement) %>%
-  dplyr::mutate(Age = round(Age)) %>%
+data |> 
+  dplyr::select(Age, traitement) |> 
+  dplyr::mutate(Age = round(Age)) |> 
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
@@ -64,61 +64,61 @@ data %>%
                      quali = c("Age"))
 
 ## -----------------------------------------------------------------------------
-iris %>% RastaRocket::desc_var(table_title = "test",
+iris |>  RastaRocket::desc_var(table_title = "test",
                             by_group = TRUE,
                             var_group = "Species",
                             group_title = "Species",
                             show_missing_data = TRUE)
 
 ## -----------------------------------------------------------------------------
-iris %>% RastaRocket::desc_var(table_title = "test",
+iris |>  RastaRocket::desc_var(table_title = "test",
                             by_group = TRUE,
                             var_group = "Species",
                             group_title = "Species",
                             show_missing_data = FALSE)
 
 ## ----second example-----------------------------------------------------------
-data %>% desc_var(table_title = "test",
+data |>  desc_var(table_title = "test",
              by_group = TRUE,
              var_group = "traitement",
              group_title = "traitement",
              freq_relevel = TRUE)
 
 ## -----------------------------------------------------------------------------
-data %>%
+data |> 
   dplyr::mutate(quatre_modalites = forcats::fct_relevel(quatre_modalites,
-                                                       "A", "C", "D", "B")) %>%
+                                                       "A", "C", "D", "B")) |> 
   desc_var(table_title = "test",
            by_group = TRUE,
            var_group = "traitement",
            group_title = "traitement")
 
 ## ----third example------------------------------------------------------------
-data %>% desc_var(table_title = "test",
+data |>  desc_var(table_title = "test",
              by_group = TRUE,
              var_group = "traitement",
              group_title = "traitement",
              drop_levels = FALSE)
 
 ## -----------------------------------------------------------------------------
-data %>% desc_var(table_title = "test",
+data |>  desc_var(table_title = "test",
              by_group = TRUE,
              var_group = "traitement",
              group_title = "traitement")
 
 ## -----------------------------------------------------------------------------
-data %>% RastaRocket::desc_var(table_title = "test",
+data |>  RastaRocket::desc_var(table_title = "test",
              by_group = FALSE,
              var_group = "traitement",
              group_title = "traitement")
 
 ## -----------------------------------------------------------------------------
-tb1 <- data %>%
-  dplyr::select(Age, sexe) %>%
+tb1 <- data |> 
+  dplyr::select(Age, sexe) |> 
   RastaRocket::desc_var(table_title = "test")
 
-tb2 <- data %>%
-  dplyr::select(quatre_modalites) %>%
+tb2 <- data |> 
+  dplyr::select(quatre_modalites) |> 
   RastaRocket::desc_var(table_title = "test")
 
 RastaRocket::intermediate_header(tbls = list(tb1, tb2),
@@ -126,11 +126,19 @@ RastaRocket::intermediate_header(tbls = list(tb1, tb2),
 
 
 ## -----------------------------------------------------------------------------
-data %>%
+data |> 
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
                      digits = list(r_quanti = 0, r_quali = 1))
+
+## -----------------------------------------------------------------------------
+RastaRocket:: desc_var(
+     data1 = iris,
+     quanti = "Sepal.Length",
+     stat_var_quanti = c("{sum}", "{mean} ({sd})"),
+     digits = list(r_quanti = c(1, 3, 2), r_quali = c(0, 2))
+ )
 
 ## -----------------------------------------------------------------------------
 tb1 <- data %>%

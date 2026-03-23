@@ -9,7 +9,6 @@ prepare_table(
   by_group = FALSE,
   var_group = NULL,
   drop_levels = TRUE,
-  freq_relevel = FALSE,
   show_missing_data = TRUE
 )
 }
@@ -21,8 +20,6 @@ prepare_table(
 \item{var_group}{The group variable (used to correctly update the label if needed).}
 
 \item{drop_levels}{Boolean (default = TRUE). Drop unused levels.}
-
-\item{freq_relevel}{Boolean  (default = FALSE). Reorder factors by frequency except for the group variable.}
 
 \item{show_missing_data}{Should the missing data be displayed. Can be either :
 \itemize{

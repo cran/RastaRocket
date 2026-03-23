@@ -12,6 +12,7 @@
 #' @param ei_grav_col AE severity column (default: "EIGRAV").
 #' @param severity A boolean to show severe adverse event line or not (default: TRUE).
 #' @param digits Number of digits for percentages
+#' @param language 'fr' default or 'en'
 #'
 #' @return A gt table summarizing the AE by grade.
 #' @export
@@ -53,7 +54,8 @@ desc_ei_per_grade <- function(df_pat_grp,
                               ei_grdm_col = "EIGRDM",
                               ei_grav_col = "EIGRAV",
                               severity = TRUE,
-                              digits = 1){
+                              digits = 1,
+                              language = "fr"){
 
 
   id_col <- rlang::ensym(id_col)
@@ -80,7 +82,6 @@ desc_ei_per_grade <- function(df_pat_grp,
     }
 
     vec_severity <- unique(na.omit(dplyr::pull(df_pat_grade, !!ei_grav_col)))
-    #vec_severity <- unique(na.omit(df_pat_grade |> pull(!!ei_grav_col)))
     if(!all(vec_severity %in% c("Grave", "Non grave"))){
       stop(glue::glue("'{rlang::as_string(ei_grav_col)}' should contain only 'Grave' or 'Non grave' but it contains: {paste(vec_severity, collapse = '; ')}"))
     }
@@ -160,7 +161,8 @@ desc_ei_per_grade <- function(df_pat_grp,
   ##### gt part
 
   res <- desc_ei_per_grade_df_to_gt(df_wide = df_wide,
-                                    vec_grp = vec_grp)
+                                    vec_grp = vec_grp,
+                                    language = language)
 
   return(res)
 }
@@ -252,21 +254,51 @@ desc_ei_per_grade_prepare_df <- function(augmented_df_pat_grp,
 #'
 #' @param df_wide A wide-format dataframe summarizing AE counts and percentages by grade and group.
 #' @param vec_grp A vector of unique group names.
+#' @param language 'fr' default or 'en'
 #'
 #' @return A formatted gt table.
 #' @keywords internal
 desc_ei_per_grade_df_to_gt <- function(df_wide,
-                                       vec_grp){
+                                       vec_grp,
+                                       language = "fr"){
 
-  ### Create the gt table and labels
+  ### language
+  if (language == 'fr'){
+    df_wide <- df_wide |>
+      dplyr::mutate(grade = dplyr::case_when(
+        grade == "Any grade" ~ "Tout grade",
+        grade == "SAE"       ~ "EIG",
+        TRUE                 ~ grade
+      ))
+
+    label_gr <- "**Grade**"
+    label_ei <- "**EI <br> N (%)**"
+    label_pat <- "**Patient <br> N (%)**"
+  } else if (language == 'en'){
+    label_gr <- "**Grade**"
+    label_ei <- "**AE <br> N (%)**"
+    label_pat <- "**Patient <br> N (%)**"
+  }
+
+  ### Construction  de la liste de labels
+  cols_ei <- names(df_wide)[grepl("_EI$", names(df_wide))]
+  cols_pat <- names(df_wide)[grepl("_PAT$", names(df_wide))]
+
+  list_labels <- list()
+  list_labels[["grade"]] <- gt::md(label_gr)
+  #list_labels[["soc"]] <- "soc"
+
+  for(col in cols_ei) list_labels[[col]] <- gt::md(label_ei)
+  for(col in cols_pat) list_labels[[col]] <- gt::md(label_pat)
+
+  ### Create the gt table
+
 
   gt_temp <- df_wide |>
+    #dplyr::group_by(soc) |>
     gt::gt() |>
-    gt::cols_label(
-      grade = gt::md("**Grade**"),
-      dplyr::ends_with("EI") ~ gt::md("**AE <br> N (%)**"),
-      dplyr::ends_with("PAT") ~ gt::md("**Patient <br> N (%)**")
-    )
+    gt::cols_label(.list = list_labels)
+
 
   gt_temp2 <- gt_temp
   for (grp in vec_grp) {
@@ -284,7 +316,7 @@ desc_ei_per_grade_df_to_gt <- function(df_wide,
     gt::cols_align(align = "left",
                    columns = dplyr::everything()) |>
     gt::tab_style(
-      locations = gt::cells_body(rows = grade %in% c("Any grade", "SAE")),
+      locations = gt::cells_body(rows = grade %in% c("Any grade", "SAE", "Tout grade", "EIG")),
       style = gt::cell_text(weight = "bold",
                             style = "italic")
     )

@@ -13,9 +13,9 @@
 #' @param var_group A variable used for grouping (if applicable). Defaults to `NULL`.
 #' @param group_title A character string specifying the title for the grouping variable. Default is `NULL` and get the label or the variable.
 #' @param stat_var_quanti A character vector specifying the statistics to display for continuous variables. Default is `c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}")`.
-#' @param digits A list, the number of decimal places to round categorical and continuous variable. Default is list(r_quanti = 1, r_quali = 1)
+#' @param digits A list, the number of decimal places to round categorical and continuous variable. r_quanti and r_quali can be a single integer or a vector of integer. Default is list(r_quanti = 1, r_quali = 1)
 #' @param drop_levels Boolean (default = TRUE). Drop unused levels.
-#' @param freq_relevel Boolean (default = FALSE). Reorder factors by frequency except for the group variable.
+#' @param freq_relevel Boolean (default = FALSE). If TRUE, reorder factors by frequency (most to least frequent) using gtsummary.
 #' @param tests A value in order to add p value. Default to `FALSE` OPTION :
 #'   - `FALSE`: No p-value add
 #'   - `TRUE`: Add p-value made by default by gtsummary. See gtsummary add_p() options.
@@ -44,7 +44,7 @@
 #'
 #' # Sample dataset
 #' data1 <- data.frame(
-#'   group = c("A", "B", "A", "C"),
+#'   group = c("A", "B", "B", "C"),
 #'   var1 = c(1, 2, 3, NA),
 #'   var2 = c("X", "Y", "X", NA)
 #' )
@@ -52,8 +52,25 @@
 #' # Generate descriptive table
 #' table <- desc_var(
 #'   data1 = data1,
-#'   table_title = "Descriptive Table"
+#'   table_title = "Descriptive Table",
+#'   quanti = "var1"
 #' )
+#'
+#' # Order categorical features by frequency
+#' table1 <- desc_var(
+#'   data1 = data1,
+#'   table_title = "Descriptive Table",
+#'   quanti = "var1",
+#'   freq_relevel = TRUE)
+#'
+#'   # Round quantitative and qualitative features using  a vector of integer
+#'   table2 <- desc_var(
+#'     data1 = iris,
+#'     quanti = "Sepal.Length",
+#'     stat_var_quanti = c("{sum}", "{mean} ({sd})"),
+#'     digits = list(r_quanti = c(1, 3, 2), r_quali = c(0, 2))
+#'     )
+#'
 #'
 #' @importFrom dplyr mutate across where
 #' @importFrom forcats fct_drop
@@ -61,7 +78,6 @@
 #' @importFrom gtsummary tbl_summary
 #' @import cardx
 #' @export
-
 
 
 desc_var <- ## Les arguments de la fonction
@@ -117,7 +133,6 @@ desc_var <- ## Les arguments de la fonction
                            by_group = by_group,
                            var_group = var_group,
                            drop_levels = drop_levels,
-                           freq_relevel = freq_relevel,
                            show_missing_data = show_missing_data)
 
     ### Basic gtsummary
@@ -128,6 +143,7 @@ desc_var <- ## Les arguments de la fonction
                              quanti = quanti,
                              stat_var_quanti = stat_var_quanti,
                              digits = digits,
+                             freq_relevel = freq_relevel,
                              show_missing_data = show_missing_data)
 
     ### Customize output

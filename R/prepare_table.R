@@ -7,7 +7,6 @@
 #'
 #' @param data1 A data frame containing the data to be prepared.
 #' @param drop_levels Boolean (default = TRUE). Drop unused levels.
-#' @param freq_relevel Boolean  (default = FALSE). Reorder factors by frequency except for the group variable.
 #' @param by_group A boolean (default is FALSE) to analyse by group.
 #' @param var_group The group variable (used to correctly update the label if needed).
 #' @return A data frame that has been prepared based on the `show_missing_data` and `DM` arguments.
@@ -29,13 +28,12 @@
 #'
 #' @import dplyr
 #' @import RastaRocket
-#' @importFrom forcats fct_infreq fct_drop
+#' @importFrom forcats fct_drop
 #' @export
 prepare_table <- function(data1,
                           by_group = FALSE,
                           var_group = NULL,
                           drop_levels = TRUE,
-                          freq_relevel = FALSE,
                           show_missing_data = TRUE){
 
 
@@ -57,17 +55,17 @@ prepare_table <- function(data1,
     }
   }
 
-  if(freq_relevel && by_group && !is.null(var_group)){
-    data1 <- data1 %>%
-      dplyr::mutate(across(where(is.factor) & !any_of(var_group),
-                           ~ forcats::fct_infreq(.x)))
-  }
-
-  if(freq_relevel && !by_group){
-    data1 <- data1 %>%
-      dplyr::mutate(across(where(is.factor),
-                           ~ forcats::fct_infreq(.x)))
-  }
+  # if(freq_relevel && by_group && !is.null(var_group)){
+  #   data1 <- data1 %>%
+  #     dplyr::mutate(across(where(is.factor) & !any_of(var_group),
+  #                          ~ forcats::fct_infreq(.x)))
+  # }
+  #
+  # if(freq_relevel && !by_group){
+  #   data1 <- data1 %>%
+  #     dplyr::mutate(across(where(is.factor),
+  #                          ~ forcats::fct_infreq(.x)))
+  # }
 
 
   if(drop_levels){

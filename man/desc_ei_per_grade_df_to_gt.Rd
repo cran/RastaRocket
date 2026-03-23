@@ -4,12 +4,14 @@
 \alias{desc_ei_per_grade_df_to_gt}
 \title{desc_ei_per_grade_df_to_gt}
 \usage{
-desc_ei_per_grade_df_to_gt(df_wide, vec_grp)
+desc_ei_per_grade_df_to_gt(df_wide, vec_grp, language = "fr")
 }
 \arguments{
 \item{df_wide}{A wide-format dataframe summarizing AE counts and percentages by grade and group.}
 
 \item{vec_grp}{A vector of unique group names.}
+
+\item{language}{'fr' default or 'en'}
 }
 \value{
 A formatted gt table.

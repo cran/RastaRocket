@@ -16,16 +16,16 @@ df_builder_ae <- function(df_pat_grp,
 
 
 
-  ################ check for missing data ##################
+  ################ check and replace missing data ##################
   if(anyNA(df_pat_llt)){
-    warning("Missing data removed from df_pat_llt please be careful/Some AE are missing !")
-    df_pat_llt <- na.omit(df_pat_llt)
+    warning("Missing data are replaced from df_pat_llt by `unknown` please be careful!")
+    df_pat_llt[is.na(df_pat_llt)] = "unknown"
 
   }
 
   if(anyNA(df_pat_grp)){
-    warning("Missing data removed from df_pat_grp please be careful/Some the RCT arm are missing !")
-    df_pat_grp <- na.omit(df_pat_grp)
+    warning("Missing data are replaced from df_pat_grp by `unknown` please be careful!")
+    df_pat_grp[is.na(df_pat_grp)] = "unknown"
   }
 
   vec_pt <- unique(df_pat_llt$EIPTN)

@@ -13,7 +13,8 @@ desc_ei_per_grade(
   ei_grdm_col = "EIGRDM",
   ei_grav_col = "EIGRAV",
   severity = TRUE,
-  digits = 1
+  digits = 1,
+  language = "fr"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ desc_ei_per_grade(
 \item{severity}{A boolean to show severe adverse event line or not (default: TRUE).}
 
 \item{digits}{Number of digits for percentages}
+
+\item{language}{'fr' default or 'en'}
 }
 \value{
 A gt table summarizing the AE by grade.

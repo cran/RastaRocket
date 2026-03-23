@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2026-02-26" />
+<meta name="date" content="2026-03-23" />
 
 <title>RastaRocketVignette</title>
 
@@ -339,7 +339,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">RastaRocketVignette</h1>
-<h4 class="date">2026-02-26</h4>
+<h4 class="date">2026-03-23</h4>
 
 
 <div id="TOC">
@@ -411,7 +411,7 @@ function.</p>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Création du data frame</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="at">Age =</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">45</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">10</span>), <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">5</span>)),  <span class="co"># Renommée Age</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">sexe =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.4</span>)),  <span class="co"># Renommée sexe</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">sexe =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.6</span>)),  <span class="co"># Renommée sexe</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="at">quatre_modalites =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>)),  <span class="co"># Modalités sans &quot;D&quot;</span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="at">traitement =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;BRAS-A&quot;</span>, <span class="st">&quot;BRAS-B&quot;</span>), <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="fl">0.45</span>)),  <span class="co"># Nouvelle variable traitement</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="at">echelle =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)  <span class="co"># Nouvelle variable entière de 0 à 5</span></span>
@@ -427,7 +427,7 @@ function.</p>
 <span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a></span>
 <span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a></span>
 <span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> labelled<span class="sc">::</span><span class="fu">set_variable_labels</span>( <span class="at">Age =</span> <span class="st">&quot;Age&quot;</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span>  labelled<span class="sc">::</span><span class="fu">set_variable_labels</span>( <span class="at">Age =</span> <span class="st">&quot;Age&quot;</span>,</span>
 <span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>                                                <span class="at">sexe =</span> <span class="st">&quot;sexe&quot;</span>,</span>
 <span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>                                                <span class="at">traitement  =</span> <span class="st">&quot;traitement&quot;</span>,</span>
 <span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>                                                <span class="at">quatre_modalites =</span> <span class="st">&quot;quatres niveaux&quot;</span>,</span>
@@ -455,7 +455,7 @@ Here, it is “traitement.”</li>
 header of the groups. if TRUE, <code>N</code> is shown; if FALSE, No
 <code>N</code> is shown ( Default to <code>FALSE</code>)</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span> RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>data <span class="sc">|&gt;</span>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                            <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                            <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                            <span class="at">group_title =</span> <span class="st">&quot;Traitement&quot;</span>,</span>
@@ -894,13 +894,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
@@ -957,9 +957,9 @@ quantitative or qualitative features. For instance, you could chose to
 describe a quantitative features as a qualitative one if it has few
 values. For instance, we can do this for <code>Age</code> after we round
 it.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, traitement) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Age =</span> <span class="fu">round</span>(Age)) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, traitement) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Age =</span> <span class="fu">round</span>(Age)) <span class="sc">|&gt;</span> </span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
@@ -1500,7 +1500,7 @@ be displayed. If no missing data is detected, it will be hidden. Users
 can override this behavior by explicitly setting
 <code>show_missing_data</code> to <code>TRUE</code> or
 <code>FALSE</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>iris <span class="sc">|&gt;</span>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                            <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                            <span class="at">var_group =</span> <span class="st">&quot;Species&quot;</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                            <span class="at">group_title =</span> <span class="st">&quot;Species&quot;</span>,</span>
@@ -2002,7 +2002,7 @@ height: 0px !important;
   
 </table>
 </div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>iris <span class="sc">|&gt;</span>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                            <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                            <span class="at">var_group =</span> <span class="st">&quot;Species&quot;</span>,</span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                            <span class="at">group_title =</span> <span class="st">&quot;Species&quot;</span>,</span>
@@ -2516,7 +2516,7 @@ applied.</p>
 <p>In this example, we add <code>freq_relevel = TRUE</code>, which
 orders the categories of categorical variables in descending order based
 on their counts.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span> <span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>data <span class="sc">|&gt;</span>  <span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>             <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>             <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>             <span class="at">group_title =</span> <span class="st">&quot;traitement&quot;</span>,</span>
@@ -2953,11 +2953,11 @@ height: 0px !important;
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Femme</td>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
 <td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+    <tr><td headers="label" class="gt_row gt_left">    Femme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td></tr>
@@ -2985,10 +2985,18 @@ height: 0px !important;
 <td headers="stat_0" class="gt_row gt_center">13.0 (26.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">6.0 (20.7%)</td>
 <td headers="stat_2" class="gt_row gt_center">7.0 (33.3%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    4</td>
+<td headers="stat_0" class="gt_row gt_center">12.0 (24.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">7.0 (24.1%)</td>
+<td headers="stat_2" class="gt_row gt_center">5.0 (23.8%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    1</td>
 <td headers="stat_0" class="gt_row gt_center">11.0 (22.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">6.0 (20.7%)</td>
 <td headers="stat_2" class="gt_row gt_center">5.0 (23.8%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    5</td>
+<td headers="stat_0" class="gt_row gt_center">6.0 (12.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">3.0 (10.3%)</td>
+<td headers="stat_2" class="gt_row gt_center">3.0 (14.3%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    2</td>
 <td headers="stat_0" class="gt_row gt_center">5.0 (10.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">4.0 (13.8%)</td>
@@ -2997,14 +3005,6 @@ height: 0px !important;
 <td headers="stat_0" class="gt_row gt_center">3.0 (6.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">3.0 (10.3%)</td>
 <td headers="stat_2" class="gt_row gt_center">0.0 (0.0%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    4</td>
-<td headers="stat_0" class="gt_row gt_center">12.0 (24.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">7.0 (24.1%)</td>
-<td headers="stat_2" class="gt_row gt_center">5.0 (23.8%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    5</td>
-<td headers="stat_0" class="gt_row gt_center">6.0 (12.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">3.0 (10.3%)</td>
-<td headers="stat_2" class="gt_row gt_center">3.0 (14.3%)</td></tr>
   </tbody>
   
 </table>
@@ -3015,9 +3015,9 @@ height: 0px !important;
 <p>The default order of categorical features is determined by their
 levels. If you want to customize this order, you can modify the levels
 using a library such as <code>forcats</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">quatre_modalites =</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(quatre_modalites,</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                                                       <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;B&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                                                       <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;B&quot;</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>           <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>           <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
@@ -3455,13 +3455,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
@@ -3516,7 +3516,7 @@ height: 0px !important;
 <h2>Remove zero-count levels</h2>
 <p>By default, zero-count levels are removed but we can explicitly
 specify we do not want to drop them.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span> <span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>data <span class="sc">|&gt;</span>  <span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>             <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>             <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>             <span class="at">group_title =</span> <span class="st">&quot;traitement&quot;</span>,</span>
@@ -3954,13 +3954,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
@@ -4020,7 +4020,7 @@ height: 0px !important;
 <div id="per-group-description" class="section level2">
 <h2>Per-Group Description</h2>
 <p>Here, we use a per-group description for the variables.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span> <span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>data <span class="sc">|&gt;</span>  <span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>             <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>             <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>             <span class="at">group_title =</span> <span class="st">&quot;traitement&quot;</span>)</span></code></pre></div>
@@ -4457,13 +4457,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
@@ -4517,7 +4517,7 @@ height: 0px !important;
 <h2>Overall Description</h2>
 <p>In this example, we generate a global description of the
 variables.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span> RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>data <span class="sc">|&gt;</span>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>             <span class="at">by_group =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>             <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>             <span class="at">group_title =</span> <span class="st">&quot;traitement&quot;</span>)</span></code></pre></div>
@@ -4937,9 +4937,9 @@ height: 0px !important;
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">sexe n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    A</td>
@@ -4974,12 +4974,12 @@ height: 0px !important;
 <code>intermediate_header</code> function which takes a list of
 sub-tables generated by <code>desc_var</code> and a vector of
 titles.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>tb1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, sexe) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>tb1 <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, sexe) <span class="sc">|&gt;</span> </span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>tb2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(quatre_modalites) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>tb2 <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(quatre_modalites) <span class="sc">|&gt;</span> </span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>)</span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>RastaRocket<span class="sc">::</span><span class="fu">intermediate_header</span>(<span class="at">tbls =</span> <span class="fu">list</span>(tb1, tb2),</span>
@@ -5403,9 +5403,9 @@ height: 0px !important;
     <tr><td headers="Title A  label" class="gt_row gt_left" style="font-weight: bold;">sexe n (d.m.)</td>
 <td headers="Title A  stat_0" class="gt_row gt_center">50 (0)</td></tr>
     <tr><td headers="Title A  label" class="gt_row gt_left">    Femme</td>
-<td headers="Title A  stat_0" class="gt_row gt_center">28.0 (56.0%)</td></tr>
-    <tr><td headers="Title A  label" class="gt_row gt_left">    Homme</td>
 <td headers="Title A  stat_0" class="gt_row gt_center">22.0 (44.0%)</td></tr>
+    <tr><td headers="Title A  label" class="gt_row gt_left">    Homme</td>
+<td headers="Title A  stat_0" class="gt_row gt_center">28.0 (56.0%)</td></tr>
     <tr class="gt_group_heading_row">
       <th colspan="2" class="gt_group_heading" style="font-size: 16; text-align: center; font-weight: bold; background-color: #8ECAE6;" scope="colgroup" id="Title B">Title B</th>
     </tr>
@@ -5425,13 +5425,20 @@ height: 0px !important;
 <div id="number-of-digits-in-quantitative-and-qualitative-features" class="section level1">
 <h1>Number of Digits in Quantitative and Qualitative Features</h1>
 <p>You can specify the number of digits for quantitative and qualitative
-features using the <code>digits</code> argument.</p>
+features using <code>r_quanti</code> and <code>r_quali</code> in the
+<code>digits</code> argument. It specifies the number of digits
+statistics are rounded to.<br />
+The values passed can be a single integer or a vector of integers. If a
+single integer or a vector is passed, it rearranged to the length of the
+number of statistics presented.</p>
 <div id="specify-number-of-digits" class="section level2">
 <h2>Specify Number of Digits</h2>
-<p>In the example below, quantitative values are rounded to 0 decimal
+<ul>
+<li>In the example below, quantitative values are rounded to 0 decimal
 places, while qualitative values percentage are rounded to 1 decimal
-place.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+place.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
@@ -5869,13 +5876,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
@@ -5924,27 +5931,16 @@ height: 0px !important;
   
 </table>
 </div>
-</div>
-<div id="combine-subtables-with-different-rounding" class="section level2">
-<h2>Combine Subtables with Different Rounding</h2>
-<p>To have more control over rounding, you can create subtables with
-different numbers of digits and combine them into a single table using
-<code>gtsummary::tbl_stack</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>tb1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, sexe, traitement) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">2</span>, <span class="at">r_quali =</span> <span class="dv">2</span>))</span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>tb2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(quatre_modalites, traitement) <span class="sc">%&gt;%</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">0</span>, <span class="at">r_quali =</span> <span class="dv">1</span>))</span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_stack</span>(<span class="fu">list</span>(tb1, tb2))</span></code></pre></div>
+<ul>
+<li>In the example below, we used a vector of integer to round
+quantitative and qualitative features.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>RastaRocket<span class="sc">::</span> <span class="fu">desc_var</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>     <span class="at">data1 =</span> iris,</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>     <span class="at">quanti =</span> <span class="st">&quot;Sepal.Length&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>     <span class="at">stat_var_quanti =</span> <span class="fu">c</span>(<span class="st">&quot;{sum}&quot;</span>, <span class="st">&quot;{mean} ({sd})&quot;</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>), <span class="at">r_quali =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a> )</span></code></pre></div>
 <div id="awznwuqggm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#awznwuqggm table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -6342,6 +6338,468 @@ height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <caption><span class="gt_from_md"><hr /></span></caption>
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span class="gt_from_md"><strong>Characteristic</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_0"><span class="gt_from_md"><strong>Overall</strong></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Sepal.Length</td>
+<td headers="stat_0" class="gt_row gt_center">150</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Sum</td>
+<td headers="stat_0" class="gt_row gt_center">876.5</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Mean (SD)</td>
+<td headers="stat_0" class="gt_row gt_center">5.843 (0.83)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Sepal.Width</td>
+<td headers="stat_0" class="gt_row gt_center">150</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Sum</td>
+<td headers="stat_0" class="gt_row gt_center">458.6</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Mean (SD)</td>
+<td headers="stat_0" class="gt_row gt_center">3.057 (0.44)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Petal.Length</td>
+<td headers="stat_0" class="gt_row gt_center">150</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Sum</td>
+<td headers="stat_0" class="gt_row gt_center">563.7</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Mean (SD)</td>
+<td headers="stat_0" class="gt_row gt_center">3.758 (1.77)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Petal.Width</td>
+<td headers="stat_0" class="gt_row gt_center">150</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Sum</td>
+<td headers="stat_0" class="gt_row gt_center">179.9</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Mean (SD)</td>
+<td headers="stat_0" class="gt_row gt_center">1.199 (0.76)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Species</td>
+<td headers="stat_0" class="gt_row gt_center">150</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    setosa</td>
+<td headers="stat_0" class="gt_row gt_center">50 (33.33%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    versicolor</td>
+<td headers="stat_0" class="gt_row gt_center">50 (33.33%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    virginica</td>
+<td headers="stat_0" class="gt_row gt_center">50 (33.33%)</td></tr>
+  </tbody>
+  
+</table>
+</div>
+</div>
+<div id="combine-subtables-with-different-rounding" class="section level2">
+<h2>Combine Subtables with Different Rounding</h2>
+<p>To have more control over rounding, you can create subtables with
+different numbers of digits and combine them into a single table using
+<code>gtsummary::tbl_stack</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>tb1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, sexe, traitement) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">2</span>, <span class="at">r_quali =</span> <span class="dv">2</span>))</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>tb2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(quatre_modalites, traitement) <span class="sc">%&gt;%</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">0</span>, <span class="at">r_quali =</span> <span class="dv">1</span>))</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_stack</span>(<span class="fu">list</span>(tb1, tb2))</span></code></pre></div>
+<div id="qesfbqwqhs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qesfbqwqhs table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#qesfbqwqhs thead, #qesfbqwqhs tbody, #qesfbqwqhs tfoot, #qesfbqwqhs tr, #qesfbqwqhs td, #qesfbqwqhs th {
+border-style: none;
+}
+#qesfbqwqhs p {
+margin: 0;
+padding: 0;
+}
+#qesfbqwqhs .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#qesfbqwqhs .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#qesfbqwqhs .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#qesfbqwqhs .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#qesfbqwqhs .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#qesfbqwqhs .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#qesfbqwqhs .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#qesfbqwqhs .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#qesfbqwqhs .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#qesfbqwqhs .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#qesfbqwqhs .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#qesfbqwqhs .gt_from_md > :first-child {
+margin-top: 0;
+}
+#qesfbqwqhs .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#qesfbqwqhs .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#qesfbqwqhs .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qesfbqwqhs .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#qesfbqwqhs .gt_row_group_first td {
+border-top-width: 2px;
+}
+#qesfbqwqhs .gt_row_group_first th {
+border-top-width: 2px;
+}
+#qesfbqwqhs .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qesfbqwqhs .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#qesfbqwqhs .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qesfbqwqhs .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#qesfbqwqhs .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qesfbqwqhs .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#qesfbqwqhs .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#qesfbqwqhs .gt_left {
+text-align: left;
+}
+#qesfbqwqhs .gt_center {
+text-align: center;
+}
+#qesfbqwqhs .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#qesfbqwqhs .gt_font_normal {
+font-weight: normal;
+}
+#qesfbqwqhs .gt_font_bold {
+font-weight: bold;
+}
+#qesfbqwqhs .gt_font_italic {
+font-style: italic;
+}
+#qesfbqwqhs .gt_super {
+font-size: 65%;
+}
+#qesfbqwqhs .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#qesfbqwqhs .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#qesfbqwqhs .gt_indent_1 {
+text-indent: 5px;
+}
+#qesfbqwqhs .gt_indent_2 {
+text-indent: 10px;
+}
+#qesfbqwqhs .gt_indent_3 {
+text-indent: 15px;
+}
+#qesfbqwqhs .gt_indent_4 {
+text-indent: 20px;
+}
+#qesfbqwqhs .gt_indent_5 {
+text-indent: 25px;
+}
+#qesfbqwqhs .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#qesfbqwqhs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <caption><span class="gt_from_md"><strong>test</strong></span></caption>
   <thead>
     <tr class="gt_col_headings gt_spanner_row">
@@ -6378,13 +6836,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_center">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.00 (56.00%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.00 (44.83%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.00 (71.43%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.00 (44.00%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.00 (55.17%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.00 (28.57%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.00 (56.00%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.00 (44.83%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.00 (71.43%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux</td>
 <td headers="stat_0" class="gt_row gt_center">50</td>
 <td headers="stat_1" class="gt_row gt_center">29</td>
@@ -6416,25 +6874,25 @@ height: 0px !important;
 statistical tests for the grouped variables.</p>
 <p>The following example adds statistical tests for all features,
 grouped by the <code>traitement</code> variable.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>                     <span class="at">tests =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div id="dhqegvlmja" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dhqegvlmja table {
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>                     <span class="at">tests =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="ktqlxlsyml" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ktqlxlsyml table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#dhqegvlmja thead, #dhqegvlmja tbody, #dhqegvlmja tfoot, #dhqegvlmja tr, #dhqegvlmja td, #dhqegvlmja th {
+#ktqlxlsyml thead, #ktqlxlsyml tbody, #ktqlxlsyml tfoot, #ktqlxlsyml tr, #ktqlxlsyml td, #ktqlxlsyml th {
 border-style: none;
 }
-#dhqegvlmja p {
+#ktqlxlsyml p {
 margin: 0;
 padding: 0;
 }
-#dhqegvlmja .gt_table {
+#ktqlxlsyml .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -6459,11 +6917,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#dhqegvlmja .gt_caption {
+#ktqlxlsyml .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#dhqegvlmja .gt_title {
+#ktqlxlsyml .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -6474,7 +6932,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#dhqegvlmja .gt_subtitle {
+#ktqlxlsyml .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -6485,7 +6943,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#dhqegvlmja .gt_heading {
+#ktqlxlsyml .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -6496,12 +6954,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dhqegvlmja .gt_bottom_border {
+#ktqlxlsyml .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dhqegvlmja .gt_col_headings {
+#ktqlxlsyml .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -6515,7 +6973,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dhqegvlmja .gt_col_heading {
+#ktqlxlsyml .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -6534,7 +6992,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#dhqegvlmja .gt_column_spanner_outer {
+#ktqlxlsyml .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -6545,13 +7003,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#dhqegvlmja .gt_column_spanner_outer:first-child {
+#ktqlxlsyml .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#dhqegvlmja .gt_column_spanner_outer:last-child {
+#ktqlxlsyml .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#dhqegvlmja .gt_column_spanner {
+#ktqlxlsyml .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -6562,10 +7020,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#dhqegvlmja .gt_spanner_row {
+#ktqlxlsyml .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#dhqegvlmja .gt_group_heading {
+#ktqlxlsyml .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6590,7 +7048,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#dhqegvlmja .gt_empty_group_heading {
+#ktqlxlsyml .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -6604,13 +7062,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#dhqegvlmja .gt_from_md > :first-child {
+#ktqlxlsyml .gt_from_md > :first-child {
 margin-top: 0;
 }
-#dhqegvlmja .gt_from_md > :last-child {
+#ktqlxlsyml .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#dhqegvlmja .gt_row {
+#ktqlxlsyml .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6628,7 +7086,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#dhqegvlmja .gt_stub {
+#ktqlxlsyml .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -6640,7 +7098,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dhqegvlmja .gt_stub_row_group {
+#ktqlxlsyml .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -6653,13 +7111,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#dhqegvlmja .gt_row_group_first td {
+#ktqlxlsyml .gt_row_group_first td {
 border-top-width: 2px;
 }
-#dhqegvlmja .gt_row_group_first th {
+#ktqlxlsyml .gt_row_group_first th {
 border-top-width: 2px;
 }
-#dhqegvlmja .gt_summary_row {
+#ktqlxlsyml .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -6668,14 +7126,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dhqegvlmja .gt_first_summary_row {
+#ktqlxlsyml .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#dhqegvlmja .gt_first_summary_row.thick {
+#ktqlxlsyml .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#dhqegvlmja .gt_last_summary_row {
+#ktqlxlsyml .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6684,7 +7142,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dhqegvlmja .gt_grand_summary_row {
+#ktqlxlsyml .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -6693,7 +7151,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dhqegvlmja .gt_first_grand_summary_row {
+#ktqlxlsyml .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6702,7 +7160,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#dhqegvlmja .gt_last_grand_summary_row_top {
+#ktqlxlsyml .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6711,10 +7169,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#dhqegvlmja .gt_striped {
+#ktqlxlsyml .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#dhqegvlmja .gt_table_body {
+#ktqlxlsyml .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -6722,7 +7180,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dhqegvlmja .gt_footnotes {
+#ktqlxlsyml .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -6735,7 +7193,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dhqegvlmja .gt_footnote {
+#ktqlxlsyml .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -6743,7 +7201,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dhqegvlmja .gt_sourcenotes {
+#ktqlxlsyml .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -6756,64 +7214,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dhqegvlmja .gt_sourcenote {
+#ktqlxlsyml .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dhqegvlmja .gt_left {
+#ktqlxlsyml .gt_left {
 text-align: left;
 }
-#dhqegvlmja .gt_center {
+#ktqlxlsyml .gt_center {
 text-align: center;
 }
-#dhqegvlmja .gt_right {
+#ktqlxlsyml .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#dhqegvlmja .gt_font_normal {
+#ktqlxlsyml .gt_font_normal {
 font-weight: normal;
 }
-#dhqegvlmja .gt_font_bold {
+#ktqlxlsyml .gt_font_bold {
 font-weight: bold;
 }
-#dhqegvlmja .gt_font_italic {
+#ktqlxlsyml .gt_font_italic {
 font-style: italic;
 }
-#dhqegvlmja .gt_super {
+#ktqlxlsyml .gt_super {
 font-size: 65%;
 }
-#dhqegvlmja .gt_footnote_marks {
+#ktqlxlsyml .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#dhqegvlmja .gt_asterisk {
+#ktqlxlsyml .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#dhqegvlmja .gt_indent_1 {
+#ktqlxlsyml .gt_indent_1 {
 text-indent: 5px;
 }
-#dhqegvlmja .gt_indent_2 {
+#ktqlxlsyml .gt_indent_2 {
 text-indent: 10px;
 }
-#dhqegvlmja .gt_indent_3 {
+#ktqlxlsyml .gt_indent_3 {
 text-indent: 15px;
 }
-#dhqegvlmja .gt_indent_4 {
+#ktqlxlsyml .gt_indent_4 {
 text-indent: 20px;
 }
-#dhqegvlmja .gt_indent_5 {
+#ktqlxlsyml .gt_indent_5 {
 text-indent: 25px;
 }
-#dhqegvlmja .katex-display {
+#ktqlxlsyml .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#dhqegvlmja div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ktqlxlsyml div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -6860,14 +7318,14 @@ height: 0px !important;
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td>
 <td headers="p.value" class="gt_row gt_center">0.061<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td>
-<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td>
 <td headers="p.value" class="gt_row gt_center"><br /></td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
@@ -6949,27 +7407,27 @@ applies:</p>
 <li>Chi-squared test for sexe, and</li>
 <li>Fisher’s exact test for echelle.</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>                     <span class="at">tests =</span> <span class="fu">list</span>(<span class="at">Age =</span> <span class="st">&quot;t.test&quot;</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>                                  <span class="at">sexe =</span> <span class="st">&quot;chisq.test&quot;</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>                                  <span class="at">echelle =</span> <span class="st">&quot;fisher.test&quot;</span>))</span></code></pre></div>
-<div id="cvawrejksp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cvawrejksp table {
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>                     <span class="at">tests =</span> <span class="fu">list</span>(<span class="at">Age =</span> <span class="st">&quot;t.test&quot;</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>                                  <span class="at">sexe =</span> <span class="st">&quot;chisq.test&quot;</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>                                  <span class="at">echelle =</span> <span class="st">&quot;fisher.test&quot;</span>))</span></code></pre></div>
+<div id="xnskqflsuq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xnskqflsuq table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#cvawrejksp thead, #cvawrejksp tbody, #cvawrejksp tfoot, #cvawrejksp tr, #cvawrejksp td, #cvawrejksp th {
+#xnskqflsuq thead, #xnskqflsuq tbody, #xnskqflsuq tfoot, #xnskqflsuq tr, #xnskqflsuq td, #xnskqflsuq th {
 border-style: none;
 }
-#cvawrejksp p {
+#xnskqflsuq p {
 margin: 0;
 padding: 0;
 }
-#cvawrejksp .gt_table {
+#xnskqflsuq .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -6994,11 +7452,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#cvawrejksp .gt_caption {
+#xnskqflsuq .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#cvawrejksp .gt_title {
+#xnskqflsuq .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -7009,7 +7467,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#cvawrejksp .gt_subtitle {
+#xnskqflsuq .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -7020,7 +7478,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#cvawrejksp .gt_heading {
+#xnskqflsuq .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -7031,12 +7489,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#cvawrejksp .gt_bottom_border {
+#xnskqflsuq .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#cvawrejksp .gt_col_headings {
+#xnskqflsuq .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -7050,7 +7508,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#cvawrejksp .gt_col_heading {
+#xnskqflsuq .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7069,7 +7527,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#cvawrejksp .gt_column_spanner_outer {
+#xnskqflsuq .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7080,13 +7538,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#cvawrejksp .gt_column_spanner_outer:first-child {
+#xnskqflsuq .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#cvawrejksp .gt_column_spanner_outer:last-child {
+#xnskqflsuq .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#cvawrejksp .gt_column_spanner {
+#xnskqflsuq .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -7097,10 +7555,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#cvawrejksp .gt_spanner_row {
+#xnskqflsuq .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#cvawrejksp .gt_group_heading {
+#xnskqflsuq .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7125,7 +7583,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#cvawrejksp .gt_empty_group_heading {
+#xnskqflsuq .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -7139,13 +7597,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#cvawrejksp .gt_from_md > :first-child {
+#xnskqflsuq .gt_from_md > :first-child {
 margin-top: 0;
 }
-#cvawrejksp .gt_from_md > :last-child {
+#xnskqflsuq .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#cvawrejksp .gt_row {
+#xnskqflsuq .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7163,7 +7621,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#cvawrejksp .gt_stub {
+#xnskqflsuq .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7175,7 +7633,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#cvawrejksp .gt_stub_row_group {
+#xnskqflsuq .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7188,13 +7646,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#cvawrejksp .gt_row_group_first td {
+#xnskqflsuq .gt_row_group_first td {
 border-top-width: 2px;
 }
-#cvawrejksp .gt_row_group_first th {
+#xnskqflsuq .gt_row_group_first th {
 border-top-width: 2px;
 }
-#cvawrejksp .gt_summary_row {
+#xnskqflsuq .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -7203,14 +7661,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#cvawrejksp .gt_first_summary_row {
+#xnskqflsuq .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#cvawrejksp .gt_first_summary_row.thick {
+#xnskqflsuq .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#cvawrejksp .gt_last_summary_row {
+#xnskqflsuq .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7219,7 +7677,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#cvawrejksp .gt_grand_summary_row {
+#xnskqflsuq .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -7228,7 +7686,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#cvawrejksp .gt_first_grand_summary_row {
+#xnskqflsuq .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7237,7 +7695,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#cvawrejksp .gt_last_grand_summary_row_top {
+#xnskqflsuq .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7246,10 +7704,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#cvawrejksp .gt_striped {
+#xnskqflsuq .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#cvawrejksp .gt_table_body {
+#xnskqflsuq .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -7257,7 +7715,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#cvawrejksp .gt_footnotes {
+#xnskqflsuq .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -7270,7 +7728,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#cvawrejksp .gt_footnote {
+#xnskqflsuq .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -7278,7 +7736,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#cvawrejksp .gt_sourcenotes {
+#xnskqflsuq .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -7291,64 +7749,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#cvawrejksp .gt_sourcenote {
+#xnskqflsuq .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#cvawrejksp .gt_left {
+#xnskqflsuq .gt_left {
 text-align: left;
 }
-#cvawrejksp .gt_center {
+#xnskqflsuq .gt_center {
 text-align: center;
 }
-#cvawrejksp .gt_right {
+#xnskqflsuq .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#cvawrejksp .gt_font_normal {
+#xnskqflsuq .gt_font_normal {
 font-weight: normal;
 }
-#cvawrejksp .gt_font_bold {
+#xnskqflsuq .gt_font_bold {
 font-weight: bold;
 }
-#cvawrejksp .gt_font_italic {
+#xnskqflsuq .gt_font_italic {
 font-style: italic;
 }
-#cvawrejksp .gt_super {
+#xnskqflsuq .gt_super {
 font-size: 65%;
 }
-#cvawrejksp .gt_footnote_marks {
+#xnskqflsuq .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#cvawrejksp .gt_asterisk {
+#xnskqflsuq .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#cvawrejksp .gt_indent_1 {
+#xnskqflsuq .gt_indent_1 {
 text-indent: 5px;
 }
-#cvawrejksp .gt_indent_2 {
+#xnskqflsuq .gt_indent_2 {
 text-indent: 10px;
 }
-#cvawrejksp .gt_indent_3 {
+#xnskqflsuq .gt_indent_3 {
 text-indent: 15px;
 }
-#cvawrejksp .gt_indent_4 {
+#xnskqflsuq .gt_indent_4 {
 text-indent: 20px;
 }
-#cvawrejksp .gt_indent_5 {
+#xnskqflsuq .gt_indent_5 {
 text-indent: 25px;
 }
-#cvawrejksp .katex-display {
+#xnskqflsuq .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#cvawrejksp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xnskqflsuq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -7395,14 +7853,14 @@ height: 0px !important;
 <td headers="stat_2" class="gt_row gt_center">21 (0)</td>
 <td headers="p.value" class="gt_row gt_center">0.11<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td>
-<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_center">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_center">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_center">6.0 (28.6%)</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_center">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">15.0 (71.4%)</td>
 <td headers="p.value" class="gt_row gt_center"><br /></td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_center">50 (0)</td>
@@ -7480,28 +7938,28 @@ height: 0px !important;
 <p>To have a nicer appearance of the table, it is possible to customize
 it as a <code>gt</code> table. A dedicated function is implemented:
 <code>custom_format</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>                     <span class="at">tests =</span> <span class="fu">list</span>(<span class="at">Age =</span> <span class="st">&quot;t.test&quot;</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>                                  <span class="at">sexe =</span> <span class="st">&quot;chisq.test&quot;</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>                                  <span class="at">echelle =</span> <span class="st">&quot;fisher.test&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>  <span class="fu">custom_format</span>()</span></code></pre></div>
-<div id="fhdvqtfzgg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fhdvqtfzgg table {
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>                     <span class="at">tests =</span> <span class="fu">list</span>(<span class="at">Age =</span> <span class="st">&quot;t.test&quot;</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>                                  <span class="at">sexe =</span> <span class="st">&quot;chisq.test&quot;</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>                                  <span class="at">echelle =</span> <span class="st">&quot;fisher.test&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>  <span class="fu">custom_format</span>()</span></code></pre></div>
+<div id="nrpqffduen" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nrpqffduen table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#fhdvqtfzgg thead, #fhdvqtfzgg tbody, #fhdvqtfzgg tfoot, #fhdvqtfzgg tr, #fhdvqtfzgg td, #fhdvqtfzgg th {
+#nrpqffduen thead, #nrpqffduen tbody, #nrpqffduen tfoot, #nrpqffduen tr, #nrpqffduen td, #nrpqffduen th {
 border-style: none;
 }
-#fhdvqtfzgg p {
+#nrpqffduen p {
 margin: 0;
 padding: 0;
 }
-#fhdvqtfzgg .gt_table {
+#nrpqffduen .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -7526,11 +7984,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_caption {
+#nrpqffduen .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#fhdvqtfzgg .gt_title {
+#nrpqffduen .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -7541,7 +7999,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#fhdvqtfzgg .gt_subtitle {
+#nrpqffduen .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -7552,7 +8010,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#fhdvqtfzgg .gt_heading {
+#nrpqffduen .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -7563,12 +8021,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_bottom_border {
+#nrpqffduen .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_col_headings {
+#nrpqffduen .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -7582,7 +8040,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_col_heading {
+#nrpqffduen .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7601,7 +8059,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#fhdvqtfzgg .gt_column_spanner_outer {
+#nrpqffduen .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7612,13 +8070,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#fhdvqtfzgg .gt_column_spanner_outer:first-child {
+#nrpqffduen .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#fhdvqtfzgg .gt_column_spanner_outer:last-child {
+#nrpqffduen .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#fhdvqtfzgg .gt_column_spanner {
+#nrpqffduen .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -7629,10 +8087,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#fhdvqtfzgg .gt_spanner_row {
+#nrpqffduen .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#fhdvqtfzgg .gt_group_heading {
+#nrpqffduen .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7657,7 +8115,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#fhdvqtfzgg .gt_empty_group_heading {
+#nrpqffduen .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -7671,13 +8129,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#fhdvqtfzgg .gt_from_md > :first-child {
+#nrpqffduen .gt_from_md > :first-child {
 margin-top: 0;
 }
-#fhdvqtfzgg .gt_from_md > :last-child {
+#nrpqffduen .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#fhdvqtfzgg .gt_row {
+#nrpqffduen .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7695,7 +8153,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#fhdvqtfzgg .gt_stub {
+#nrpqffduen .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7707,7 +8165,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fhdvqtfzgg .gt_stub_row_group {
+#nrpqffduen .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -7720,13 +8178,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#fhdvqtfzgg .gt_row_group_first td {
+#nrpqffduen .gt_row_group_first td {
 border-top-width: 2px;
 }
-#fhdvqtfzgg .gt_row_group_first th {
+#nrpqffduen .gt_row_group_first th {
 border-top-width: 2px;
 }
-#fhdvqtfzgg .gt_summary_row {
+#nrpqffduen .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -7735,14 +8193,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fhdvqtfzgg .gt_first_summary_row {
+#nrpqffduen .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_first_summary_row.thick {
+#nrpqffduen .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#fhdvqtfzgg .gt_last_summary_row {
+#nrpqffduen .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7751,7 +8209,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_grand_summary_row {
+#nrpqffduen .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -7760,7 +8218,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fhdvqtfzgg .gt_first_grand_summary_row {
+#nrpqffduen .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7769,7 +8227,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_last_grand_summary_row_top {
+#nrpqffduen .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -7778,10 +8236,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_striped {
+#nrpqffduen .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#fhdvqtfzgg .gt_table_body {
+#nrpqffduen .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -7789,7 +8247,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_footnotes {
+#nrpqffduen .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -7802,7 +8260,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_footnote {
+#nrpqffduen .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -7810,7 +8268,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fhdvqtfzgg .gt_sourcenotes {
+#nrpqffduen .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -7823,64 +8281,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#fhdvqtfzgg .gt_sourcenote {
+#nrpqffduen .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fhdvqtfzgg .gt_left {
+#nrpqffduen .gt_left {
 text-align: left;
 }
-#fhdvqtfzgg .gt_center {
+#nrpqffduen .gt_center {
 text-align: center;
 }
-#fhdvqtfzgg .gt_right {
+#nrpqffduen .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#fhdvqtfzgg .gt_font_normal {
+#nrpqffduen .gt_font_normal {
 font-weight: normal;
 }
-#fhdvqtfzgg .gt_font_bold {
+#nrpqffduen .gt_font_bold {
 font-weight: bold;
 }
-#fhdvqtfzgg .gt_font_italic {
+#nrpqffduen .gt_font_italic {
 font-style: italic;
 }
-#fhdvqtfzgg .gt_super {
+#nrpqffduen .gt_super {
 font-size: 65%;
 }
-#fhdvqtfzgg .gt_footnote_marks {
+#nrpqffduen .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#fhdvqtfzgg .gt_asterisk {
+#nrpqffduen .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#fhdvqtfzgg .gt_indent_1 {
+#nrpqffduen .gt_indent_1 {
 text-indent: 5px;
 }
-#fhdvqtfzgg .gt_indent_2 {
+#nrpqffduen .gt_indent_2 {
 text-indent: 10px;
 }
-#fhdvqtfzgg .gt_indent_3 {
+#nrpqffduen .gt_indent_3 {
 text-indent: 15px;
 }
-#fhdvqtfzgg .gt_indent_4 {
+#nrpqffduen .gt_indent_4 {
 text-indent: 20px;
 }
-#fhdvqtfzgg .gt_indent_5 {
+#nrpqffduen .gt_indent_5 {
 text-indent: 25px;
 }
-#fhdvqtfzgg .katex-display {
+#nrpqffduen .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#fhdvqtfzgg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nrpqffduen div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -7927,14 +8385,14 @@ height: 0px !important;
 <td headers="stat_2" class="gt_row gt_right" style="font-weight: bold;">21 (0)</td>
 <td headers="p.value" class="gt_row gt_center" style="font-weight: bold;">0.11<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_right">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_right">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_right">15.0 (71.4%)</td>
-<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_right">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_right">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_right">6.0 (28.6%)</td>
+<td headers="p.value" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_right">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_right">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_right">15.0 (71.4%)</td>
 <td headers="p.value" class="gt_row gt_center"><br /></td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_right" style="font-weight: bold;">50 (0)</td>
@@ -8006,36 +8464,36 @@ height: 0px !important;
 </table>
 </div>
 <p>This also works when using stacked tables.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>tb1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, sexe, traitement) <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">0</span>, <span class="at">r_quali =</span> <span class="dv">0</span>))</span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>tb2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(quatre_modalites, traitement) <span class="sc">%&gt;%</span></span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">0</span>, <span class="at">r_quali =</span> <span class="dv">1</span>))</span>
-<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_stack</span>(<span class="fu">list</span>(tb1, tb2)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a>  <span class="fu">custom_format</span>()</span></code></pre></div>
-<div id="chqyvmolis" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#chqyvmolis table {
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>tb1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Age, sexe, traitement) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">0</span>, <span class="at">r_quali =</span> <span class="dv">0</span>))</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>tb2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(quatre_modalites, traitement) <span class="sc">%&gt;%</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>,</span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a>                     <span class="at">digits =</span> <span class="fu">list</span>(<span class="at">r_quanti =</span> <span class="dv">0</span>, <span class="at">r_quali =</span> <span class="dv">1</span>))</span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_stack</span>(<span class="fu">list</span>(tb1, tb2)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a>  <span class="fu">custom_format</span>()</span></code></pre></div>
+<div id="stmafergzq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#stmafergzq table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#chqyvmolis thead, #chqyvmolis tbody, #chqyvmolis tfoot, #chqyvmolis tr, #chqyvmolis td, #chqyvmolis th {
+#stmafergzq thead, #stmafergzq tbody, #stmafergzq tfoot, #stmafergzq tr, #stmafergzq td, #stmafergzq th {
 border-style: none;
 }
-#chqyvmolis p {
+#stmafergzq p {
 margin: 0;
 padding: 0;
 }
-#chqyvmolis .gt_table {
+#stmafergzq .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -8060,11 +8518,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#chqyvmolis .gt_caption {
+#stmafergzq .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#chqyvmolis .gt_title {
+#stmafergzq .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -8075,7 +8533,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#chqyvmolis .gt_subtitle {
+#stmafergzq .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -8086,7 +8544,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#chqyvmolis .gt_heading {
+#stmafergzq .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -8097,12 +8555,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#chqyvmolis .gt_bottom_border {
+#stmafergzq .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#chqyvmolis .gt_col_headings {
+#stmafergzq .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -8116,7 +8574,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#chqyvmolis .gt_col_heading {
+#stmafergzq .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8135,7 +8593,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#chqyvmolis .gt_column_spanner_outer {
+#stmafergzq .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8146,13 +8604,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#chqyvmolis .gt_column_spanner_outer:first-child {
+#stmafergzq .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#chqyvmolis .gt_column_spanner_outer:last-child {
+#stmafergzq .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#chqyvmolis .gt_column_spanner {
+#stmafergzq .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -8163,10 +8621,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#chqyvmolis .gt_spanner_row {
+#stmafergzq .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#chqyvmolis .gt_group_heading {
+#stmafergzq .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8191,7 +8649,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#chqyvmolis .gt_empty_group_heading {
+#stmafergzq .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -8205,13 +8663,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#chqyvmolis .gt_from_md > :first-child {
+#stmafergzq .gt_from_md > :first-child {
 margin-top: 0;
 }
-#chqyvmolis .gt_from_md > :last-child {
+#stmafergzq .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#chqyvmolis .gt_row {
+#stmafergzq .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8229,7 +8687,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#chqyvmolis .gt_stub {
+#stmafergzq .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8241,7 +8699,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#chqyvmolis .gt_stub_row_group {
+#stmafergzq .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8254,13 +8712,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#chqyvmolis .gt_row_group_first td {
+#stmafergzq .gt_row_group_first td {
 border-top-width: 2px;
 }
-#chqyvmolis .gt_row_group_first th {
+#stmafergzq .gt_row_group_first th {
 border-top-width: 2px;
 }
-#chqyvmolis .gt_summary_row {
+#stmafergzq .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -8269,14 +8727,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#chqyvmolis .gt_first_summary_row {
+#stmafergzq .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#chqyvmolis .gt_first_summary_row.thick {
+#stmafergzq .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#chqyvmolis .gt_last_summary_row {
+#stmafergzq .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8285,7 +8743,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#chqyvmolis .gt_grand_summary_row {
+#stmafergzq .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -8294,7 +8752,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#chqyvmolis .gt_first_grand_summary_row {
+#stmafergzq .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8303,7 +8761,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#chqyvmolis .gt_last_grand_summary_row_top {
+#stmafergzq .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8312,10 +8770,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#chqyvmolis .gt_striped {
+#stmafergzq .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#chqyvmolis .gt_table_body {
+#stmafergzq .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -8323,7 +8781,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#chqyvmolis .gt_footnotes {
+#stmafergzq .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -8336,7 +8794,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#chqyvmolis .gt_footnote {
+#stmafergzq .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -8344,7 +8802,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#chqyvmolis .gt_sourcenotes {
+#stmafergzq .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -8357,64 +8815,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#chqyvmolis .gt_sourcenote {
+#stmafergzq .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#chqyvmolis .gt_left {
+#stmafergzq .gt_left {
 text-align: left;
 }
-#chqyvmolis .gt_center {
+#stmafergzq .gt_center {
 text-align: center;
 }
-#chqyvmolis .gt_right {
+#stmafergzq .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#chqyvmolis .gt_font_normal {
+#stmafergzq .gt_font_normal {
 font-weight: normal;
 }
-#chqyvmolis .gt_font_bold {
+#stmafergzq .gt_font_bold {
 font-weight: bold;
 }
-#chqyvmolis .gt_font_italic {
+#stmafergzq .gt_font_italic {
 font-style: italic;
 }
-#chqyvmolis .gt_super {
+#stmafergzq .gt_super {
 font-size: 65%;
 }
-#chqyvmolis .gt_footnote_marks {
+#stmafergzq .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#chqyvmolis .gt_asterisk {
+#stmafergzq .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#chqyvmolis .gt_indent_1 {
+#stmafergzq .gt_indent_1 {
 text-indent: 5px;
 }
-#chqyvmolis .gt_indent_2 {
+#stmafergzq .gt_indent_2 {
 text-indent: 10px;
 }
-#chqyvmolis .gt_indent_3 {
+#stmafergzq .gt_indent_3 {
 text-indent: 15px;
 }
-#chqyvmolis .gt_indent_4 {
+#stmafergzq .gt_indent_4 {
 text-indent: 20px;
 }
-#chqyvmolis .gt_indent_5 {
+#stmafergzq .gt_indent_5 {
 text-indent: 25px;
 }
-#chqyvmolis .katex-display {
+#stmafergzq .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#chqyvmolis div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#stmafergzq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -8455,13 +8913,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_right" style="font-weight: bold;">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_right" style="font-weight: bold;">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_right">28 (56%)</td>
-<td headers="stat_1" class="gt_row gt_right">13 (45%)</td>
-<td headers="stat_2" class="gt_row gt_right">15 (71%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_right">22 (44%)</td>
 <td headers="stat_1" class="gt_row gt_right">16 (55%)</td>
 <td headers="stat_2" class="gt_row gt_right">6 (29%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_right">28 (56%)</td>
+<td headers="stat_1" class="gt_row gt_right">13 (45%)</td>
+<td headers="stat_2" class="gt_row gt_right">15 (71%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux</td>
 <td headers="stat_0" class="gt_row gt_right" style="font-weight: bold;">50</td>
 <td headers="stat_1" class="gt_row gt_right" style="font-weight: bold;">29</td>
@@ -8484,27 +8942,27 @@ height: 0px !important;
 </div>
 <p>You can customize the format by specifying the column size and the
 alignment.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="fu">custom_format</span>(<span class="at">align =</span> <span class="st">&quot;left&quot;</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>                <span class="at">column_size =</span> <span class="fu">list</span>(label <span class="sc">~</span> gt<span class="sc">::</span><span class="fu">pct</span>(<span class="dv">50</span>),</span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>                                   gt<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;stat&quot;</span>) <span class="sc">~</span> gt<span class="sc">::</span><span class="fu">pct</span>(<span class="dv">25</span>)))</span></code></pre></div>
-<div id="uvwywdrnlk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#uvwywdrnlk table {
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>                     <span class="at">by_group =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>                     <span class="at">var_group =</span> <span class="st">&quot;traitement&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="fu">custom_format</span>(<span class="at">align =</span> <span class="st">&quot;left&quot;</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>                <span class="at">column_size =</span> <span class="fu">list</span>(label <span class="sc">~</span> gt<span class="sc">::</span><span class="fu">pct</span>(<span class="dv">50</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>                                   gt<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;stat&quot;</span>) <span class="sc">~</span> gt<span class="sc">::</span><span class="fu">pct</span>(<span class="dv">25</span>)))</span></code></pre></div>
+<div id="uhaaoxrxcp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uhaaoxrxcp table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#uvwywdrnlk thead, #uvwywdrnlk tbody, #uvwywdrnlk tfoot, #uvwywdrnlk tr, #uvwywdrnlk td, #uvwywdrnlk th {
+#uhaaoxrxcp thead, #uhaaoxrxcp tbody, #uhaaoxrxcp tfoot, #uhaaoxrxcp tr, #uhaaoxrxcp td, #uhaaoxrxcp th {
 border-style: none;
 }
-#uvwywdrnlk p {
+#uhaaoxrxcp p {
 margin: 0;
 padding: 0;
 }
-#uvwywdrnlk .gt_table {
+#uhaaoxrxcp .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -8529,11 +8987,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_caption {
+#uhaaoxrxcp .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#uvwywdrnlk .gt_title {
+#uhaaoxrxcp .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -8544,7 +9002,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#uvwywdrnlk .gt_subtitle {
+#uhaaoxrxcp .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -8555,7 +9013,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#uvwywdrnlk .gt_heading {
+#uhaaoxrxcp .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -8566,12 +9024,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_bottom_border {
+#uhaaoxrxcp .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_col_headings {
+#uhaaoxrxcp .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -8585,7 +9043,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_col_heading {
+#uhaaoxrxcp .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8604,7 +9062,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#uvwywdrnlk .gt_column_spanner_outer {
+#uhaaoxrxcp .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8615,13 +9073,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#uvwywdrnlk .gt_column_spanner_outer:first-child {
+#uhaaoxrxcp .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#uvwywdrnlk .gt_column_spanner_outer:last-child {
+#uhaaoxrxcp .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#uvwywdrnlk .gt_column_spanner {
+#uhaaoxrxcp .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -8632,10 +9090,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#uvwywdrnlk .gt_spanner_row {
+#uhaaoxrxcp .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#uvwywdrnlk .gt_group_heading {
+#uhaaoxrxcp .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8660,7 +9118,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#uvwywdrnlk .gt_empty_group_heading {
+#uhaaoxrxcp .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -8674,13 +9132,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#uvwywdrnlk .gt_from_md > :first-child {
+#uhaaoxrxcp .gt_from_md > :first-child {
 margin-top: 0;
 }
-#uvwywdrnlk .gt_from_md > :last-child {
+#uhaaoxrxcp .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#uvwywdrnlk .gt_row {
+#uhaaoxrxcp .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8698,7 +9156,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#uvwywdrnlk .gt_stub {
+#uhaaoxrxcp .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8710,7 +9168,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uvwywdrnlk .gt_stub_row_group {
+#uhaaoxrxcp .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -8723,13 +9181,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#uvwywdrnlk .gt_row_group_first td {
+#uhaaoxrxcp .gt_row_group_first td {
 border-top-width: 2px;
 }
-#uvwywdrnlk .gt_row_group_first th {
+#uhaaoxrxcp .gt_row_group_first th {
 border-top-width: 2px;
 }
-#uvwywdrnlk .gt_summary_row {
+#uhaaoxrxcp .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -8738,14 +9196,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uvwywdrnlk .gt_first_summary_row {
+#uhaaoxrxcp .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_first_summary_row.thick {
+#uhaaoxrxcp .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#uvwywdrnlk .gt_last_summary_row {
+#uhaaoxrxcp .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8754,7 +9212,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_grand_summary_row {
+#uhaaoxrxcp .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -8763,7 +9221,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uvwywdrnlk .gt_first_grand_summary_row {
+#uhaaoxrxcp .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8772,7 +9230,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_last_grand_summary_row_top {
+#uhaaoxrxcp .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -8781,10 +9239,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_striped {
+#uhaaoxrxcp .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#uvwywdrnlk .gt_table_body {
+#uhaaoxrxcp .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -8792,7 +9250,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_footnotes {
+#uhaaoxrxcp .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -8805,7 +9263,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_footnote {
+#uhaaoxrxcp .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -8813,7 +9271,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uvwywdrnlk .gt_sourcenotes {
+#uhaaoxrxcp .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -8826,64 +9284,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#uvwywdrnlk .gt_sourcenote {
+#uhaaoxrxcp .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uvwywdrnlk .gt_left {
+#uhaaoxrxcp .gt_left {
 text-align: left;
 }
-#uvwywdrnlk .gt_center {
+#uhaaoxrxcp .gt_center {
 text-align: center;
 }
-#uvwywdrnlk .gt_right {
+#uhaaoxrxcp .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#uvwywdrnlk .gt_font_normal {
+#uhaaoxrxcp .gt_font_normal {
 font-weight: normal;
 }
-#uvwywdrnlk .gt_font_bold {
+#uhaaoxrxcp .gt_font_bold {
 font-weight: bold;
 }
-#uvwywdrnlk .gt_font_italic {
+#uhaaoxrxcp .gt_font_italic {
 font-style: italic;
 }
-#uvwywdrnlk .gt_super {
+#uhaaoxrxcp .gt_super {
 font-size: 65%;
 }
-#uvwywdrnlk .gt_footnote_marks {
+#uhaaoxrxcp .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#uvwywdrnlk .gt_asterisk {
+#uhaaoxrxcp .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#uvwywdrnlk .gt_indent_1 {
+#uhaaoxrxcp .gt_indent_1 {
 text-indent: 5px;
 }
-#uvwywdrnlk .gt_indent_2 {
+#uhaaoxrxcp .gt_indent_2 {
 text-indent: 10px;
 }
-#uvwywdrnlk .gt_indent_3 {
+#uhaaoxrxcp .gt_indent_3 {
 text-indent: 15px;
 }
-#uvwywdrnlk .gt_indent_4 {
+#uhaaoxrxcp .gt_indent_4 {
 text-indent: 20px;
 }
-#uvwywdrnlk .gt_indent_5 {
+#uhaaoxrxcp .gt_indent_5 {
 text-indent: 25px;
 }
-#uvwywdrnlk .katex-display {
+#uhaaoxrxcp .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#uvwywdrnlk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uhaaoxrxcp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -8930,13 +9388,13 @@ height: 0px !important;
 <td headers="stat_1" class="gt_row gt_left" style="font-weight: bold;">29 (0)</td>
 <td headers="stat_2" class="gt_row gt_left" style="font-weight: bold;">21 (0)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Femme</td>
-<td headers="stat_0" class="gt_row gt_left">28.0 (56.0%)</td>
-<td headers="stat_1" class="gt_row gt_left">13.0 (44.8%)</td>
-<td headers="stat_2" class="gt_row gt_left">15.0 (71.4%)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
 <td headers="stat_0" class="gt_row gt_left">22.0 (44.0%)</td>
 <td headers="stat_1" class="gt_row gt_left">16.0 (55.2%)</td>
 <td headers="stat_2" class="gt_row gt_left">6.0 (28.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Homme</td>
+<td headers="stat_0" class="gt_row gt_left">28.0 (56.0%)</td>
+<td headers="stat_1" class="gt_row gt_left">13.0 (44.8%)</td>
+<td headers="stat_2" class="gt_row gt_left">15.0 (71.4%)</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">quatres niveaux n (d.m.)</td>
 <td headers="stat_0" class="gt_row gt_left" style="font-weight: bold;">50 (0)</td>
 <td headers="stat_1" class="gt_row gt_left" style="font-weight: bold;">29 (0)</td>
@@ -8993,27 +9451,27 @@ height: 0px !important;
 <code>gtsummary::reset_gtsummary_theme()</code> reset the format to the
 default behavior (i.e English). You can set the format once at the
 beginning of the document, no need to specify it multiple times.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># reset theme to default</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">reset_gtsummary_theme</span>()</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co"># switch to French format</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">theme_gtsummary_language</span>(<span class="at">language =</span> <span class="st">&quot;fr&quot;</span>, <span class="at">decimal.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>)</span></code></pre></div>
-<div id="pzwqkbnyyq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pzwqkbnyyq table {
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># reset theme to default</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">reset_gtsummary_theme</span>()</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co"># switch to French format</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">theme_gtsummary_language</span>(<span class="at">language =</span> <span class="st">&quot;fr&quot;</span>, <span class="at">decimal.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>  RastaRocket<span class="sc">::</span><span class="fu">desc_var</span>(<span class="at">table_title =</span> <span class="st">&quot;test&quot;</span>)</span></code></pre></div>
+<div id="yhyaxhlhpj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yhyaxhlhpj table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#pzwqkbnyyq thead, #pzwqkbnyyq tbody, #pzwqkbnyyq tfoot, #pzwqkbnyyq tr, #pzwqkbnyyq td, #pzwqkbnyyq th {
+#yhyaxhlhpj thead, #yhyaxhlhpj tbody, #yhyaxhlhpj tfoot, #yhyaxhlhpj tr, #yhyaxhlhpj td, #yhyaxhlhpj th {
 border-style: none;
 }
-#pzwqkbnyyq p {
+#yhyaxhlhpj p {
 margin: 0;
 padding: 0;
 }
-#pzwqkbnyyq .gt_table {
+#yhyaxhlhpj .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -9038,11 +9496,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_caption {
+#yhyaxhlhpj .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#pzwqkbnyyq .gt_title {
+#yhyaxhlhpj .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -9053,7 +9511,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#pzwqkbnyyq .gt_subtitle {
+#yhyaxhlhpj .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -9064,7 +9522,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#pzwqkbnyyq .gt_heading {
+#yhyaxhlhpj .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -9075,12 +9533,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_bottom_border {
+#yhyaxhlhpj .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_col_headings {
+#yhyaxhlhpj .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -9094,7 +9552,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_col_heading {
+#yhyaxhlhpj .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -9113,7 +9571,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#pzwqkbnyyq .gt_column_spanner_outer {
+#yhyaxhlhpj .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -9124,13 +9582,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#pzwqkbnyyq .gt_column_spanner_outer:first-child {
+#yhyaxhlhpj .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#pzwqkbnyyq .gt_column_spanner_outer:last-child {
+#yhyaxhlhpj .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#pzwqkbnyyq .gt_column_spanner {
+#yhyaxhlhpj .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -9141,10 +9599,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#pzwqkbnyyq .gt_spanner_row {
+#yhyaxhlhpj .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#pzwqkbnyyq .gt_group_heading {
+#yhyaxhlhpj .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -9169,7 +9627,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#pzwqkbnyyq .gt_empty_group_heading {
+#yhyaxhlhpj .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -9183,13 +9641,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#pzwqkbnyyq .gt_from_md > :first-child {
+#yhyaxhlhpj .gt_from_md > :first-child {
 margin-top: 0;
 }
-#pzwqkbnyyq .gt_from_md > :last-child {
+#yhyaxhlhpj .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#pzwqkbnyyq .gt_row {
+#yhyaxhlhpj .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -9207,7 +9665,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#pzwqkbnyyq .gt_stub {
+#yhyaxhlhpj .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -9219,7 +9677,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#pzwqkbnyyq .gt_stub_row_group {
+#yhyaxhlhpj .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -9232,13 +9690,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#pzwqkbnyyq .gt_row_group_first td {
+#yhyaxhlhpj .gt_row_group_first td {
 border-top-width: 2px;
 }
-#pzwqkbnyyq .gt_row_group_first th {
+#yhyaxhlhpj .gt_row_group_first th {
 border-top-width: 2px;
 }
-#pzwqkbnyyq .gt_summary_row {
+#yhyaxhlhpj .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -9247,14 +9705,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#pzwqkbnyyq .gt_first_summary_row {
+#yhyaxhlhpj .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_first_summary_row.thick {
+#yhyaxhlhpj .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#pzwqkbnyyq .gt_last_summary_row {
+#yhyaxhlhpj .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -9263,7 +9721,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_grand_summary_row {
+#yhyaxhlhpj .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -9272,7 +9730,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#pzwqkbnyyq .gt_first_grand_summary_row {
+#yhyaxhlhpj .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -9281,7 +9739,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_last_grand_summary_row_top {
+#yhyaxhlhpj .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -9290,10 +9748,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_striped {
+#yhyaxhlhpj .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#pzwqkbnyyq .gt_table_body {
+#yhyaxhlhpj .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -9301,7 +9759,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_footnotes {
+#yhyaxhlhpj .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -9314,7 +9772,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_footnote {
+#yhyaxhlhpj .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -9322,7 +9780,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#pzwqkbnyyq .gt_sourcenotes {
+#yhyaxhlhpj .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -9335,64 +9793,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#pzwqkbnyyq .gt_sourcenote {
+#yhyaxhlhpj .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#pzwqkbnyyq .gt_left {
+#yhyaxhlhpj .gt_left {
 text-align: left;
 }
-#pzwqkbnyyq .gt_center {
+#yhyaxhlhpj .gt_center {
 text-align: center;
 }
-#pzwqkbnyyq .gt_right {
+#yhyaxhlhpj .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#pzwqkbnyyq .gt_font_normal {
+#yhyaxhlhpj .gt_font_normal {
 font-weight: normal;
 }
-#pzwqkbnyyq .gt_font_bold {
+#yhyaxhlhpj .gt_font_bold {
 font-weight: bold;
 }
-#pzwqkbnyyq .gt_font_italic {
+#yhyaxhlhpj .gt_font_italic {
 font-style: italic;
 }
-#pzwqkbnyyq .gt_super {
+#yhyaxhlhpj .gt_super {
 font-size: 65%;
 }
-#pzwqkbnyyq .gt_footnote_marks {
+#yhyaxhlhpj .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#pzwqkbnyyq .gt_asterisk {
+#yhyaxhlhpj .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#pzwqkbnyyq .gt_indent_1 {
+#yhyaxhlhpj .gt_indent_1 {
 text-indent: 5px;
 }
-#pzwqkbnyyq .gt_indent_2 {
+#yhyaxhlhpj .gt_indent_2 {
 text-indent: 10px;
 }
-#pzwqkbnyyq .gt_indent_3 {
+#yhyaxhlhpj .gt_indent_3 {
 text-indent: 15px;
 }
-#pzwqkbnyyq .gt_indent_4 {
+#yhyaxhlhpj .gt_indent_4 {
 text-indent: 20px;
 }
-#pzwqkbnyyq .gt_indent_5 {
+#yhyaxhlhpj .gt_indent_5 {
 text-indent: 25px;
 }
-#pzwqkbnyyq .katex-display {
+#yhyaxhlhpj .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#pzwqkbnyyq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yhyaxhlhpj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -9449,11 +9907,11 @@ height: 0px !important;
   
 </table>
 </div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co"># you can put several tables here, it will keep French format</span></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co"># back to default format</span></span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">reset_gtsummary_theme</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co"># you can put several tables here, it will keep French format</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co"># back to default format</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">reset_gtsummary_theme</span>()</span></code></pre></div>
 </div>
 
 
