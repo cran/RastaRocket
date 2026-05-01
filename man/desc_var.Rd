@@ -22,7 +22,8 @@ desc_var(
   show_n_per_group = FALSE,
   show_missing_data = NULL,
   var_tot = NULL,
-  var_characteristic = NULL
+  var_characteristic = NULL,
+  include_all_na_cat = TRUE
 )
 }
 \arguments{
@@ -75,6 +76,8 @@ desc_var(
 \item{var_tot}{A string specifying the name of total column. Default is \code{NULL} and will guess from \code{theme_gtsummary_language()}.}
 
 \item{var_characteristic}{A string specifying the name of characteristic column. Default is \code{NULL} and will guess from \code{theme_gtsummary_language()}.}
+
+\item{include_all_na_cat}{Should the categorical variable with a missing levels (all values are NA) be displayed. Default to \code{TRUE}}
 }
 \value{
 A gtsummary table object containing the descriptive statistics.

@@ -109,6 +109,39 @@ desc_ei_per_grade(df_pat_grp = df_pat_grp,
                   df_pat_grade = df_pat_llt |> dplyr::mutate(RDGRPNAME = "A"))
 ```
 
+
+# Custom appearance
+
+To have a nicer appearance of the table, it is possible to apply custom formatting by using `custom_format`.  
+It allows you to align columns and optionally adjust column widths.
+
+```{r}
+desc_ei_per_pt(df_pat_grp = df_pat_grp,
+               df_pat_llt = df_pat_llt) |> custom_format()
+```
+
+
+```{r}
+desc_ei_per_grade(df_pat_grp = df_pat_grp,
+                  df_pat_grade = df_pat_llt) |> custom_format()
+```
+
+
+You can customize the format by specifying the column size and the alignment.
+
+```{r}
+desc_ei_per_pt(df_pat_grp = df_pat_grp,
+               df_pat_llt = df_pat_llt) |> custom_format(align = "center", column_size = list(pt ~ gt::px(280)))
+```
+
+
+```{r}
+desc_ei_per_grade(df_pat_grp = df_pat_grp,
+                  df_pat_grade = df_pat_llt) |> custom_format(align = "center", column_size = list(grade ~ gt::px(150)))
+```
+
+
+
 # Plot Adverse Events
 
 This section provides several visualization methods for adverse events (AEs) based on patient data.

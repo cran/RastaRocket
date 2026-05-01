@@ -19,27 +19,32 @@ customize_table(
 )
 }
 \arguments{
-\item{base_table}{A \code{gtsummary} table object, typically generated using functions
-like \code{gtsummary::tbl_summary}.}
+\item{base_table}{A \code{gtsummary} table object, typically generated using functions like \code{gtsummary::tbl_summary}.}
 
 \item{by_group}{A boolean (default is FALSE) to analyse by group.}
 
-\item{var_group}{A string or NULL, specifying the variable used for grouping in the
-table. If \code{NULL}, no group-specific modifications are applied.}
+\item{var_group}{A variable used for grouping (if applicable). Defaults to \code{NULL}.}
 
-\item{add_total}{A boolean to add total column or not when var_group is specified.}
+\item{add_total}{A boolean (default is TRUE) to add total column or not when var_group is specified.}
 
-\item{show_missing_data}{A boolean indicating whether to display missing data counts
-and percentages in the table. If \code{TRUE}, columns for missing data will be added.}
+\item{show_missing_data}{Default to \code{NULL}. Should the missing data be displayed. Can be either :
+\itemize{
+\item \code{FALSE}: No missing data displayed
+\item \code{TRUE}: Missing data displayed
+\item \code{NULL} (default): will be switch to \code{anyNA(data1)} value.
+}}
 
-\item{show_n_per_group}{A boolean indicating whether to display group sizes (n) for
-each level of the grouping variable.}
+\item{show_n_per_group}{Default to \code{FALSE}. Should the 'N' appears in the column header of the groups. Can be either :
+\itemize{
+\item \code{FALSE}: No 'N' is shown
+\item \code{TRUE}: 'N' is shown
+}}
 
-\item{group_title}{A string specifying the title for the group column in the table.}
+\item{group_title}{A character string specifying the title for the grouping variable. Default is \code{NULL} and get the label or the variable.}
 
-\item{table_title}{A string specifying the title of the entire table.}
+\item{table_title}{A character string specifying the title of the table.}
 
-\item{var_title}{A string specifying the title for the variable column in the table.}
+\item{var_title}{A character string for the title of the variable column in the table. Defaults to \code{"Variable"}.}
 
 \item{var_tot}{A string specifying the name of total column. Default is \code{NULL} and will guess from \code{theme_gtsummary_language()}.}
 
@@ -83,7 +88,7 @@ base_table <- trial \%>\%
                                        "{median} ({p25} ; {p75})",
                                        "{min} ; {max}")
     ))
- 
+
 customize_table(
   base_table,
   var_group = "trt",

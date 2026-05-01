@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' library(dplyr)
-#' df <- tibble(x = 1:3, y = 4:6, z = 7:9)
+#' df <- data.frame(x = 1:3, y = 4:6, z = 7:9)
 #'
 #' # Simple selection
 #' select_plus(df, x, y)

@@ -1,8 +1,7 @@
-utils::globalVariables(c("row_type"))
 
-#' Custom formatting for `gtsummary` tables
+#' Custom formatting for `gtsummary` and `gt` tables
 #'
-#' This function takes a `gt` table and applies custom formatting. It allows you to align columns,
+#' This function takes a `gtsummary` or `gt` table and applies custom formatting. It allows you to align columns,
 #' apply bold text to certain rows, and adjust column widths if specified.
 #'
 #' @param gt_table A `gt` table object (also handles gtsummary tables by converting them).
@@ -12,7 +11,7 @@ utils::globalVariables(c("row_type"))
 #'   the width for one or more columns. If not provided, column widths will not be modified.
 #'
 #' @return A `gt` table object with the specified formatting applied.
-#'   The table will have columns aligned according to the `align` parameter, 
+#'   The table will have columns aligned according to the `align` parameter,
 #'   and cells in the "label" rows will have bold text. If `column_size` is provided,
 #'   the column widths will be adjusted accordingly.
 #'
@@ -31,23 +30,40 @@ utils::globalVariables(c("row_type"))
 custom_format <- function(gt_table,
                           align = "right",
                           column_size = NULL) {
-  
+
+  # Convert gtsummary table to gt table
   if("gtsummary" %in% class(gt_table)){
     gt_table <- gtsummary::as_gt(gt_table)
   }
-  # Convert gtsummary table to gt table and align columns
+
+
+  cols_names <- names(gt_table[["_data"]])
+  # Colonnes a exclure
+  cols_a_exclure <- c("variable", "row_type", "label", "grade", "pt")
+  cols_align <- setdiff(cols_names, cols_a_exclure)
+
+  # aligns the selected columns
   res <- gt_table %>%
-    gt::cols_align(align = align, columns = gt::starts_with("stat")) %>%
-    gt::tab_style(
-      style = gt::cell_text(weight = "bold"),
-      locations = gt::cells_body(rows = row_type == "label")
+    gt::cols_align(
+      align = align,
+      columns = dplyr::all_of(cols_align)
     )
-  
+
+  # Bold the “label” rows (gtsummary tables)
+  if ("row_type" %in% names(res[["_data"]])) {
+    res <- res %>%
+      gt::tab_style(
+        style = gt::cell_text(weight = "bold"),
+        locations = gt::cells_body(rows = row_type == "label")
+      )
+  }
+
+
   # If column_size is provided, apply column widths
   if (!is.null(column_size)) {
     res <- res %>%
       gt::cols_width(.list = column_size)
   }
-  
+
   return(res)
 }

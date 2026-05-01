@@ -1,3 +1,16 @@
+# RastaRocket 1.1.4
+
+## Improvements
+
+- Added a new `indent_table()` function to control text indentation in table cells.
+- Added an `include_all_na_cat` argument to `desc_var()` and `prepare_table()` to better handle factors with missing levels.
+- Added a new `write_rendercopy()` function to enable rendering the .qmd file programmatically without using the Render button, and to allow flexible definition of the output HTML file name and location.
+- Updated `write_qmd()` to add components to facilitate switching between analysis phases.
+- Added unit tests for `custom_round()`, `select_plus()`, and `riskdifference()`.
+- Improved function documentation by using the @inheritParams roxygen tag.
+
+
+
 # RastaRocket 1.1.3
 
 ## Major changes

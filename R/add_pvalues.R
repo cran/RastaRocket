@@ -12,7 +12,7 @@
 #' library(gtsummary)
 #' tbl <- trial %>% tbl_summary(by = trt)
 #' tbl <- add_pvalues(tbl, tests = TRUE)
-#' 
+#'
 #' @export
 add_pvalues <- function(res, tests) {
   if (is.list(tests)) {

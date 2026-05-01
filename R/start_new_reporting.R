@@ -25,7 +25,7 @@
 #'
 #' @export
 start_new_reporting <- function(folder_path,
-                                output_folder,
+                                output_folder,                      
                                 name = "report",
                                 structure = "USMR",
                                 path_logo = NULL,
@@ -49,13 +49,15 @@ start_new_reporting <- function(folder_path,
   html_path = paste0(folder_path, "/", name, "_custom.html")
   qmd_path = paste0(folder_path, "/", name, ".qmd")
   yaml_path = paste0(folder_path, "/_quarto.yml")
-  date_stamp_path = paste0(folder_path, "/datestamp_output_file.R")
+  rendercopy_path = paste0(folder_path, "/rendercopy.R")
   
   write_css(css_path)
   
   write_qmd(path = qmd_path,
             path_html = paste0(name, "_custom.html"),
-            path_css = paste0(name, "_custom.css"))
+            path_css = paste0(name, "_custom.css"),
+            study_abbreviation = study_abbreviation,
+            name = name)
   
   write_html_file(path = html_path,
                   structure = structure,
@@ -76,7 +78,9 @@ start_new_reporting <- function(folder_path,
   
   write_quarto_yml(path = yaml_path)
   
-  write_datestamp_output_file(output_folder = output_folder,
-                              path = date_stamp_path,
-                              from_file = paste0(name, ".html"))
+  write_rendercopy(
+    output_folder = output_folder,
+    path = rendercopy_path,
+    name = name
+  )
 }

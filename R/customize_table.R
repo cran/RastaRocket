@@ -5,21 +5,9 @@
 #' and captions. It provides flexible options for grouping, displaying missing data,
 #' and customizing table titles.
 #'
-#' @param base_table A `gtsummary` table object, typically generated using functions
-#'        like `gtsummary::tbl_summary`.
-#' @param by_group A boolean (default is FALSE) to analyse by group.
-#' @param var_group A string or NULL, specifying the variable used for grouping in the
-#'        table. If `NULL`, no group-specific modifications are applied.
-#' @param add_total A boolean to add total column or not when var_group is specified.
-#' @param show_missing_data A boolean indicating whether to display missing data counts
-#'        and percentages in the table. If `TRUE`, columns for missing data will be added.
-#' @param show_n_per_group A boolean indicating whether to display group sizes (n) for
-#'        each level of the grouping variable.
-#' @param group_title A string specifying the title for the group column in the table.
-#' @param table_title A string specifying the title of the entire table.
-#' @param var_title A string specifying the title for the variable column in the table.
-#' @param var_tot A string specifying the name of total column. Default is `NULL` and will guess from `theme_gtsummary_language()`.
-#' @param var_characteristic A string specifying the name of characteristic column. Default is `NULL` and will guess from `theme_gtsummary_language()`.
+#'
+#' @param base_table A `gtsummary` table object, typically generated using functions like `gtsummary::tbl_summary`.
+#' @inheritParams desc_var
 #'
 #' @return A customized `gtsummary` table object with added columns, headers, captions,
 #'         and modifications based on the provided arguments.
@@ -48,7 +36,7 @@
 #'                                        "{median} ({p25} ; {p75})",
 #'                                        "{min} ; {max}")
 #'     ))
-#'  
+#'
 #' customize_table(
 #'   base_table,
 #'   var_group = "trt",
@@ -84,7 +72,7 @@ customize_table <- function(base_table,
 
   ### Add missing values
   base_table_missing <- add_missing_info(base_table = base_table)
-  
+
   ### header
   res <- custom_headers(base_table_missing = base_table_missing,
                         var_characteristic = var_characteristic,

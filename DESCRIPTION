@@ -1,6 +1,6 @@
 Package: RastaRocket
 Title: Rocket-Fast Clinical Research Reporting
-Version: 1.1.3
+Version: 1.1.4
 Authors@R: 
     c(person(given = "USMR",
            family = "CHU de Bordeaux",
@@ -37,11 +37,12 @@ Encoding: UTF-8
 RoxygenNote: 7.3.3
 Depends: R (>= 4.1.0)
 Imports: dplyr, tidyr, labelled, rlang, gtsummary, forcats, gt, cardx,
-        glue, purrr, ggh4x, ggplot2, ggrepel, scales, viridis
-Suggests: testthat, knitr, rmarkdown
+        glue, purrr, ggh4x, ggplot2, ggrepel, scales, viridis, here
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown
 VignetteBuilder: knitr
+Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2026-03-23 09:44:17 UTC; sowmoh
+Packaged: 2026-04-30 15:14:04 UTC; izottem
 Author: USMR CHU de Bordeaux [aut, cre],
   Valentine Renaudeau [aut],
   Marion Kret [aut],
@@ -50,4 +51,4 @@ Author: USMR CHU de Bordeaux [aut, cre],
   Thomas Ferté [aut]
 Maintainer: USMR CHU de Bordeaux <astreinte.usmr@chu-bordeaux.fr>
 Repository: CRAN
-Date/Publication: 2026-03-23 10:10:02 UTC
+Date/Publication: 2026-05-01 04:40:03 UTC

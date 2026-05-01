@@ -17,7 +17,7 @@ utils::globalVariables(c(
 ))
 
 
-# # desc_ei_per_pt.R
+#  desc_ei_per_pt.R
 utils::globalVariables(c("EILLTN",
                          "EISOCPN",
                          "EIPTN",
@@ -40,3 +40,10 @@ utils::globalVariables(c("EILLTN",
 
 # plot_dumbell.R
 utils::globalVariables(c("facet", "grp_num"))
+
+
+# custom_format.R
+utils::globalVariables(c("row_type"))
+
+# indent_table.R
+utils::globalVariables(c("label"))

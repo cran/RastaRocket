@@ -44,6 +44,22 @@ desc_ei_per_grade(df_pat_grp = df_pat_grp,
                   df_pat_grade = df_pat_llt |> dplyr::mutate(RDGRPNAME = "A"))
 
 ## -----------------------------------------------------------------------------
+desc_ei_per_pt(df_pat_grp = df_pat_grp,
+               df_pat_llt = df_pat_llt) |> custom_format()
+
+## -----------------------------------------------------------------------------
+desc_ei_per_grade(df_pat_grp = df_pat_grp,
+                  df_pat_grade = df_pat_llt) |> custom_format()
+
+## -----------------------------------------------------------------------------
+desc_ei_per_pt(df_pat_grp = df_pat_grp,
+               df_pat_llt = df_pat_llt) |> custom_format(align = "center", column_size = list(pt ~ gt::px(280)))
+
+## -----------------------------------------------------------------------------
+desc_ei_per_grade(df_pat_grp = df_pat_grp,
+                  df_pat_grade = df_pat_llt) |> custom_format(align = "center", column_size = list(grade ~ gt::px(150)))
+
+## -----------------------------------------------------------------------------
 df_pat_grp <- df_pat_grp |> 
   dplyr::mutate(RDGRPNAME = c(rep("A", 5), rep("B", 5)))
 

@@ -120,7 +120,7 @@ write_html_file <- function(path,
 
   <br />
   
-  <p style="text-align: center;text-transform: uppercase; font-weight: bolder;font-size:20px;">{report_type}</p>
+  <p id="titre-rapport" style="text-align: center;text-transform: uppercase; font-weight: bolder;font-size:20px;"></p>
   {confidential_html}
   
   <HR COLOR="black" ALIGN=CENTER WIDTH="100%">

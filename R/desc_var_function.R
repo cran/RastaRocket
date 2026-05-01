@@ -29,6 +29,7 @@
 #'   - `NULL` (default): will be switch to `anyNA(data1)` value.
 #' @param var_tot A string specifying the name of total column. Default is `NULL` and will guess from `theme_gtsummary_language()`.
 #' @param var_characteristic A string specifying the name of characteristic column. Default is `NULL` and will guess from `theme_gtsummary_language()`.
+#' @param include_all_na_cat Should the categorical variable with a missing levels (all values are NA) be displayed. Default to `TRUE`
 #'
 #' @details
 #' The function processes the dataset according to the specified parameters and generates descriptive tables.
@@ -102,7 +103,8 @@ desc_var <- ## Les arguments de la fonction
            show_n_per_group = FALSE,
            show_missing_data = NULL,
            var_tot = NULL,
-           var_characteristic = NULL) {
+           var_characteristic = NULL,
+           include_all_na_cat = TRUE) {
 
     # Check consistency between by_group and var_group
     if(by_group && is.null(var_group)){
@@ -133,7 +135,8 @@ desc_var <- ## Les arguments de la fonction
                            by_group = by_group,
                            var_group = var_group,
                            drop_levels = drop_levels,
-                           show_missing_data = show_missing_data)
+                           show_missing_data = show_missing_data,
+                           include_all_na_cat = include_all_na_cat)
 
     ### Basic gtsummary
     base_table <- base_table(data1 = data2,

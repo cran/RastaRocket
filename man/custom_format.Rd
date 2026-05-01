@@ -2,7 +2,7 @@
 % Please edit documentation in R/custom_format.R
 \name{custom_format}
 \alias{custom_format}
-\title{Custom formatting for \code{gtsummary} tables}
+\title{Custom formatting for \code{gtsummary} and \code{gt} tables}
 \usage{
 custom_format(gt_table, align = "right", column_size = NULL)
 }
@@ -22,7 +22,7 @@ and cells in the "label" rows will have bold text. If \code{column_size} is prov
 the column widths will be adjusted accordingly.
 }
 \description{
-This function takes a \code{gt} table and applies custom formatting. It allows you to align columns,
+This function takes a \code{gtsummary} or \code{gt} table and applies custom formatting. It allows you to align columns,
 apply bold text to certain rows, and adjust column widths if specified.
 }
 \examples{

@@ -360,14 +360,37 @@ gtsummary::tbl_stack(list(tb1, tb2)) %>%
 You can customize the format by specifying the column size and the alignment.
 
 ```{r}
-data %>%
+data |> 
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
-                     var_group = "traitement") %>%
+                     var_group = "traitement") |> 
   custom_format(align = "left",
                 column_size = list(label ~ gt::pct(50),
                                    gt::starts_with("stat") ~ gt::pct(25)))
 ```
+
+
+## Text indentation
+
+You can specify the text indentation by using a numeric value correspinding to value as pixels (0 ~ px(0); 30 ~ px(30); 60 ~ px(60)). A dedicated function is implemented: `indent_table()`.
+
+
+```{r}
+data |> 
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement") |> 
+  indent_table(indent = 30)
+```
+
+```{r}
+data |> 
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement") |> 
+  indent_table(indent = 60)
+```
+
 
 # French format
 

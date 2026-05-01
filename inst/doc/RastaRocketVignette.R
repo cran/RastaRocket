@@ -202,13 +202,27 @@ gtsummary::tbl_stack(list(tb1, tb2)) %>%
   custom_format()
 
 ## -----------------------------------------------------------------------------
-data %>%
+data |> 
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
-                     var_group = "traitement") %>%
+                     var_group = "traitement") |> 
   custom_format(align = "left",
                 column_size = list(label ~ gt::pct(50),
                                    gt::starts_with("stat") ~ gt::pct(25)))
+
+## -----------------------------------------------------------------------------
+data |> 
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement") |> 
+  indent_table(indent = 30)
+
+## -----------------------------------------------------------------------------
+data |> 
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement") |> 
+  indent_table(indent = 60)
 
 ## -----------------------------------------------------------------------------
 # reset theme to default

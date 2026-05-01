@@ -9,28 +9,27 @@ prepare_table(
   by_group = FALSE,
   var_group = NULL,
   drop_levels = TRUE,
-  show_missing_data = TRUE
+  show_missing_data = TRUE,
+  include_all_na_cat = TRUE
 )
 }
 \arguments{
-\item{data1}{A data frame containing the data to be prepared.}
+\item{data1}{A data frame containing the dataset to be analyzed.}
 
 \item{by_group}{A boolean (default is FALSE) to analyse by group.}
 
-\item{var_group}{The group variable (used to correctly update the label if needed).}
+\item{var_group}{A variable used for grouping (if applicable). Defaults to \code{NULL}.}
 
 \item{drop_levels}{Boolean (default = TRUE). Drop unused levels.}
 
-\item{show_missing_data}{Should the missing data be displayed. Can be either :
+\item{show_missing_data}{Default to \code{NULL}. Should the missing data be displayed. Can be either :
 \itemize{
 \item \code{FALSE}: No missing data displayed
-\item \code{TRUE}(default): Missing data displayed
+\item \code{TRUE}: Missing data displayed
+\item \code{NULL} (default): will be switch to \code{anyNA(data1)} value.
 }}
-}
-\value{
-A data frame that has been prepared based on the \code{show_missing_data} and \code{DM} arguments.
-The function modifies the input data frame by applying labels, ordering factor variables,
-and potentially dropping unused levels.
+
+\item{include_all_na_cat}{Should the categorical variable with a missing levels (all values are NA) be displayed. Default to \code{TRUE}}
 }
 \description{
 This function prepares a data frame for summarization by handling missing data

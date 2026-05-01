@@ -5,23 +5,7 @@
 #' descriptive statistics for categorical and continuous variables, with
 #' options for customizing the rounding and labels.
 #'
-#' @param data1 A data frame containing the data to summarize.
-#' @param by_group A boolean (default is FALSE) to analyse by group.
-#' @param var_group A string or NULL, the variable to group by (optional).
-#'        If NULL, no grouping will be applied.
-#' @param quali A character vector, the names of categorical variables to
-#'        treat as categorical in the summary table.
-#' @param quanti A character vector, the names of continuous variables to
-#'        treat as continuous in the summary table.
-#'
-#' @param stat_var_quanti A character vector specifying the statistics to display for continuous variables. Default is `c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}")`.
-#' @param digits A list, the number of decimal places to round categorical and
-#'        continuous variable. Default is list(r_quanti = 1, r_quali = 1)
-#'
-#' @param freq_relevel Boolean (default = FALSE). If TRUE, reorder categorical levels by frequency (most to least frequent).
-#' @param show_missing_data Should the missing data be displayed. Can be either :
-#'   - `FALSE`: No missing data displayed
-#'   - `TRUE`(default): Missing data displayed
+#' @inheritParams desc_var
 #'
 #' @return A `gtsummary` table summarizing the specified variables,
 #'         grouped by `var_group` if provided, with customizable statistics

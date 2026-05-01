@@ -17,31 +17,28 @@ base_table(
 )
 }
 \arguments{
-\item{data1}{A data frame containing the data to summarize.}
+\item{data1}{A data frame containing the dataset to be analyzed.}
 
-\item{show_missing_data}{Should the missing data be displayed. Can be either :
+\item{show_missing_data}{Default to \code{NULL}. Should the missing data be displayed. Can be either :
 \itemize{
 \item \code{FALSE}: No missing data displayed
-\item \code{TRUE}(default): Missing data displayed
+\item \code{TRUE}: Missing data displayed
+\item \code{NULL} (default): will be switch to \code{anyNA(data1)} value.
 }}
 
 \item{by_group}{A boolean (default is FALSE) to analyse by group.}
 
-\item{var_group}{A string or NULL, the variable to group by (optional).
-If NULL, no grouping will be applied.}
+\item{var_group}{A variable used for grouping (if applicable). Defaults to \code{NULL}.}
 
-\item{quali}{A character vector, the names of categorical variables to
-treat as categorical in the summary table.}
+\item{quali}{A vector of qualitative variables to be described. Defaults to \code{NULL}.}
 
-\item{quanti}{A character vector, the names of continuous variables to
-treat as continuous in the summary table.}
+\item{quanti}{A vector of quantitative variables to be described. Defaults to \code{NULL}.}
 
 \item{stat_var_quanti}{A character vector specifying the statistics to display for continuous variables. Default is \code{c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}")}.}
 
-\item{digits}{A list, the number of decimal places to round categorical and
-continuous variable. Default is list(r_quanti = 1, r_quali = 1)}
+\item{digits}{A list, the number of decimal places to round categorical and continuous variable. r_quanti and r_quali can be a single integer or a vector of integer. Default is list(r_quanti = 1, r_quali = 1)}
 
-\item{freq_relevel}{Boolean (default = FALSE). If TRUE, reorder categorical levels by frequency (most to least frequent).}
+\item{freq_relevel}{Boolean (default = FALSE). If TRUE, reorder factors by frequency (most to least frequent) using gtsummary.}
 }
 \value{
 A \code{gtsummary} table summarizing the specified variables,

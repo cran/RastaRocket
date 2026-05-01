@@ -4,7 +4,7 @@
 \alias{write_qmd}
 \title{Write a Quarto Markdown (.qmd) file}
 \usage{
-write_qmd(path, path_html, path_css)
+write_qmd(path, path_html, path_css, study_abbreviation, name)
 }
 \arguments{
 \item{path}{Character string specifying the output file path for the .qmd file.}
@@ -12,6 +12,10 @@ write_qmd(path, path_html, path_css)
 \item{path_html}{Character string specifying the path to an HTML file to be included before the body of the document.}
 
 \item{path_css}{Character string specifying the path to a CSS file for styling the document.}
+
+\item{study_abbreviation}{Character string providing the abbreviation of the study.}
+
+\item{name}{The name of the files}
 }
 \value{
 None. The function writes a .qmd file to the specified \code{path}.
@@ -22,5 +26,5 @@ This function generates a Quarto Markdown (.qmd) file with predefined metadata a
 \details{
 The function creates a Quarto Markdown file with metadata fields such as title, author, date, and format settings.
 The HTML file specified in \code{path_html} is included before the body, and the CSS file specified in \code{path_css}
-is used for styling. The generated document includes an example of a table with a caption.
+is used for styling. The generated document includes an example of a start of report.
 }

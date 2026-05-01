@@ -5,16 +5,7 @@
 #' (DM) option to factor variables. It provides flexibility for data cleaning and ordering
 #' before summarizing with functions like `gtsummary`.
 #'
-#' @param data1 A data frame containing the data to be prepared.
-#' @param drop_levels Boolean (default = TRUE). Drop unused levels.
-#' @param by_group A boolean (default is FALSE) to analyse by group.
-#' @param var_group The group variable (used to correctly update the label if needed).
-#' @return A data frame that has been prepared based on the `show_missing_data` and `DM` arguments.
-#'         The function modifies the input data frame by applying labels, ordering factor variables,
-#'         and potentially dropping unused levels.
-#' @param show_missing_data Should the missing data be displayed. Can be either :
-#'   - `FALSE`: No missing data displayed
-#'   - `TRUE`(default): Missing data displayed
+#' @inheritParams desc_var
 #'
 #' @details
 #' - The `DM` option defines the data manipulation to be applied to factor variables:
@@ -34,7 +25,8 @@ prepare_table <- function(data1,
                           by_group = FALSE,
                           var_group = NULL,
                           drop_levels = TRUE,
-                          show_missing_data = TRUE){
+                          show_missing_data = TRUE,
+                          include_all_na_cat = TRUE){
 
 
   ### Remove grouping variable if not used
@@ -55,17 +47,20 @@ prepare_table <- function(data1,
     }
   }
 
-  # if(freq_relevel && by_group && !is.null(var_group)){
-  #   data1 <- data1 %>%
-  #     dplyr::mutate(across(where(is.factor) & !any_of(var_group),
-  #                          ~ forcats::fct_infreq(.x)))
-  # }
-  #
-  # if(freq_relevel && !by_group){
-  #   data1 <- data1 %>%
-  #     dplyr::mutate(across(where(is.factor),
-  #                          ~ forcats::fct_infreq(.x)))
-  # }
+  ### Deal with factors with missing levels
+  bool_all_na <- data1 |> dplyr::summarise(across(everything(), ~ all(is.na(.x)))) |> any()
+  na_col_names <- data1 |> dplyr::summarise(across(everything(), ~ all(is.na(.x)))) |> dplyr::select(where(~isTRUE(.x))) |> names() |> dput()
+
+  if(include_all_na_cat & bool_all_na){
+
+    data1 <- data1 |> dplyr::mutate(
+      dplyr::across(
+        where(~ is.factor(.x) && length(levels(.x)) == 0),
+        ~ forcats::fct_explicit_na(.x, na_level = "(d.m.)"))
+    )
+
+    rlang::warn(glue::glue("The {na_col_names} is factor with missing level (all values are NA) and is displayed. "))
+  }
 
 
   if(drop_levels){
