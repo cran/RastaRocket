@@ -1,3 +1,14 @@
+# RastaRocket 1.1.5
+
+## Improvements
+
+- Added an `indent_gtsummary_table()` function, which allows subtables to use different indentation levels in gtsummary tables and combines them into a single table using `gtsummary::tbl_stack()`.
+- Renamed the `indent_table()` function to `indent_gt_table()`, which handles indentation for gt tables.
+- Fixed the display of `character(0)` values in Quarto reports.
+- Updated the default `digits` arguments in `desc_var()`.
+- Updated the vignette accordingly to illustrate these enhancements.
+
+
 # RastaRocket 1.1.4
 
 ## Improvements

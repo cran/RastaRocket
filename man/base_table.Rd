@@ -11,7 +11,7 @@ base_table(
   var_group,
   quali = NULL,
   quanti = NULL,
-  stat_var_quanti = c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}"),
+  stat_var_quanti = c("{mean} ({sd})", "{median} ({p25} ; {p75})", "{min} ; {max}"),
   digits = list(r_quanti = 1, r_quali = 1),
   freq_relevel = FALSE
 )

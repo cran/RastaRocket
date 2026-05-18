@@ -230,7 +230,7 @@ The values passed can be a single integer or a vector of integers. If a single i
 
 ## Specify Number of Digits
 
-- In the example below, quantitative values are rounded to 0 decimal places, while qualitative values percentage are rounded to 1 decimal place.
+- In the example below, quantitative values are rounded to 1 decimal places, while qualitative values percentage are rounded to 0 decimal place.
 
 
 
@@ -239,7 +239,7 @@ data |>
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(r_quanti = 0, r_quali = 1))
+                     digits = list(r_quanti = 1, r_quali = 0))
 ```
 
 
@@ -276,46 +276,13 @@ tb2 <- data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(r_quanti = 0, r_quali = 1))
+                     digits = list(r_quanti = 1, r_quali = 0))
 
 gtsummary::tbl_stack(list(tb1, tb2))
 ```
 
 
 
-# Statistical tests
-
-## Add Default Statistical Tests
-
-You can include statistical tests in your summary table using the `tests = TRUE` argument. This automatically applies default statistical tests for the grouped variables.
-
-The following example adds statistical tests for all features, grouped by the `traitement` variable.
-
-```{r}
-data %>%
-  RastaRocket::desc_var(table_title = "test",
-                     by_group = TRUE,
-                     var_group = "traitement",
-                     tests = TRUE)
-```
-
-## Specify Statistical Tests for Each Feature
-
-For greater control, you can specify the test to use for each feature by passing a named list to the tests argument. The example below applies:
-
-- t-test for Age,
-- Chi-squared test for sexe, and
-- Fisher's exact test for echelle.
-
-```{r}
-data %>%
-  RastaRocket::desc_var(table_title = "test",
-                     by_group = TRUE,
-                     var_group = "traitement",
-                     tests = list(Age = "t.test",
-                                  sexe = "chisq.test",
-                                  echelle = "fisher.test"))
-```
 
 # Custom appearance
 
@@ -372,23 +339,76 @@ data |>
 
 ## Text indentation
 
-You can specify the text indentation by using a numeric value correspinding to value as pixels (0 ~ px(0); 30 ~ px(30); 60 ~ px(60)). A dedicated function is implemented: `indent_table()`.
+- You can specify the indentation for columns by using a numeric value correspinding the space to indent text. A dedicated function is implemented: `indent_gtsummary_table()`.     
+- You can create subtables with different indentation and combine them into a single table using `gtsummary::tbl_stack`.
 
 
 ```{r}
-data |> 
-  RastaRocket::desc_var(table_title = "test",
-                     by_group = TRUE,
-                     var_group = "traitement") |> 
-  indent_table(indent = 30)
+tb1 <- data %>%
+     dplyr::select(Age, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb1 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 2)) |> RastaRocket::indent_gtsummary_table(indent = 4)  
+
+tb2 <- data %>%
+     dplyr::select(sexe, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb2 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 0)) |> RastaRocket::indent_gtsummary_table(indent = 8)  
+
+tb3 <- data %>%
+     dplyr::select(quatre_modalites, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb3 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 1)) |> RastaRocket::indent_gtsummary_table(indent = 16)
+
+tb4 <- data %>%
+     dplyr::select(echelle, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb4 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 1))
+
+gtsummary::tbl_stack(list(tb1, tb2, tb3, tb4))
 ```
 
+
+
+# Statistical tests
+
+## Add Default Statistical Tests
+
+You can include statistical tests in your summary table using the `tests = TRUE` argument. This automatically applies default statistical tests for the grouped variables.
+
+The following example adds statistical tests for all features, grouped by the `traitement` variable.
+
 ```{r}
-data |> 
+data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
-                     var_group = "traitement") |> 
-  indent_table(indent = 60)
+                     var_group = "traitement",
+                     tests = TRUE)
+```
+
+## Specify Statistical Tests for Each Feature
+
+For greater control, you can specify the test to use for each feature by passing a named list to the tests argument. The example below applies:
+
+- t-test for Age,
+- Chi-squared test for sexe, and
+- Fisher's exact test for echelle.
+
+```{r}
+data %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     tests = list(Age = "t.test",
+                                  sexe = "chisq.test",
+                                  echelle = "fisher.test"))
 ```
 
 

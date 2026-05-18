@@ -48,14 +48,14 @@ custom_headers <- function(base_table_missing,
   if (!is.null(var_group)) {
     if (is.null(group_title)) {
       group_title <- labelled::get_variable_labels(base_table_missing$inputs$data)[[var_group]]
-      if (is.null(group_title)) {
+      if (is.null(group_title) || length(group_title) == 0 || !nzchar(group_title)) {
         group_title <- var_group
       }
     }
 
     base_table_missing <- base_table_missing %>%
       gtsummary::modify_spanning_header(
-        c(gtsummary::all_stat_cols(FALSE) ~ paste0("**", group_title, "**"))
+        gtsummary::all_stat_cols() ~ paste0("**", group_title, "**")
       )
   }
 

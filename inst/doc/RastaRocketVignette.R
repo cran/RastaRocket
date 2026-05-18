@@ -130,7 +130,7 @@ data |>
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(r_quanti = 0, r_quali = 1))
+                     digits = list(r_quanti = 1, r_quali = 0))
 
 ## -----------------------------------------------------------------------------
 RastaRocket:: desc_var(
@@ -153,25 +153,9 @@ tb2 <- data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
                      var_group = "traitement",
-                     digits = list(r_quanti = 0, r_quali = 1))
+                     digits = list(r_quanti = 1, r_quali = 0))
 
 gtsummary::tbl_stack(list(tb1, tb2))
-
-## -----------------------------------------------------------------------------
-data %>%
-  RastaRocket::desc_var(table_title = "test",
-                     by_group = TRUE,
-                     var_group = "traitement",
-                     tests = TRUE)
-
-## -----------------------------------------------------------------------------
-data %>%
-  RastaRocket::desc_var(table_title = "test",
-                     by_group = TRUE,
-                     var_group = "traitement",
-                     tests = list(Age = "t.test",
-                                  sexe = "chisq.test",
-                                  echelle = "fisher.test"))
 
 ## -----------------------------------------------------------------------------
 data %>%
@@ -211,18 +195,51 @@ data |>
                                    gt::starts_with("stat") ~ gt::pct(25)))
 
 ## -----------------------------------------------------------------------------
-data |> 
-  RastaRocket::desc_var(table_title = "test",
-                     by_group = TRUE,
-                     var_group = "traitement") |> 
-  indent_table(indent = 30)
+tb1 <- data %>%
+     dplyr::select(Age, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb1 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 2)) |> RastaRocket::indent_gtsummary_table(indent = 4)  
+
+tb2 <- data %>%
+     dplyr::select(sexe, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb2 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 0)) |> RastaRocket::indent_gtsummary_table(indent = 8)  
+
+tb3 <- data %>%
+     dplyr::select(quatre_modalites, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb3 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 1)) |> RastaRocket::indent_gtsummary_table(indent = 16)
+
+tb4 <- data %>%
+     dplyr::select(echelle, traitement) %>%
+     RastaRocket::desc_var(table_title = "tb4 test",
+                           by_group = TRUE,
+                           var_group = "traitement",
+                           digits = list(r_quanti = 2, r_quali = 1))
+
+gtsummary::tbl_stack(list(tb1, tb2, tb3, tb4))
 
 ## -----------------------------------------------------------------------------
-data |> 
+data %>%
   RastaRocket::desc_var(table_title = "test",
                      by_group = TRUE,
-                     var_group = "traitement") |> 
-  indent_table(indent = 60)
+                     var_group = "traitement",
+                     tests = TRUE)
+
+## -----------------------------------------------------------------------------
+data %>%
+  RastaRocket::desc_var(table_title = "test",
+                     by_group = TRUE,
+                     var_group = "traitement",
+                     tests = list(Age = "t.test",
+                                  sexe = "chisq.test",
+                                  echelle = "fisher.test"))
 
 ## -----------------------------------------------------------------------------
 # reset theme to default

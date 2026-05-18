@@ -49,7 +49,6 @@ prepare_table <- function(data1,
 
   ### Deal with factors with missing levels
   bool_all_na <- data1 |> dplyr::summarise(across(everything(), ~ all(is.na(.x)))) |> any()
-  na_col_names <- data1 |> dplyr::summarise(across(everything(), ~ all(is.na(.x)))) |> dplyr::select(where(~isTRUE(.x))) |> names() |> dput()
 
   if(include_all_na_cat & bool_all_na){
 
@@ -59,7 +58,6 @@ prepare_table <- function(data1,
         ~ forcats::fct_explicit_na(.x, na_level = "(d.m.)"))
     )
 
-    rlang::warn(glue::glue("The {na_col_names} is factor with missing level (all values are NA) and is displayed. "))
   }
 
 

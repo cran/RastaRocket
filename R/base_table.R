@@ -25,7 +25,7 @@ base_table <- function(data1,
                        var_group,
                        quali = NULL,
                        quanti = NULL,
-                       stat_var_quanti = c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}"),
+                       stat_var_quanti = c("{mean} ({sd})", "{median} ({p25} ; {p75})", "{min} ; {max}"),
                        digits = list(r_quanti = 1, r_quali = 1),
                        freq_relevel = FALSE){
 
@@ -37,7 +37,7 @@ base_table <- function(data1,
   if(!dplyr::setequal(names(digits), vec_check)) stop(glue::glue("digits names must be {string_check}"))
 
   ####### check stat_var_quanti vector ##########
-  vec_stat <- c("{mean} ({sd})", "{median} ({p25}; {p75})", "{min}; {max}", "{sum}")
+  vec_stat <- c("{mean} ({sd})", "{median} ({p25} ; {p75})", "{min} ; {max}", "{sum}")
   if(any(!stat_var_quanti %in% vec_stat)){
     stop(glue::glue("stat_var_quanti names must be `{vec_stat[1]}` for mean (SD); `{vec_stat[2]}` for median (Q1, Q3);  `{vec_stat[3]}` for range or `{vec_stat[4]}` for Sum"))
   }
